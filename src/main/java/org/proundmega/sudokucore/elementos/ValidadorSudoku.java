@@ -1,0 +1,95 @@
+package org.proundmega.sudokucore.elementos;
+
+import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import org.proundmega.sudokucore.Celda;
+import org.proundmega.sudokucore.InvalidSudokuException;
+
+public class ValidadorSudoku {
+    
+    public static boolean esFilaCompleta(Celda[][] celdas, Fila fila) {
+        return esBloqueCompleto(fila.getFila(celdas));
+    }
+
+    private static boolean esBloqueCompleto(Celda[] bloque) {
+        return !Arrays.stream(bloque)
+                .anyMatch(Celda::estaVacia);
+    }
+    
+    public static boolean esColumnaCompleta(Celda[][] celdas, Columna columna) {
+        return esBloqueCompleto(columna.getColumnas(celdas));
+    }
+    
+    public static boolean esCuadranteCompleto(Celda[][] celdas, Cuadrante cuadrante) {
+        return esBloqueCompleto(cuadrante.getCuadrante(celdas));
+    }
+    
+    public static boolean esFilaValida(Celda[][] celdas, Fila fila) {
+        return esBloqueValido(fila.getFila(celdas));
+    }
+    
+    private static boolean esBloqueValido(Celda[] celdas) {
+        Map<Celda, Long> elementosContados = Arrays.stream(celdas).filter(celda -> !celda.estaVacia())
+                .collect(
+                        Collectors.groupingBy(Function.identity(), Collectors.counting()
+                        )
+                );
+        
+        return elementosContados.values().stream()
+                .allMatch(conteo -> conteo == 1);
+    }
+    
+    public static boolean esColumnaValida(Celda[][] celdas, Columna columna) {
+        return esBloqueValido(columna.getColumnas(celdas));
+    }
+    
+    public static boolean esCuadranteValido(Celda[][] celdas, Cuadrante cuadrante) {
+        return esBloqueValido(cuadrante.getCuadrante(celdas));
+    }
+    
+    public static boolean esCeldasValidasYCompletas(Celda[][] celdas) {
+        boolean filas = filasValidasYCompletas(celdas);
+        boolean columnas = columnasValidasYCompletas(celdas);
+        boolean cuadrantes = cuadrantesValidosYCompletos(celdas);
+        
+        return filas && columnas && cuadrantes;
+    }
+    
+    private static boolean filasValidasYCompletas(Celda[][] celdas) {
+        for(Fila fila : Fila.values()) {
+            if (!esFilaValida(celdas, fila)) {
+                throw new InvalidSudokuException("Sudoku no valido en la fila " + fila.getIndiceFila() +  ": entradas duplicadas " );
+            }
+            if(!esFilaCompleta(celdas, fila)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private static boolean columnasValidasYCompletas(Celda[][] celdas) {
+        for(Columna columna : Columna.values()) {
+            if (!esColumnaValida(celdas, columna)) {
+                throw new InvalidSudokuException("Sudoku no valido en la columna " + columna.getIndiceColumna()+  ": entradas duplicadas " );
+            }
+            if(!esColumnaCompleta(celdas, columna)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private static boolean cuadrantesValidosYCompletos(Celda[][] celdas) {
+        for(Cuadrante cuadrante : Cuadrante.values()) {
+            if (!esCuadranteValido(celdas, cuadrante)) {
+                throw new InvalidSudokuException("Sudoku no valido en la fila " + cuadrante.toString() +  ": entradas duplicadas " );
+            }
+            if(!esCuadranteCompleto(celdas, cuadrante)) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
