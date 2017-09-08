@@ -1,13 +1,26 @@
 package org.proundmega.sudokucore.solver;
 
 import org.proundmega.sudokucore.Grid;
+import org.proundmega.sudokucore.SubGrid;
+import org.proundmega.sudokucore.elementos.Cuadrante;
 
 public class CuadranteSolver implements Solver{
 
     @Override
     public Grid solveCasilla(Grid gridOriginal) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for(Cuadrante cuadrante : Cuadrante.values()) {
+            SubGrid subgrid = gridOriginal.getSubGrid(cuadrante);
+            
+            if(subgrid.soloFaltaUnEspacio()) {
+                return subgrid.completarCuadrante();
+            }
+        }
+        
+        // TODO Testea esho
+        return new Grid();
     }
+    
+    
 
     @Override
     public String getMetodoUsado() {

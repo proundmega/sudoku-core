@@ -3,6 +3,7 @@ package org.proundmega.sudokucore;
 import java.util.Arrays;
 import lombok.NonNull;
 import org.proundmega.sudokucore.elementos.Columna;
+import org.proundmega.sudokucore.elementos.Cuadrante;
 import org.proundmega.sudokucore.elementos.Fila;
 import org.proundmega.sudokucore.elementos.ValidadorSudoku;
 
@@ -81,6 +82,10 @@ public class Grid {
         copia[fila.getIndiceFila()][columna.getIndiceColumna()] = new Celda(valor);
         
         return new Grid(copia);
+    }
+    
+    public SubGrid getSubGrid(Cuadrante cuadrante) {
+        return new SubGrid(celdas, cuadrante);
     }
     
     public boolean isGridResuelta() {

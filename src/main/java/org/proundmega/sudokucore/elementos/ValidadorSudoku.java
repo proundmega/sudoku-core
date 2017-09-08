@@ -6,6 +6,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.proundmega.sudokucore.Celda;
 import org.proundmega.sudokucore.InvalidSudokuException;
+import org.proundmega.sudokucore.SubGrid;
 
 public class ValidadorSudoku {
     
@@ -23,7 +24,19 @@ public class ValidadorSudoku {
     }
     
     public static boolean esCuadranteCompleto(Celda[][] celdas, Cuadrante cuadrante) {
-        return esBloqueCompleto(cuadrante.getCuadrante(celdas));
+        return esBloqueCompleto(
+                Arrays.stream(cuadrante.getCuadrante(celdas))
+                        .flatMap(tupla -> Arrays.stream(tupla))
+                        .toArray(Celda[]::new)
+        );
+    }
+    
+    public static boolean esCuadranteCompleto(Celda[][] cuadrante) {
+        return esBloqueCompleto(
+                Arrays.stream(cuadrante)
+                        .flatMap(tupla -> Arrays.stream(tupla))
+                        .toArray(Celda[]::new)
+        );
     }
     
     public static boolean esFilaValida(Celda[][] celdas, Fila fila) {
@@ -46,7 +59,10 @@ public class ValidadorSudoku {
     }
     
     public static boolean esCuadranteValido(Celda[][] celdas, Cuadrante cuadrante) {
-        return esBloqueValido(cuadrante.getCuadrante(celdas));
+        return esBloqueValido(Arrays.stream(cuadrante.getCuadrante(celdas))
+                        .flatMap(tupla -> Arrays.stream(tupla))
+                        .toArray(Celda[]::new)
+        );
     }
     
     public static boolean esCeldasValidasYCompletas(Celda[][] celdas) {

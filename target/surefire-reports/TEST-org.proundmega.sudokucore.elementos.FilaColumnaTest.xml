@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="18" failures="0" name="org.proundmega.sudokucore.elementos.ValidadorSudokuTest" time="0.111" errors="0" skipped="0">
+<testsuite tests="2" failures="0" name="org.proundmega.sudokucore.elementos.FilaColumnaTest" time="0.009" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -59,22 +59,6 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="org.proundmega.sudokucore.elementos.ValidadorSudokuTest" name="cuadranteIncompleto" time="0.007"/>
-  <testcase classname="org.proundmega.sudokucore.elementos.ValidadorSudokuTest" name="columnaIncompleta" time="0.005"/>
-  <testcase classname="org.proundmega.sudokucore.elementos.ValidadorSudokuTest" name="filaValidaCompleta" time="0.034"/>
-  <testcase classname="org.proundmega.sudokucore.elementos.ValidadorSudokuTest" name="filaIncompleta" time="0.001"/>
-  <testcase classname="org.proundmega.sudokucore.elementos.ValidadorSudokuTest" name="filaValidaIncompleta" time="0"/>
-  <testcase classname="org.proundmega.sudokucore.elementos.ValidadorSudokuTest" name="cuadranteCompleto" time="0.001"/>
-  <testcase classname="org.proundmega.sudokucore.elementos.ValidadorSudokuTest" name="cuadranteInvalido" time="0"/>
-  <testcase classname="org.proundmega.sudokucore.elementos.ValidadorSudokuTest" name="columnaInvalidaRepetido" time="0"/>
-  <testcase classname="org.proundmega.sudokucore.elementos.ValidadorSudokuTest" name="isResueltaConValoresInvalidos1" time="0"/>
-  <testcase classname="org.proundmega.sudokucore.elementos.ValidadorSudokuTest" name="isResueltaConValoresInvalidos2" time="0.002"/>
-  <testcase classname="org.proundmega.sudokucore.elementos.ValidadorSudokuTest" name="columnaCompleta" time="0.007"/>
-  <testcase classname="org.proundmega.sudokucore.elementos.ValidadorSudokuTest" name="filaCompleta" time="0.001"/>
-  <testcase classname="org.proundmega.sudokucore.elementos.ValidadorSudokuTest" name="columnaValidaCompleta" time="0.001"/>
-  <testcase classname="org.proundmega.sudokucore.elementos.ValidadorSudokuTest" name="isResueltaConFilaIncompleta" time="0.005"/>
-  <testcase classname="org.proundmega.sudokucore.elementos.ValidadorSudokuTest" name="columnaValidaIncompleta" time="0.001"/>
-  <testcase classname="org.proundmega.sudokucore.elementos.ValidadorSudokuTest" name="filaInvalidaRepetido" time="0"/>
-  <testcase classname="org.proundmega.sudokucore.elementos.ValidadorSudokuTest" name="isResueltaQueEstaResuelta" time="0.006"/>
-  <testcase classname="org.proundmega.sudokucore.elementos.ValidadorSudokuTest" name="cuadranteValido" time="0"/>
+  <testcase classname="org.proundmega.sudokucore.elementos.FilaColumnaTest" name="columnaRetornadaCorrectamente" time="0"/>
+  <testcase classname="org.proundmega.sudokucore.elementos.FilaColumnaTest" name="filaRetornadaCorrectamente" time="0.003"/>
 </testsuite>

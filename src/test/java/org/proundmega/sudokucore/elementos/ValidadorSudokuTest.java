@@ -129,4 +129,14 @@ public class ValidadorSudokuTest {
     public void isResueltaConValoresInvalidos2() {
         ValidadorSudoku.esCeldasValidasYCompletas(celdas);
     }
+    
+    public void isCuadranteCompletoValido() {
+        Celda[][] cuadranteCompleto = new Celda[][] {
+            GridFactory.crearCeldas(_1, _2, _3),
+            GridFactory.crearCeldas(_4, _5, _6),
+            GridFactory.crearCeldas(_7, _8, _9)
+        };
+        
+        assertTrue(ValidadorSudoku.esCuadranteCompleto(cuadranteCompleto));
+    }
 }
