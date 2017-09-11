@@ -1,5 +1,7 @@
 package org.proundmega.sudokucore;
 
+import org.proundmega.sudokucore.elementos.grid.Grid;
+import org.proundmega.sudokucore.elementos.Celda;
 import java.util.ArrayList;
 import java.util.List;
 

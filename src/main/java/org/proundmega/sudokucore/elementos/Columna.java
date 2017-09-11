@@ -1,9 +1,12 @@
 package org.proundmega.sudokucore.elementos;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import org.proundmega.sudokucore.Celda;
+import org.proundmega.sudokucore.Posicion;
 
 public enum Columna {
     _1(1),
@@ -35,13 +38,25 @@ public enum Columna {
         this.indiceColumna = fila;
     }
 
-    public int getIndiceColumna() {
+    public int getIndiceColumnaParaArray() {
         return indiceColumna - 1;
     }
     
-    public Celda[] getColumnas(Celda[][] celdas) {
+    public Celda[] getColumna(Celda[][] celdas) {
         return Arrays.stream(celdas)
-                .map(tupla -> tupla[getIndiceColumna()])
+                .map(tupla -> tupla[getIndiceColumnaParaArray()])
                 .toArray(Celda[]::new);
     }
+    
+    public List<Posicion> getColumnaAsList(Celda[][] celdas) {
+        List<Posicion> posiciones = new ArrayList<>();
+
+        for (int fila = 0; fila < celdas[0].length; fila++) {
+            Posicion posicion = new Posicion(fila + 1, indiceColumna, celdas[fila][getIndiceColumnaParaArray()]);
+            posiciones.add(posicion);
+        }
+
+        return Collections.unmodifiableList(posiciones);
+    }
+    
 }

@@ -1,5 +1,6 @@
 package org.proundmega.sudokucore;
 
+import org.proundmega.sudokucore.elementos.Celda;
 import lombok.AllArgsConstructor;
 import lombok.Value;
 

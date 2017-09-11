@@ -1,23 +1,24 @@
 package org.proundmega.sudokucore.solver;
 
-import org.proundmega.sudokucore.Grid;
-import org.proundmega.sudokucore.SubGrid;
+import org.proundmega.sudokucore.elementos.grid.Grid;
+import org.proundmega.sudokucore.elementos.grid.SubGridCuadrante;
 import org.proundmega.sudokucore.elementos.Cuadrante;
 
 public class CuadranteSolver implements Solver{
 
     @Override
-    public Grid solveCasilla(Grid gridOriginal) {
+    public Respuesta solveCasilla(Grid gridOriginal) {
         for(Cuadrante cuadrante : Cuadrante.values()) {
-            SubGrid subgrid = gridOriginal.getSubGrid(cuadrante);
+            SubGridCuadrante subgrid = gridOriginal.getSubGrid(cuadrante);
             
             if(subgrid.soloFaltaUnEspacio()) {
-                return subgrid.completarCuadrante();
+                Grid respuesta = subgrid.completarSubGrid();
+                return new Respuesta(respuesta, true, this);
             }
         }
         
-        // TODO Testea esho
-        return new Grid();
+        // Si estoy aqui no resolvi nada
+        return new Respuesta(gridOriginal, false, this);
     }
     
     

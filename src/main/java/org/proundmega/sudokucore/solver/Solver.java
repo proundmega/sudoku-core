@@ -1,8 +1,8 @@
 package org.proundmega.sudokucore.solver;
 
-import org.proundmega.sudokucore.Grid;
+import org.proundmega.sudokucore.elementos.grid.Grid;
 
 public interface Solver {
-    Grid solveCasilla(Grid gridOriginal);
+    Respuesta solveCasilla(Grid gridOriginal);
     String getMetodoUsado();
 }

@@ -2,7 +2,7 @@ package org.proundmega.sudokucore.solver;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.proundmega.sudokucore.Grid;
+import org.proundmega.sudokucore.elementos.grid.Grid;
 import org.proundmega.sudokucore.data.GridFactory;
 
 public class CuadranteSolverTest {
@@ -13,9 +13,20 @@ public class CuadranteSolverTest {
         Grid gridIncompleta = new Grid(GridFactory.getSudokuIncompleto1());
         
         Grid esperado = new Grid(GridFactory.getSudokuResueltoValido1());
-        Grid obtenido = solver.solveCasilla(gridIncompleta);
+        Grid obtenido = solver.solveCasilla(gridIncompleta).getGridRespuesta();
         
         assertEquals(esperado, obtenido);
+    }
+    
+    @Test
+    public void solverYaResuelto() {
+        Solver solver = new CuadranteSolver();
+        
+        Grid gridCompleta = new Grid(GridFactory.getSudokuResueltoValido1());
+        
+        Respuesta obtenido = solver.solveCasilla(gridCompleta);
+        
+        assertFalse(obtenido.isAvanceEnResolver());
     }
     
 }

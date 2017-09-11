@@ -7,10 +7,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.proundmega.sudokucore.Celda;
-import org.proundmega.sudokucore.Valor;
+import org.junit.Ignore;
+import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.data.GridFactory;
-import static org.proundmega.sudokucore.Valor.*;
+import static org.proundmega.sudokucore.elementos.Valor.*;
 import static org.proundmega.sudokucore.data.GridFactory.crearCeldas;
 
 public class CuadranteTest {
@@ -137,4 +137,32 @@ public class CuadranteTest {
         
         assertArrayEquals(esperado, cuadrante.getCuadrante(celdas));
     }
-}
+    
+    @Test
+    public void gcInferiorDerechoAsList() {
+        Cuadrante cuadrante = Cuadrante.INFERIOR_DERECHO;
+        
+        List<Posicion> esperado = getPosicionesInferiorDerecho(celdas);
+        List<Posicion> obtenido = cuadrante.getCuadranteAsList(celdas);
+        
+        assertEquals(esperado, obtenido);
+    }
+    
+    private List<Posicion> getPosicionesInferiorDerecho(Celda[][] celdas) {
+        List<Posicion> posiciones = new ArrayList<>();
+        
+        posiciones.add(new Posicion(7, 7, celdas[6][6]));
+        posiciones.add(new Posicion(7, 8, celdas[6][7]));
+        posiciones.add(new Posicion(7, 9, celdas[6][8]));
+        
+        posiciones.add(new Posicion(8, 7, celdas[7][6]));
+        posiciones.add(new Posicion(8, 8, celdas[7][7]));
+        posiciones.add(new Posicion(8, 9, celdas[7][8]));
+        
+        posiciones.add(new Posicion(9, 7, celdas[8][6]));
+        posiciones.add(new Posicion(9, 8, celdas[8][7]));
+        posiciones.add(new Posicion(9, 9, celdas[8][8]));
+        
+        return posiciones;
+    }
+ }

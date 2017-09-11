@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.proundmega.sudokucore;
+package org.proundmega.sudokucore.elementos.grid;
 
+import org.proundmega.sudokucore.elementos.grid.SubGridCuadrante;
+import org.proundmega.sudokucore.elementos.grid.Grid;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.proundmega.sudokucore.data.GridFactory;
@@ -22,7 +24,7 @@ public class SubGridTest {
     @Test
     public void estaCasiCompleto() {
         Grid gridCasiCompleto = new Grid(GridFactory.getSudokuIncompleto1());
-        SubGrid subgrid = gridCasiCompleto.getSubGrid(Cuadrante.INFERIOR_DERECHO);
+        SubGridCuadrante subgrid = gridCasiCompleto.getSubGrid(Cuadrante.INFERIOR_DERECHO);
         
         assertTrue(subgrid.soloFaltaUnEspacio());
     }
@@ -30,7 +32,7 @@ public class SubGridTest {
     @Test
     public void estaCasiCompletoPeroEstaCompleto() {
         Grid gridCasiCompleto = new Grid(GridFactory.getSudokuIncompleto1());
-        SubGrid subgrid = gridCasiCompleto.getSubGrid(Cuadrante.INFERIOR_IZQUIERO);
+        SubGridCuadrante subgrid = gridCasiCompleto.getSubGrid(Cuadrante.INFERIOR_IZQUIERO);
         
         assertFalse(subgrid.soloFaltaUnEspacio());
     }
@@ -38,7 +40,7 @@ public class SubGridTest {
     @Test
     public void estaCasiCompletoPeroEstaMuyIncompleto() {
         Grid gridCasiCompleto = new Grid(GridFactory.getSudokuIncompleto2());
-        SubGrid subgrid = gridCasiCompleto.getSubGrid(Cuadrante.INFERIOR_DERECHO);
+        SubGridCuadrante subgrid = gridCasiCompleto.getSubGrid(Cuadrante.INFERIOR_DERECHO);
         
         assertFalse(subgrid.soloFaltaUnEspacio());
     }

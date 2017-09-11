@@ -2,9 +2,9 @@ package org.proundmega.sudokucore.data;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.proundmega.sudokucore.Celda;
-import org.proundmega.sudokucore.Valor;
-import static org.proundmega.sudokucore.Valor.*;
+import org.proundmega.sudokucore.elementos.Celda;
+import org.proundmega.sudokucore.elementos.Valor;
+import static org.proundmega.sudokucore.elementos.Valor.*;
 
 public class GridFactory {
     

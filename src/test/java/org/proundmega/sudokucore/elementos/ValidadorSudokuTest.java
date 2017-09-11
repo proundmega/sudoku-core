@@ -5,11 +5,9 @@ import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
-import org.proundmega.sudokucore.Celda;
-import org.proundmega.sudokucore.Grid;
+import org.proundmega.sudokucore.elementos.grid.Grid;
 import org.proundmega.sudokucore.InvalidSudokuException;
-import org.proundmega.sudokucore.Valor;
-import static org.proundmega.sudokucore.Valor.*;
+import static org.proundmega.sudokucore.elementos.Valor.*;
 import org.proundmega.sudokucore.data.GridFactory;
 
 public class ValidadorSudokuTest {

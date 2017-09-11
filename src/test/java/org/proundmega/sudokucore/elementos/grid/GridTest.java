@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.proundmega.sudokucore;
+package org.proundmega.sudokucore.elementos.grid;
 
+import org.proundmega.sudokucore.elementos.grid.Grid;
+import org.proundmega.sudokucore.elementos.Valor;
+import org.proundmega.sudokucore.elementos.Celda;
 import java.util.Arrays;
 import org.junit.Test;
 import static org.junit.Assert.*;

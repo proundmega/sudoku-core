@@ -4,9 +4,8 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.proundmega.sudokucore.Celda;
 import org.proundmega.sudokucore.InvalidSudokuException;
-import org.proundmega.sudokucore.SubGrid;
+import org.proundmega.sudokucore.elementos.grid.SubGridCuadrante;
 
 public class ValidadorSudoku {
     
@@ -20,7 +19,7 @@ public class ValidadorSudoku {
     }
     
     public static boolean esColumnaCompleta(Celda[][] celdas, Columna columna) {
-        return esBloqueCompleto(columna.getColumnas(celdas));
+        return esBloqueCompleto(columna.getColumna(celdas));
     }
     
     public static boolean esCuadranteCompleto(Celda[][] celdas, Cuadrante cuadrante) {
@@ -55,7 +54,7 @@ public class ValidadorSudoku {
     }
     
     public static boolean esColumnaValida(Celda[][] celdas, Columna columna) {
-        return esBloqueValido(columna.getColumnas(celdas));
+        return esBloqueValido(columna.getColumna(celdas));
     }
     
     public static boolean esCuadranteValido(Celda[][] celdas, Cuadrante cuadrante) {
@@ -76,7 +75,7 @@ public class ValidadorSudoku {
     private static boolean filasValidasYCompletas(Celda[][] celdas) {
         for(Fila fila : Fila.values()) {
             if (!esFilaValida(celdas, fila)) {
-                throw new InvalidSudokuException("Sudoku no valido en la fila " + fila.getIndiceFila() +  ": entradas duplicadas " );
+                throw new InvalidSudokuException("Sudoku no valido en la fila " + fila.getIndiceFilaParaArray() +  ": entradas duplicadas " );
             }
             if(!esFilaCompleta(celdas, fila)) {
                 return false;
@@ -88,7 +87,7 @@ public class ValidadorSudoku {
     private static boolean columnasValidasYCompletas(Celda[][] celdas) {
         for(Columna columna : Columna.values()) {
             if (!esColumnaValida(celdas, columna)) {
-                throw new InvalidSudokuException("Sudoku no valido en la columna " + columna.getIndiceColumna()+  ": entradas duplicadas " );
+                throw new InvalidSudokuException("Sudoku no valido en la columna " + columna.getIndiceColumnaParaArray()+  ": entradas duplicadas " );
             }
             if(!esColumnaCompleta(celdas, columna)) {
                 return false;

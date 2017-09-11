@@ -1,4 +1,4 @@
-package org.proundmega.sudokucore;
+package org.proundmega.sudokucore.elementos;
 
 import java.util.Objects;
 

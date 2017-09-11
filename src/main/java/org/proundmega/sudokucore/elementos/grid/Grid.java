@@ -1,5 +1,7 @@
-package org.proundmega.sudokucore;
+package org.proundmega.sudokucore.elementos.grid;
 
+import org.proundmega.sudokucore.elementos.Valor;
+import org.proundmega.sudokucore.elementos.Celda;
 import java.util.Arrays;
 import lombok.NonNull;
 import org.proundmega.sudokucore.elementos.Columna;
@@ -79,13 +81,21 @@ public class Grid {
     
     public Grid reemplazarCasilla(@NonNull Fila fila, @NonNull Columna columna, @NonNull Valor valor) {
         Celda[][] copia = copiarCeldas(celdas);
-        copia[fila.getIndiceFila()][columna.getIndiceColumna()] = new Celda(valor);
+        copia[fila.getIndiceFilaParaArray()][columna.getIndiceColumnaParaArray()] = new Celda(valor);
         
         return new Grid(copia);
     }
     
-    public SubGrid getSubGrid(Cuadrante cuadrante) {
-        return new SubGrid(celdas, cuadrante);
+    public SubGridCuadrante getSubGrid(Cuadrante cuadrante) {
+        return new SubGridCuadrante(celdas, cuadrante);
+    }
+    
+    public SubGridFila getSubGrid(Fila fila) {
+        return new SubGridFila(celdas, fila);
+    }
+    
+    public SubGridColumna getSubGrid(Columna columna) {
+        return new SubGridColumna(celdas, columna);
     }
     
     public boolean isGridResuelta() {
