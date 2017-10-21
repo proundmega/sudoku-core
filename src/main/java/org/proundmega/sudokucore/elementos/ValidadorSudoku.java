@@ -99,7 +99,7 @@ public class ValidadorSudoku {
     private static boolean cuadrantesValidosYCompletos(Celda[][] celdas) {
         for(Cuadrante cuadrante : Cuadrante.values()) {
             if (!esCuadranteValido(celdas, cuadrante)) {
-                throw new InvalidSudokuException("Sudoku no valido en la fila " + cuadrante.toString() +  ": entradas duplicadas " );
+                throw new InvalidSudokuException("Sudoku no valido en el cuadrante " + cuadrante.toString() +  ": entradas duplicadas " );
             }
             if(!esCuadranteCompleto(celdas, cuadrante)) {
                 return false;

@@ -7,7 +7,7 @@ import org.proundmega.sudokucore.elementos.grid.SubGrid;
 public class FilaSolver implements Solver {
 
     @Override
-    public Respuesta solveCasilla(Grid gridOriginal) {
+    public Respuesta apply(Grid gridOriginal) {
         for(Fila fila: Fila.values()) {
             SubGrid subgrid = gridOriginal.getSubGrid(fila);
             

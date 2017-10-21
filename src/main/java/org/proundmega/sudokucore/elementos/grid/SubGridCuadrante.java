@@ -6,9 +6,12 @@ import java.util.List;
 import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.elementos.Cuadrante;
 import org.proundmega.sudokucore.elementos.ValidadorSudoku;
+import org.proundmega.sudokucore.elementos.Valor;
+import org.proundmega.sudokucore.elementos.grid.anotador.AnotadorCuadrante;
 import org.proundmega.sudokucore.solver.SolverHelper;
 
 public class SubGridCuadrante extends AbstractSubGrid {
+
     private Cuadrante cuadranteObjetivo;
     private Celda[][] solve;
 
@@ -17,7 +20,7 @@ public class SubGridCuadrante extends AbstractSubGrid {
         this.cuadranteObjetivo = cuadrante;
         this.solve = cuadrante.getCuadrante(celdas);
     }
-    
+
     @Override
     public boolean estaCompleta() {
         return ValidadorSudoku.esCuadranteCompleto(solve);
@@ -36,4 +39,11 @@ public class SubGridCuadrante extends AbstractSubGrid {
         return cuadranteObjetivo.getCuadranteAsList(celdas);
     }
 
+    public List<Posicion> getPosicionesVaciasAnotadas() {
+        AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadranteObjetivo);
+        List<Posicion> posicionesVaciasAnotadas = anotador.getPosicionesConAnotacionesRemovidas();
+        
+        return posicionesVaciasAnotadas;
+    }
+    
 }

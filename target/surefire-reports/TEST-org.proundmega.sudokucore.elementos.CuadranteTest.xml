@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="10" failures="0" name="org.proundmega.sudokucore.elementos.CuadranteTest" time="0.012" errors="0" skipped="0">
+<testsuite tests="15" failures="0" name="org.proundmega.sudokucore.elementos.CuadranteTest" time="0.038" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -59,10 +59,15 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="org.proundmega.sudokucore.elementos.CuadranteTest" name="gcCentralIzquierdo" time="0.002"/>
-  <testcase classname="org.proundmega.sudokucore.elementos.CuadranteTest" name="gcCentralCentral" time="0.001"/>
+  <testcase classname="org.proundmega.sudokucore.elementos.CuadranteTest" name="gcInferiorDerechoVacias" time="0"/>
+  <testcase classname="org.proundmega.sudokucore.elementos.CuadranteTest" name="getValoresVerticalesCorrectos1" time="0"/>
+  <testcase classname="org.proundmega.sudokucore.elementos.CuadranteTest" name="getValoresVerticalesCorrectos2" time="0"/>
+  <testcase classname="org.proundmega.sudokucore.elementos.CuadranteTest" name="gcCentralIzquierdo" time="0.01"/>
+  <testcase classname="org.proundmega.sudokucore.elementos.CuadranteTest" name="gcCentralCentral" time="0"/>
   <testcase classname="org.proundmega.sudokucore.elementos.CuadranteTest" name="gcInferiorCentral" time="0"/>
   <testcase classname="org.proundmega.sudokucore.elementos.CuadranteTest" name="gcSuperiorCentral" time="0"/>
+  <testcase classname="org.proundmega.sudokucore.elementos.CuadranteTest" name="getValoresHorizontalesCorrectos1" time="0"/>
+  <testcase classname="org.proundmega.sudokucore.elementos.CuadranteTest" name="getValoresHorizontalesCorrectos2" time="0.012"/>
   <testcase classname="org.proundmega.sudokucore.elementos.CuadranteTest" name="gcCentralDerecho" time="0"/>
   <testcase classname="org.proundmega.sudokucore.elementos.CuadranteTest" name="gcSuperiorIzquierdo" time="0"/>
   <testcase classname="org.proundmega.sudokucore.elementos.CuadranteTest" name="gcInferiorDerecho" time="0.001"/>

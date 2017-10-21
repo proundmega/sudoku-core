@@ -4,6 +4,7 @@ import org.proundmega.sudokucore.elementos.Valor;
 import org.proundmega.sudokucore.elementos.Celda;
 import java.util.Arrays;
 import lombok.NonNull;
+import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.elementos.Columna;
 import org.proundmega.sudokucore.elementos.Cuadrante;
 import org.proundmega.sudokucore.elementos.Fila;
@@ -74,11 +75,6 @@ public class Grid {
         return print;
     }
     
-    @Deprecated
-    public Grid resolverCasilla() {
-        return new Grid(celdas);
-    }
-    
     public Grid reemplazarCasilla(@NonNull Fila fila, @NonNull Columna columna, @NonNull Valor valor) {
         Celda[][] copia = copiarCeldas(celdas);
         copia[fila.getIndiceFilaParaArray()][columna.getIndiceColumnaParaArray()] = new Celda(valor);
@@ -100,6 +96,10 @@ public class Grid {
     
     public boolean isGridResuelta() {
         return ValidadorSudoku.esCeldasValidasYCompletas(celdas);
+    }
+    
+    public Posicion getPosicion(Fila fila, Columna columna) {
+        return new Posicion(fila, columna, celdas[fila.getIndiceFilaParaArray()][columna.getIndiceColumnaParaArray()]);
     }
 
     @Override

@@ -13,7 +13,7 @@ public class CuadranteSolverTest {
         Grid gridIncompleta = new Grid(GridFactory.getSudokuIncompleto1());
         
         Grid esperado = new Grid(GridFactory.getSudokuResueltoValido1());
-        Grid obtenido = solver.solveCasilla(gridIncompleta).getGridRespuesta();
+        Grid obtenido = solver.apply(gridIncompleta).getGridRespuesta();
         
         assertEquals(esperado, obtenido);
     }
@@ -24,7 +24,7 @@ public class CuadranteSolverTest {
         
         Grid gridCompleta = new Grid(GridFactory.getSudokuResueltoValido1());
         
-        Respuesta obtenido = solver.solveCasilla(gridCompleta);
+        Respuesta obtenido = solver.apply(gridCompleta);
         
         assertFalse(obtenido.isAvanceEnResolver());
     }

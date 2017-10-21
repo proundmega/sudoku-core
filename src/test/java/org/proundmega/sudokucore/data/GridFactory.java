@@ -81,4 +81,20 @@ public class GridFactory {
             crearCeldas( _3,    _9,    _5,      _1,    _2,    _4,       _6,   _7,   _8)
         };
     }
+    
+    public static Celda[][] getSudokuFacil1() {
+        return new Celda[][] {
+            crearCeldas( VACIA,    _7,    VACIA,    VACIA,    _3,    VACIA,     VACIA,   VACIA,      _6),
+            crearCeldas(    _4,    _5,    VACIA,    VACIA,    _1,    VACIA,        _8,   VACIA,   VACIA),
+            crearCeldas( VACIA,  VACIA,    _3,         _4,  VACIA,   VACIA,     VACIA,      _9,   VACIA),
+            
+            crearCeldas( VACIA,  VACIA,      _6,    VACIA,  VACIA,   VACIA,     VACIA,   VACIA,   VACIA),
+            crearCeldas(    _9,     _1,   VACIA,    VACIA,  VACIA,   VACIA,     VACIA,      _3,      _7),
+            crearCeldas( VACIA,  VACIA,   VACIA,    VACIA,  VACIA,   VACIA,        _1,   VACIA,   VACIA),
+            
+            crearCeldas( VACIA,     _8,   VACIA,    VACIA,  VACIA,      _5,        _3,   VACIA,   VACIA),
+            crearCeldas( VACIA,  VACIA,      _2,    VACIA,     _8,   VACIA,     VACIA,      _4,      _9),
+            crearCeldas(    _3,  VACIA,   VACIA,    VACIA,     _2,   VACIA,     VACIA,      _7,   VACIA)
+        };
+    }
 }

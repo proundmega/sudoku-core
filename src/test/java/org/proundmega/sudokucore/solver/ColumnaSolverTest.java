@@ -22,7 +22,7 @@ public class ColumnaSolverTest {
         Grid esperado = new Grid(GridFactory.getSudokuResueltoValido1());
         
         Solver solver = new ColumnaSolver();
-        Respuesta obtenido = solver.solveCasilla(gridIncompleta);
+        Respuesta obtenido = solver.apply(gridIncompleta);
         
         assertEquals(esperado, obtenido.getGridRespuesta());
     }
@@ -33,7 +33,7 @@ public class ColumnaSolverTest {
         Grid esperado = new Grid(GridFactory.getSudokuIncompleto1());
         
         Solver solver = new ColumnaSolver();
-        Respuesta obtenido = solver.solveCasilla(gridIncompleta);
+        Respuesta obtenido = solver.apply(gridIncompleta);
         
         assertEquals(esperado, obtenido.getGridRespuesta());
     }

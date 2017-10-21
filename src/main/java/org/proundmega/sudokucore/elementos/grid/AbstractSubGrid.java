@@ -24,8 +24,8 @@ public abstract class AbstractSubGrid implements SubGrid {
         Valor valorFaltante = getPosicionFaltante(posiciones);
         
         return new Grid(celdas).reemplazarCasilla(
-                Fila.toFila(posicionVacia.getFila()),
-                Columna.toColumna(posicionVacia.getColumna()),
+                posicionVacia.getFila(),
+                posicionVacia.getColumna(),
                 valorFaltante
         );
     }

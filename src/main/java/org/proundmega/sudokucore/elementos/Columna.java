@@ -42,6 +42,10 @@ public enum Columna {
         return indiceColumna - 1;
     }
     
+    public int getIndice() {
+        return indiceColumna;
+    }
+    
     public Celda[] getColumna(Celda[][] celdas) {
         return Arrays.stream(celdas)
                 .map(tupla -> tupla[getIndiceColumnaParaArray()])

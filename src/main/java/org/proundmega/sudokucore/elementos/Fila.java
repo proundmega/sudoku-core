@@ -45,7 +45,11 @@ public enum Fila {
     public int getIndiceFilaParaArray() {
         return indiceFila - 1;
     }
-
+    
+    public int getIndice() {
+        return indiceFila;
+    }
+    
     public Celda[] getFila(Celda[][] celdas) {
         return celdas[getIndiceFilaParaArray()];
     }

@@ -1,28 +1,28 @@
 package org.proundmega.sudokucore.elementos;
 
-import java.util.Objects;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Stream;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import org.proundmega.sudokucore.Posicion;
 
-/**
- *
- * @author vansi
- */
+@EqualsAndHashCode
+@AllArgsConstructor
 public class Celda {
+    @Getter
     private final Valor valorActual;
 
     public Celda() {
         valorActual = Valor.VACIA;
     }
     
-    public Celda(Valor valorActual) {
-        this.valorActual = valorActual;
-    }
-    
     public boolean estaVacia() {
         return valorActual == Valor.VACIA;
-    }
-
-    public Valor getValorActual() {
-        return valorActual;
     }
 
     public Celda cambiarValor(Valor valor) {
@@ -32,31 +32,6 @@ public class Celda {
     @Override
     public String toString() {
         return "[" + valorActual + "]";
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.valorActual);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Celda other = (Celda) obj;
-        if (this.valorActual != other.valorActual) {
-            return false;
-        }
-        return true;
     }
     
 }

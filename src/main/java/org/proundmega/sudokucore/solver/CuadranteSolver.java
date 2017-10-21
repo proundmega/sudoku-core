@@ -7,7 +7,7 @@ import org.proundmega.sudokucore.elementos.Cuadrante;
 public class CuadranteSolver implements Solver{
 
     @Override
-    public Respuesta solveCasilla(Grid gridOriginal) {
+    public Respuesta apply(Grid gridOriginal) {
         for(Cuadrante cuadrante : Cuadrante.values()) {
             SubGridCuadrante subgrid = gridOriginal.getSubGrid(cuadrante);
             
@@ -16,7 +16,6 @@ public class CuadranteSolver implements Solver{
                 return new Respuesta(respuesta, true, this);
             }
         }
-        
         // Si estoy aqui no resolvi nada
         return new Respuesta(gridOriginal, false, this);
     }
