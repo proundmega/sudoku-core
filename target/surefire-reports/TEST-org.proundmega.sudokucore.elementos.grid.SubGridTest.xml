@@ -60,6 +60,6 @@
     <property name="sun.cpu.isalist" value=""/>
   </properties>
   <testcase classname="org.proundmega.sudokucore.elementos.grid.SubGridTest" name="estaCasiCompletoPeroEstaMuyIncompleto" time="0.003"/>
-  <testcase classname="org.proundmega.sudokucore.elementos.grid.SubGridTest" name="estaCasiCompleto" time="0"/>
+  <testcase classname="org.proundmega.sudokucore.elementos.grid.SubGridTest" name="estaCasiCompleto" time="0.001"/>
   <testcase classname="org.proundmega.sudokucore.elementos.grid.SubGridTest" name="estaCasiCompletoPeroEstaCompleto" time="0"/>
 </testsuite>

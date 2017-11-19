@@ -5,10 +5,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.ToString;
 import lombok.Value;
 import org.proundmega.sudokucore.Posicion;
 
-@Value
+@ToString
 public enum Fila implements Posicionable {
     _1(1),
     _2(2),
