@@ -3,14 +3,13 @@ package org.proundmega.sudokucore.solver;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.proundmega.contrib.OptionalConsumer;
 
 /**
  * Este es un pipeline hecho de creadores y consumidores que procesa una entrada
@@ -23,112 +22,131 @@ import org.proundmega.contrib.OptionalConsumer;
  * @author vansi
  * @param <I> Input - la clase que recibo
  * @param <O> Output - la clases que voy a retornar en un paso intermedio
- * @param <P> La clases a usar como base de la funcion, los pasos que debe seguir
+ * @param <P> La clases a usar como base de la funcion, los pasos que debe
+ * seguir
  */
 public class Pipeline<I, O, P extends Function<I, O>> {
 
-    private PipelineIntermediate<I, O, P> intermediate;
+    private PipelineIntermediate<I, O, P> datos;
 
     private Pipeline(PipelineIntermediate<I, O, P> intermediate) {
-        this.intermediate = intermediate;
+        this.datos = intermediate;
     }
 
     public O get() {
-        I temp = intermediate.input;
-        Return<O> answer = null;
-        for (int i = 0; i < intermediate.maxIterations; i++) {
-            answer = iterate(temp);
-            if (answer.isFinished()) {
-                return answer.getOutput();
-            }
-            else {
-                temp = intermediate.afterStep.apply(answer.getOutput());
-            }
-        }
-        return answer.getOutput();
+        List<Retorno> retornoList = new ArrayList<>();
+        Consumer<Retorno> nulo = retorno -> {};
+        Consumer<Retorno> guardar = retorno -> retornoList.add(retorno);
+        realizarPipeline(nulo, guardar);
+
+        return retornoList.get(0).getSalida();
     }
 
-    private Return<O> iterate(I input) {
-        I temp = input;
-        O output = null;
-        
-        for (Function<I, O> pipelineStep : intermediate.steps) {
-            output = pipelineStep.apply(temp);
-            //System.out.println("Input: \n" + temp);
-            //System.out.println("Output: \n" + output);
-            
-            if (finished(output)) {
-                return new Return<>(output, true);
-            } else if (haveToRestart(output)) {
-                return new Return<>(output, false);
+    private void realizarPipeline(Consumer<Retorno> alFinalizarPaso, Consumer<Retorno> alFinalizarIteracion) {
+        I temp = datos.input;
+        Retorno respuesta = null;
+        for (int i = 0; i < datos.maxIteraciones; i++) {
+            respuesta = iterar(temp);
+            if (respuesta.isTerminado()) {
+                alFinalizarIteracion.accept(respuesta);
             } else {
-                temp = intermediate.afterStep.apply(output);
+                temp = datos.pasoIntercambio.apply(respuesta.getSalida());
+                alFinalizarPaso.accept(respuesta);
+            }
+        }
+        alFinalizarIteracion.accept(respuesta);
+    }
+
+    private Retorno iterar(I input) {
+        I temp = input;
+        O salida = null;
+
+        for (Function<I, O> pipelineStep : datos.pasos) {
+            salida = pipelineStep.apply(temp);
+
+            if (haTerminado(salida)) {
+                return new Retorno((P) pipelineStep, salida, true);
+            } else if (tieneQueReiniciar(salida)) {
+                return new Retorno((P) pipelineStep, salida, false);
+            } else {
+                temp = datos.pasoIntercambio.apply(salida);
             }
         }
 
-        return new Return<>(output, false);
+        return new Retorno(null, salida, false);
     }
 
-    private boolean finished(O result) {
-        return intermediate.finishers.stream()
-                .map(function -> function.test(result))
-                .allMatch(answer -> answer == true);
+    private boolean haTerminado(O resultado) {
+        return datos.finalizadores.stream()
+                .map(funcion -> funcion.test(resultado))
+                .allMatch(respuesta -> respuesta == true);
     }
 
-    private boolean haveToRestart(O result) {
-        return intermediate.restarters.stream()
-                .map(function -> function.test(result))
-                .allMatch(answer -> answer == true);
+    private boolean tieneQueReiniciar(O resultado) {
+        return datos.reiniciadores.stream()
+                .map(funcion -> funcion.test(resultado))
+                .allMatch(respuesta -> respuesta == true);
     }
-    
-    public static <I, O, P extends Function<I, O>> PipelineIntermediate<I, O, P> create(I input, Class<P> clazz) {
-        return new PipelineIntermediate<I, O, P>(input);
+
+    public static <I, O, P extends Function<I, O>> PipelineIntermediate<I, O, P> crear(I input, Class<P> clazz) {
+        return new PipelineIntermediate(input);
     }
-    
-    public static <I, O, P extends Function<I, O>> PipelineIntermediate<I, O, P> create(I input, Set<P> funciones) {
+
+    public static <I, O, P extends Function<I, O>> PipelineIntermediate<I, O, P> crear(I input, Set<P> funciones) {
         return new PipelineIntermediate<>(input, funciones);
     }
-    
+
+    public List<O> getPorPasos() {
+        List<Retorno> retornoList = new ArrayList<>();
+
+        Consumer<Retorno> guardar = retorno -> retornoList.add(retorno);
+        realizarPipeline(guardar, guardar);
+
+        return retornoList.stream()
+                .map(valor -> valor.getSalida())
+                .collect(Collectors.toList());
+    }
+
     public static class PipelineIntermediate<I, O, P extends Function<I, O>> {
 
         private I input;
-        private Set<P> steps = new HashSet<>();
-        private Function<O, I> afterStep;
-        private List<Predicate> restarters = new ArrayList<>();
-        private List<Predicate> finishers = new ArrayList<>();
-        private int maxIterations = 10000;
+        private Set<P> pasos = new HashSet<>();
+        private Function<O, I> pasoIntercambio;
+        private List<Predicate> reiniciadores = new ArrayList<>();
+        private List<Predicate> finalizadores = new ArrayList<>();
+        private int maxIteraciones = 10000;
 
         private PipelineIntermediate(I input, Set<P> steps) {
-            this.steps = steps;
+            this.pasos = steps;
             this.input = input;
         }
-        
+
         private PipelineIntermediate(I input) {
             this.input = input;
         }
-        
+
         public PipelineIntermediate<I, O, P> addStep(P step) {
-            steps.add(step);
+            pasos.add(step);
             return this;
         }
 
         public PipelineIntermediate<I, O, P> afterStep(Function<O, I> step) {
-            this.afterStep = step;
+            this.pasoIntercambio = step;
             return this;
         }
 
         public PipelineIntermediate<I, O, P> restartPipelineIf(Predicate<O> consumer) {
-            restarters.add(consumer);
+            reiniciadores.add(consumer);
             return this;
         }
 
         public PipelineIntermediate<I, O, P> finishIf(Predicate<O> consumer) {
-            finishers.add(consumer);
+            finalizadores.add(consumer);
             return this;
         }
 
         public PipelineIntermediate<I, O, P> maxIterations(int maxIterations) {
-            this.maxIterations = maxIterations;
+            this.maxIteraciones = maxIterations;
             return this;
         }
 
@@ -139,9 +157,10 @@ public class Pipeline<I, O, P extends Function<I, O>> {
 
     @Data
     @AllArgsConstructor
-    private static class Return<O> {
+    private class Retorno {
 
-        private O output;
-        private boolean finished;
+        private P metodo;
+        private O salida;
+        private boolean terminado;
     }
 }

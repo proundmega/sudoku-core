@@ -1,5 +1,6 @@
 package org.proundmega.sudokucore.solver;
 
+import org.proundmega.sudokucore.Respuesta;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.proundmega.sudokucore.data.GridFactory;
@@ -10,7 +11,7 @@ public class FilaSolverTest {
     @Test
     public void resolver1() {
         Grid gridIncompleta = new Grid(GridFactory.getSudokuIncompleto1());
-        Grid esperado = new Grid(GridFactory.getSudokuResueltoValido1());
+        Grid esperado = new Grid(GridFactory.getSudokuFacil1Resuelto());
         
         Solver solver = new FilaSolver();
         Respuesta obtenido = solver.apply(gridIncompleta);

@@ -9,7 +9,7 @@ public class PipelineProcesadores {
     
     public static Pipeline<List<Posicion>, Optional<Intercambio>, ProcesadorAnotaciones> getPipelineProcesadoresSimples(
             List<Posicion> posicionesVacias) {
-        return Pipeline.create(posicionesVacias, ProcesadorAnotaciones.class)
+        return Pipeline.crear(posicionesVacias, ProcesadorAnotaciones.class)
                 .addStep(new CeldaConUnicaPosicion())
                 .addStep(new ValorConUnicaPosicion())
                 .afterStep(intercambio -> posicionesVacias)

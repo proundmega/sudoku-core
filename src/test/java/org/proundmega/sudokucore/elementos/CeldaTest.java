@@ -1,7 +1,5 @@
 package org.proundmega.sudokucore.elementos;
 
-import org.proundmega.sudokucore.elementos.Valor;
-import org.proundmega.sudokucore.elementos.Celda;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

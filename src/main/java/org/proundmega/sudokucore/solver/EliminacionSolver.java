@@ -1,5 +1,6 @@
 package org.proundmega.sudokucore.solver;
 
+import org.proundmega.sudokucore.Respuesta;
 import java.util.List;
 import java.util.Optional;
 import org.proundmega.sudokucore.solver.procesadores.Intercambio;

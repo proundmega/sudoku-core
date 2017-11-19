@@ -6,9 +6,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.Value;
 import org.proundmega.sudokucore.Posicion;
 
-public enum Columna {
+@Value
+public enum Columna implements Posicionable {
     _1(1),
     _2(2),
     _3(3),
@@ -61,6 +63,11 @@ public enum Columna {
         }
 
         return Collections.unmodifiableList(posiciones);
+    }
+
+    @Override
+    public List<Posicion> getPosiciones(Celda[][] celdas) {
+        return getColumnaAsList(celdas);
     }
     
 }

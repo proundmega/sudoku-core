@@ -1,9 +1,8 @@
 package org.proundmega.sudokucore.elementos;
 
-/**
- *
- * @author vansi
- */
+import java.util.HashMap;
+import java.util.Map;
+
 public enum Valor {
     _1("1"),
     _2("2"),
@@ -16,15 +15,33 @@ public enum Valor {
     _9("9"),
     VACIA(" ");
     
-    private String valor;
+    private static Map<String, Valor> valores;
+    
+    static {
+        valores = new HashMap<>();
+        for(Valor valor : Valor.values()) {
+            valores.put(valor.valorAsString.trim(), valor);
+        }
+    }
+
+    public static Valor toValor(String valor) {
+        valor = valor.trim();
+        if(valores.containsKey(valor)) {
+            return valores.get(valor);
+        }
+        else {
+            throw new IllegalArgumentException("El elemento ingresado es un valor invalido: " + valor);
+        }
+    }
+    
+    private String valorAsString;
 
     private Valor(String valor) {
-        this.valor = valor;
+        this.valorAsString = valor;
     }
 
     @Override
     public String toString() {
-        return valor;
+        return valorAsString;
     }
-    
 }

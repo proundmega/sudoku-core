@@ -1,21 +1,13 @@
 package org.proundmega.sudokucore.elementos;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import org.proundmega.sudokucore.Posicion;
+import lombok.Data;
+import lombok.Value;
 
-@EqualsAndHashCode
+@Value
 @AllArgsConstructor
 public class Celda {
-    @Getter
-    private final Valor valorActual;
+    private Valor valorActual;
 
     public Celda() {
         valorActual = Valor.VACIA;
@@ -33,5 +25,5 @@ public class Celda {
     public String toString() {
         return "[" + valorActual + "]";
     }
-    
+
 }

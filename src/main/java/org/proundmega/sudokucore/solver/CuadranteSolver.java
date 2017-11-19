@@ -1,5 +1,6 @@
 package org.proundmega.sudokucore.solver;
 
+import org.proundmega.sudokucore.Respuesta;
 import org.proundmega.sudokucore.elementos.grid.Grid;
 import org.proundmega.sudokucore.elementos.grid.SubGridCuadrante;
 import org.proundmega.sudokucore.elementos.Cuadrante;

@@ -1,8 +1,11 @@
 package org.proundmega.sudokucore.elementos.grid;
 
+import java.util.ArrayList;
 import org.proundmega.sudokucore.elementos.Valor;
 import org.proundmega.sudokucore.elementos.Celda;
 import java.util.Arrays;
+import java.util.List;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.elementos.Columna;
@@ -10,10 +13,15 @@ import org.proundmega.sudokucore.elementos.Cuadrante;
 import org.proundmega.sudokucore.elementos.Fila;
 import org.proundmega.sudokucore.elementos.ValidadorSudoku;
 
+@EqualsAndHashCode
 public class Grid {
     private Celda[][] celdas = new Celda[9][9];
     
     public Grid() {
+        crearCeldasVacias();
+    }
+
+    private void crearCeldasVacias() {
         for (int fila = 0; fila < 9; fila++) {
             for (int columna = 0; columna < 9; columna++) {
                 celdas[fila][columna] = new Celda();
@@ -26,7 +34,21 @@ public class Grid {
         this.celdas = copiarCeldas(celdas);
     }
     
-    private void verificarCeldasEnviadas(@NonNull Celda[][] celdasEnviadas) throws IllegalArgumentException {
+    public Grid(String[][] gridAsString) {
+        verificarCeldasEnviadas(gridAsString);
+        pasarLosValoresACelda(gridAsString);
+    }
+
+    private void pasarLosValoresACelda(String[][] gridAsString) {
+        for(int fila = 0; fila < 9; fila++) {
+            for(int columna = 0; columna < 9; columna++) {
+                Valor valor = Valor.toValor(gridAsString[fila][columna]);
+                this.celdas[fila][columna] = new Celda(valor);
+            }
+        }
+    }
+    
+    private static <T> void verificarCeldasEnviadas(@NonNull T[][] celdasEnviadas) throws IllegalArgumentException {
         if (celdasEnviadas.length == 0) { 
             throw new IllegalArgumentException("Matriz de sudoku con numero de filas 0...");
         }
@@ -99,32 +121,22 @@ public class Grid {
     }
     
     public Posicion getPosicion(Fila fila, Columna columna) {
-        return new Posicion(fila, columna, celdas[fila.getIndiceFilaParaArray()][columna.getIndiceColumnaParaArray()]);
+        return GridAPosiciones.getPosicion(celdas, fila, columna);
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 71 * hash + Arrays.deepHashCode(this.celdas);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Grid other = (Grid) obj;
-        if (!Arrays.deepEquals(this.celdas, other.celdas)) {
-            return false;
-        }
-        return true;
+    public List<Posicion> getPosiciones() {
+        return GridAPosiciones.getPosiciones(celdas);
     }
     
+    public String[][] getValoresAsString() {
+        String[][] gridAsString = new String[9][9];
+        
+        for(int fila = 0; fila < 9; fila++) {
+            for(int columna = 0; columna < 9; columna++) {
+                gridAsString[fila][columna] = celdas[fila][columna].getValorActual().toString();
+            }
+        }
+        
+        return gridAsString;
+    }
 }

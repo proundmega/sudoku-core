@@ -34,7 +34,7 @@ public class FilaColumnaTest {
     public void obtenerFilaAsListCorrectamente() {
         Fila fila = Fila._7;
         
-        Celda[][] celda = GridFactory.getSudokuResueltoValido1();
+        Celda[][] celda = GridFactory.getSudokuFacil1Resuelto();
         List<Posicion> posiciones = getListaFila7(celda);
         List<Posicion> obtenidos = fila.getfilaAsList(celda);
         
@@ -63,7 +63,7 @@ public class FilaColumnaTest {
     public void obtenerColumnaAsListCorrectamente() {
         Columna columna = Columna._3;
         
-        Celda[][] celda = GridFactory.getSudokuResueltoValido1();
+        Celda[][] celda = GridFactory.getSudokuFacil1Resuelto();
         List<Posicion> posiciones = getListaColumna3(celda);
         List<Posicion> obtenidos = columna.getColumnaAsList(celda);
         

@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.proundmega.sudokucore.Posicion;
 
-public enum Cuadrante {
+public enum Cuadrante implements Posicionable {
     SUPERIOR_IZQUIERO(0, 0),
     SUPERIOR_CENTRAL(0, 3),
     SUPERIOR_DERECHO(0, 6),
@@ -82,6 +82,11 @@ public enum Cuadrante {
                 .filter(cuadrante -> cuadrante.getOffsetColumna()== this.getOffsetColumna())
                 .flatMap(cuadrante -> cuadrante.getCuadranteAsList(celdas).stream())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Posicion> getPosiciones(Celda[][] celdas) {
+        return getCuadranteAsList(celdas);
     }
 
 }

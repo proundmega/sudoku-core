@@ -19,7 +19,7 @@ public class CuadranteTest {
     
     @BeforeClass
     public static void crearGridPrueba() {
-        celdas = GridFactory.getSudokuResueltoValido1();
+        celdas = GridFactory.getSudokuFacil1Resuelto();
     }
     
     @Test
@@ -190,7 +190,7 @@ public class CuadranteTest {
     
     @Test
     public void getValoresHorizontalesCorrectos1() {
-        Celda[][] celdas = GridFactory.getSudokuResueltoValido1();
+        Celda[][] celdas = GridFactory.getSudokuFacil1Resuelto();
         
         Cuadrante cuadrante = Cuadrante.CENTRAL_CENTRAL;
         
@@ -205,7 +205,7 @@ public class CuadranteTest {
     
     @Test
     public void getValoresHorizontalesCorrectos2() {
-        Celda[][] celdas = GridFactory.getSudokuResueltoValido1();
+        Celda[][] celdas = GridFactory.getSudokuFacil1Resuelto();
         
         Cuadrante cuadrante = Cuadrante.INFERIOR_DERECHO;
         
@@ -220,7 +220,7 @@ public class CuadranteTest {
     
     @Test
     public void getValoresVerticalesCorrectos1() {
-        Celda[][] celdas = GridFactory.getSudokuResueltoValido1();
+        Celda[][] celdas = GridFactory.getSudokuFacil1Resuelto();
         
         Cuadrante cuadrante = Cuadrante.CENTRAL_CENTRAL;
         
@@ -235,7 +235,7 @@ public class CuadranteTest {
     
     @Test
     public void getValoresVerticalesCorrectos2() {
-        Celda[][] celdas = GridFactory.getSudokuResueltoValido1();
+        Celda[][] celdas = GridFactory.getSudokuFacil1Resuelto();
         
         Cuadrante cuadrante = Cuadrante.INFERIOR_DERECHO;
         

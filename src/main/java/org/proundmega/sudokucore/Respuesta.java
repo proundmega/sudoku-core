@@ -1,8 +1,9 @@
-package org.proundmega.sudokucore.solver;
+package org.proundmega.sudokucore;
 
 import lombok.AllArgsConstructor;
 import lombok.Value;
 import org.proundmega.sudokucore.elementos.grid.Grid;
+import org.proundmega.sudokucore.solver.Solver;
 
 @Value
 @AllArgsConstructor

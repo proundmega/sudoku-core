@@ -59,6 +59,6 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="org.proundmega.sudokucore.solver.FilaSolverTest" name="resolver1" time="0.001"/>
+  <testcase classname="org.proundmega.sudokucore.solver.FilaSolverTest" name="resolver1" time="0"/>
   <testcase classname="org.proundmega.sudokucore.solver.FilaSolverTest" name="resolver2" time="0"/>
 </testsuite>

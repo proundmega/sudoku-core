@@ -110,7 +110,7 @@ public class ValidadorSudokuTest {
     
     @Test
     public void isResueltaQueEstaResuelta() {
-        assertTrue(ValidadorSudoku.esCeldasValidasYCompletas(GridFactory.getSudokuResueltoValido1()));
+        assertTrue(ValidadorSudoku.esCeldasValidasYCompletas(GridFactory.getSudokuFacil1Resuelto()));
     }
     
     @Test

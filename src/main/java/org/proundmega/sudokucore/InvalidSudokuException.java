@@ -1,13 +1,18 @@
 package org.proundmega.sudokucore;
 
-public class InvalidSudokuException extends RuntimeException {
+import java.util.List;
 
-    public InvalidSudokuException(String message) {
-        super(message);
+public class InvalidSudokuException extends RuntimeException {
+    private List<Posicion> posiciones;
+    
+    public InvalidSudokuException(String message, List<Posicion> posiciones) {
+        super(message + "\nPosiciones repetidas: " + posiciones);
+        this.posiciones = posiciones;
     }
 
-    public InvalidSudokuException(String message, Throwable cause) {
-        super(message, cause);
+    public InvalidSudokuException(String message, List<Posicion> posiciones, Throwable cause) {
+        super(message + "\nPosiciones repetidas: " + posiciones);
+        this.posiciones = posiciones;
     }
     
 }
