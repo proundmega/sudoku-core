@@ -158,7 +158,6 @@ public class Pipeline<I, O, P extends Function<I, O>> {
     @Data
     @AllArgsConstructor
     private class Retorno {
-
         private P metodo;
         private O salida;
         private boolean terminado;

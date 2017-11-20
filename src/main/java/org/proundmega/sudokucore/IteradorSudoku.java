@@ -4,36 +4,72 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import lombok.AccessLevel;
+import lombok.Data;
 import lombok.Getter;
-import lombok.Value;
+import lombok.Setter;
 import org.proundmega.sudokucore.elementos.grid.Grid;
 import org.proundmega.sudokucore.solver.NullSolver;
 
-@Value
+@Data
 public class IteradorSudoku {
+
+    @Setter(AccessLevel.NONE)
     private List<Respuesta> pasos;
+
+    @Setter(AccessLevel.NONE)
     private boolean existeValor;
+
+    @Setter(AccessLevel.NONE)
     private Respuesta actual;
 
     @Getter(AccessLevel.NONE)
-    private ListIterator<Respuesta> iterador;
+    @Setter(AccessLevel.NONE)
+    private int posicionActual;
 
     public IteradorSudoku(List<Respuesta> pasos) {
         this.pasos = pasos;
         this.existeValor = true;
-        this.iterador = pasos.listIterator();
-        this.actual = iterador.next();
+        this.actual = pasos.get(0);
+        this.posicionActual = 0;
     }
 
     public IteradorSudoku() {
         this.pasos = new ArrayList<>();
         this.pasos.add(new Respuesta(new Grid(), false, new NullSolver()));
         this.existeValor = false;
-        this.iterador = pasos.listIterator();
-        this.actual = iterador.next();
+        this.actual = pasos.get(0);
+        this.posicionActual = 0;
     }
 
-    public boolean hasNext() {
-        return iterador.hasNext();
+    public boolean haySiguiente() {
+        return posicionActual < pasos.size() - 1;
+    }
+
+    public void siguiente() {
+        if(haySiguiente()) {
+            posicionActual++;
+            actual = pasos.get(posicionActual);
+        }
+    }
+
+    public boolean hayPrevio() {
+        return posicionActual > 0;
+    }
+
+    public void anterior() {
+        if(hayPrevio()) {
+            posicionActual--;
+            actual = pasos.get(posicionActual);
+        }
+    }
+    
+    public void inicio() {
+        posicionActual = 0;
+        actual = pasos.get(posicionActual);
+    }
+    
+    public void ultimo() {
+        posicionActual = pasos.size() - 1;
+        actual = pasos.get(posicionActual);
     }
 }

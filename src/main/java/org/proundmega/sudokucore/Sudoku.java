@@ -38,6 +38,10 @@ public class Sudoku {
         return pipeline.getPorPasos();
     }
     
+    public IteradorSudoku solveAsIterador() {
+        return new IteradorSudoku(solvePorPasos());
+    }
+    
     public Grid getGrid() {
         return gridActual;
     }

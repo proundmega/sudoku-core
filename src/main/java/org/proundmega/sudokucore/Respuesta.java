@@ -11,4 +11,8 @@ public class Respuesta {
     private Grid gridRespuesta;
     private boolean avanceEnResolver;
     private Solver solverUsado;
+    
+    public Sudoku getSudoku() {
+        return new Sudoku(gridRespuesta);
+    }
 }
