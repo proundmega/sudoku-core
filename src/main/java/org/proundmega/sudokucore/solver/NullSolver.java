@@ -1,6 +1,9 @@
 package org.proundmega.sudokucore.solver;
 
+import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.Respuesta;
+import org.proundmega.sudokucore.elementos.Columna;
+import org.proundmega.sudokucore.elementos.Fila;
 import org.proundmega.sudokucore.elementos.grid.Grid;
 
 public class NullSolver implements Solver {
@@ -14,5 +17,5 @@ public class NullSolver implements Solver {
     public String getMetodoUsado() {
         return "Solver vacio";
     }
-    
+
 }

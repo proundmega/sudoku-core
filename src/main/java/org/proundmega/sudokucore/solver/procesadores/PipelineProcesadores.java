@@ -2,18 +2,20 @@ package org.proundmega.sudokucore.solver.procesadores;
 
 import java.util.List;
 import java.util.Optional;
+import org.proundmega.sudokucore.MetadataSolver;
 import org.proundmega.sudokucore.Posicion;
+import org.proundmega.sudokucore.elementos.grid.anotador.Anotador;
 import org.proundmega.sudokucore.solver.Pipeline;
 
 public class PipelineProcesadores {
     
-    public static Pipeline<List<Posicion>, Optional<Intercambio>, ProcesadorAnotaciones> getPipelineProcesadoresSimples(
-            List<Posicion> posicionesVacias) {
-        return Pipeline.crear(posicionesVacias, ProcesadorAnotaciones.class)
+    public static Pipeline<Anotador, Optional<MetadataSolver>, ProcesadorAnotaciones> getPipelineProcesadoresSimples(
+            Anotador anotador) {
+        return Pipeline.crear(anotador, ProcesadorAnotaciones.class)
                 .addStep(new CeldaConUnicaPosicion())
                 .addStep(new ValorConUnicaPosicion())
-                .afterStep(intercambio -> posicionesVacias)
-                .finishIf(intercambio -> intercambio.isPresent())
+                .afterStep(intercambio -> anotador)
+                .finishIf(Optional::isPresent)
                 .maxIterations(10)
                 .build();
     }

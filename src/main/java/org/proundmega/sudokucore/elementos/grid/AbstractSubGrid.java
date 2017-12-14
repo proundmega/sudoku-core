@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.proundmega.sudokucore.MetadataSolver;
 import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.elementos.Columna;
 import org.proundmega.sudokucore.elementos.Fila;
@@ -17,17 +18,16 @@ public abstract class AbstractSubGrid implements SubGrid {
     }
 
     @Override
-    public Grid completarSubGrid() {
+    public MetadataSolver completarSubGrid() {
         List<Posicion> posiciones = getPosiciones();
         
         Posicion posicionVacia = getPosicionVacia(posiciones);
-        Valor valorFaltante = getPosicionFaltante(posiciones);
+        Valor valorFaltante = getValorFaltante(posiciones);
         
-        return new Grid(celdas).reemplazarCasilla(
-                posicionVacia.getFila(),
-                posicionVacia.getColumna(),
-                valorFaltante
-        );
+        Posicion posicionReemplazo = new Posicion(posicionVacia.getFila(), posicionVacia.getColumna(), new Celda(valorFaltante));
+        Grid gridResuelta = new Grid(celdas).reemplazarCasilla(posicionReemplazo);
+        
+        return new MetadataSolver(gridResuelta, posicionReemplazo);
     }
     
     protected abstract List<Posicion> getPosiciones();
@@ -39,7 +39,7 @@ public abstract class AbstractSubGrid implements SubGrid {
                 .orElseThrow(NullPointerException::new);
     }
 
-    protected Valor getPosicionFaltante(List<Posicion> posiciones) {
+    protected Valor getValorFaltante(List<Posicion> posiciones) {
         Set<Valor> valores = posiciones.stream()
                 .map((Posicion posicion) -> posicion.getCelda().getValorActual())
                 .collect(Collectors.toSet());

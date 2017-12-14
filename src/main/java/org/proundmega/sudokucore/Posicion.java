@@ -19,6 +19,8 @@ public class Posicion implements Comparable<Posicion>{
     private Celda celda;
     private Set<Valor> anotaciones;
     
+    private static Posicion POSICION_NULA = new Posicion(null, null, Valor.VACIA);
+    
     public Posicion(int fila, int columna, Celda celda) {
         this.fila = Fila.toFila(fila);
         this.columna = Columna.toColumna(columna);
@@ -31,6 +33,17 @@ public class Posicion implements Comparable<Posicion>{
         this.columna = columna;
         this.celda = celda;
         this.anotaciones = new TreeSet<>();
+    }
+    
+    public Posicion(Fila fila, Columna columna, Valor valor) {
+        this.fila = fila;
+        this.columna = columna;
+        this.celda = new Celda(valor);
+        this.anotaciones = new TreeSet<>();
+    }
+
+    public Posicion() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     public int getFilaAsNumero() {
@@ -69,5 +82,12 @@ public class Posicion implements Comparable<Posicion>{
         
         return Integer.compare(this.columna.getIndice(), o.columna.getIndice());
     }
-
+    
+    public static Posicion posicionNula() {
+        return POSICION_NULA;
+    }
+    
+    public static boolean esNula(Posicion posicion) {
+        return posicion == POSICION_NULA;
+    }
 }

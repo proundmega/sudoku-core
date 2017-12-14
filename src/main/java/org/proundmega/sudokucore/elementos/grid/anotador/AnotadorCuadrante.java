@@ -11,7 +11,7 @@ import org.proundmega.sudokucore.elementos.Cuadrante;
 import org.proundmega.sudokucore.elementos.Valor;
 import org.proundmega.sudokucore.solver.SolverHelper;
 
-public class AnotadorCuadrante {
+public class AnotadorCuadrante implements Anotador {
     private Celda[][] celdas;
     private Cuadrante cuadranteObjetivo;
     private List<Posicion> posicionesVacias;
@@ -32,6 +32,7 @@ public class AnotadorCuadrante {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public List<Posicion> getPosicionesConAnotacionesRemovidas() {
         List<Posicion> posiciones = removerNotacionesFilaA(posicionesVacias);
         return removerNotacionesColumnaA(posiciones);
@@ -110,6 +111,22 @@ public class AnotadorCuadrante {
         
         Collections.sort(valoresConNotacionesRemovidas);
         return valoresConNotacionesRemovidas;
+    }
+
+    @Override
+    public List<Posicion> getPosicionesQueRemuevenValoresDeValor(Valor valor) {
+        List<Posicion> posiciones = new ArrayList<>();
+        
+        List<Posicion> valoresFilaLLenos = cuadranteObjetivo.getCeldasHorizontalesConValor(celdas);
+        List<Posicion> valoresColumnaLLenos = cuadranteObjetivo.getCeldasVerticalesConValor(celdas);
+        
+        posiciones.addAll(valoresFilaLLenos);
+        posiciones.addAll(valoresColumnaLLenos);
+        
+        return posiciones.stream()
+                .filter(posicionConValor -> posicionConValor.getCelda().getValorActual() == valor)
+                .sorted()
+                .collect(Collectors.toList());
     }
     
 }

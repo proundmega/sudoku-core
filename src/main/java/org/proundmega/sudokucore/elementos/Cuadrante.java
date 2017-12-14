@@ -69,18 +69,21 @@ public enum Cuadrante implements Posicionable {
     }
 
     public List<Posicion> getCeldasHorizontalesConValor(Celda[][] celdas) {
-        return Arrays.stream(Cuadrante.values())
-                .filter(cuadrante -> cuadrante != this)
-                .filter(cuadrante -> cuadrante.getOffsetFila() == this.getOffsetFila())
-                .flatMap(cuadrante -> cuadrante.getCuadranteAsList(celdas).stream())
-                .collect(Collectors.toList());
+        return getCeldasConValorDeCuardrantesAdyacentesSiCumple(celdas, 
+                cuadrante -> cuadrante.getOffsetFila() == this.getOffsetFila());
     }
 
     public List<Posicion> getCeldasVerticalesConValor(Celda[][] celdas) {
+        return getCeldasConValorDeCuardrantesAdyacentesSiCumple(celdas, 
+                cuadrante -> cuadrante.getOffsetColumna() == this.getOffsetColumna());
+    }
+    
+    private List<Posicion> getCeldasConValorDeCuardrantesAdyacentesSiCumple(Celda[][] celdas, Predicate<Cuadrante> predicado) {
         return Arrays.stream(Cuadrante.values())
                 .filter(cuadrante -> cuadrante != this)
-                .filter(cuadrante -> cuadrante.getOffsetColumna()== this.getOffsetColumna())
-                .flatMap(cuadrante -> cuadrante.getCuadranteAsList(celdas).stream())
+                .filter(cuadrante -> predicado.test(cuadrante))
+                .flatMap(cuadrante -> cuadrante.getPosiciones(celdas).stream())
+                .filter(posicion -> posicion.getCelda().getValorActual() != Valor.VACIA)
                 .collect(Collectors.toList());
     }
 

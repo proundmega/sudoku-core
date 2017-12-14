@@ -104,6 +104,10 @@ public class Grid {
         return new Grid(copia);
     }
     
+    public Grid reemplazarCasilla(Posicion posicion) {
+        return reemplazarCasilla(posicion.getFila(), posicion.getColumna(), posicion.getCelda().getValorActual());
+    }
+    
     public SubGridCuadrante getSubGrid(Cuadrante cuadrante) {
         return new SubGridCuadrante(celdas, cuadrante);
     }

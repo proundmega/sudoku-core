@@ -1,5 +1,6 @@
 package org.proundmega.sudokucore.solver;
 
+import org.proundmega.sudokucore.MetadataSolver;
 import org.proundmega.sudokucore.Respuesta;
 import org.proundmega.sudokucore.elementos.grid.Grid;
 import org.proundmega.sudokucore.elementos.Fila;
@@ -13,8 +14,8 @@ public class FilaSolver implements Solver {
             SubGrid subgrid = gridOriginal.getSubGrid(fila);
             
             if(subgrid.soloFaltaUnEspacio()) {
-                Grid respuesta = subgrid.completarSubGrid();
-                return new Respuesta(respuesta, true, this);
+                MetadataSolver respuesta = subgrid.completarSubGrid();
+                return new Respuesta(respuesta.getGridResuelta(), true, this, respuesta);
             }
         }
         

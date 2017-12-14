@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.proundmega.sudokucore.elementos.grid.anotador;
 
 import java.util.ArrayList;
@@ -17,14 +12,12 @@ import org.junit.BeforeClass;
 import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.data.GridFactory;
 import org.proundmega.sudokucore.elementos.Celda;
+import org.proundmega.sudokucore.elementos.Columna;
 import org.proundmega.sudokucore.elementos.Cuadrante;
+import org.proundmega.sudokucore.elementos.Fila;
 import org.proundmega.sudokucore.elementos.Valor;
 import static org.proundmega.sudokucore.elementos.Valor.*;
 
-/**
- *
- * @author vansi
- */
 public class AnotadorCuadranteTest {
     private static Celda[][] celdas;
     
@@ -160,6 +153,56 @@ public class AnotadorCuadranteTest {
         posiciones.add(posicionAfectada6);
         
         return posiciones;
+    }
+    
+    @Test
+    public void getContextoCorrecto1() {
+        Cuadrante cuadranteObjetivo = Cuadrante.SUPERIOR_IZQUIERO;
+        AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadranteObjetivo);
+        
+        List<Posicion> obtenidas = anotador.getPosicionesQueRemuevenValoresDeValor(_3);
+        List<Posicion> esperadas =  getPosicionesQueRemuevenNotacionesSuperiorDerecho();
+        
+        assertEquals(esperadas, obtenidas);
+    }
+    
+    private List<Posicion> getPosicionesQueRemuevenNotacionesSuperiorDerecho() {
+        List<Posicion> posiciones = new ArrayList<>();
+        
+        posiciones.add(new Posicion(Fila._1, Columna._5, Valor._3));
+        posiciones.add(new Posicion(Fila._9, Columna._1, Valor._3));
+        
+        return posiciones;
+    }
+    
+    @Test
+    public void getContextoCorrecto2() {
+        Cuadrante cuadranteObjetivo = Cuadrante.INFERIOR_CENTRAL;
+        AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadranteObjetivo);
+        
+        List<Posicion> obtenidas = anotador.getPosicionesQueRemuevenValoresDeValor(_8);
+        List<Posicion> esperadas =  getPosicionesQueRemuevenNotacionesInferiorCentral();
+        
+        assertEquals(esperadas, obtenidas);
+    }
+    
+    private List<Posicion> getPosicionesQueRemuevenNotacionesInferiorCentral() {
+        List<Posicion> posiciones = new ArrayList<>();
+        
+        posiciones.add(new Posicion(Fila._7, Columna._2, Valor._8));
+        
+        return posiciones;
+    }
+    
+    @Test
+    public void getContextoCorrectoCeldaVacia() {
+        Cuadrante cuadranteObjetivo = Cuadrante.INFERIOR_CENTRAL;
+        AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadranteObjetivo);
+        
+        List<Posicion> obtenidas = anotador.getPosicionesQueRemuevenValoresDeValor(VACIA);
+        List<Posicion> esperadas = new ArrayList<>();
+        
+        assertEquals(esperadas, obtenidas);
     }
     
 }

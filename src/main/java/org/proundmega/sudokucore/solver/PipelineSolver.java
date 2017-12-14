@@ -22,7 +22,7 @@ public class PipelineSolver {
         solvers.add(new CuadranteSolver());
         solvers.add(new FilaSolver());
         solvers.add(new ColumnaSolver());
-        solvers.add(new EliminacionSolver());
+        solvers.add(new EliminacionCuadranteSolver());
         
         return solvers;
     }

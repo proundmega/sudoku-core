@@ -11,6 +11,14 @@ public class Respuesta {
     private Grid gridRespuesta;
     private boolean avanceEnResolver;
     private Solver solverUsado;
+    private MetadataSolver metadatos;
+
+    public Respuesta(Grid gridRespuesta, boolean avanceEnResolver, Solver solverUsado) {
+        this.gridRespuesta = gridRespuesta;
+        this.avanceEnResolver = avanceEnResolver;
+        this.solverUsado = solverUsado;
+        this.metadatos = new MetadataSolver();
+    }
     
     public Sudoku getSudoku() {
         return new Sudoku(gridRespuesta);

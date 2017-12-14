@@ -35,7 +35,7 @@ public class IteradorSudoku {
 
     public IteradorSudoku() {
         this.pasos = new ArrayList<>();
-        this.pasos.add(new Respuesta(new Grid(), false, new NullSolver()));
+        this.pasos.add(new Respuesta(new Grid(), false, new NullSolver(), new MetadataSolver()));
         this.existeValor = false;
         this.actual = pasos.get(0);
         this.posicionActual = 0;

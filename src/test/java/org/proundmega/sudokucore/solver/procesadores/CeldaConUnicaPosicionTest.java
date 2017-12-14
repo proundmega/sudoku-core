@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+import org.proundmega.sudokucore.MetadataSolver;
 import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.data.GridFactory;
 import org.proundmega.sudokucore.elementos.Celda;
@@ -12,26 +14,34 @@ import org.proundmega.sudokucore.elementos.Cuadrante;
 import org.proundmega.sudokucore.elementos.Fila;
 import org.proundmega.sudokucore.elementos.Valor;
 import org.proundmega.sudokucore.elementos.grid.SubGridCuadrante;
+import org.proundmega.sudokucore.elementos.grid.anotador.Anotador;
 
 public class CeldaConUnicaPosicionTest {
     
     @Test
     public void hayUnaCeldaConUnPosibleValorCorrecto() {
-        List<Posicion> posiciones = getPosicionesVaciasDeCuadrante(Cuadrante.SUPERIOR_DERECHO);
+        List<Posicion> posiciones = getPosicionesVaciasDeCuadrante(Cuadrante.SUPERIOR_DERECHO)
+                .getPosicionesConAnotacionesRemovidas();
         
         CeldaConUnicaPosicion metodo = new CeldaConUnicaPosicion();
         assertTrue(metodo.hayUnaCasillaConUnSoloPosibleValor(posiciones));
     }
     
-    private List<Posicion> getPosicionesVaciasDeCuadrante(Cuadrante cuadrante) {
+    private Anotador getPosicionesVaciasDeCuadrante(Cuadrante cuadrante) {
         Celda[][] celda = GridFactory.getSudokuFacil1();
         SubGridCuadrante subgrid = new SubGridCuadrante(celda, cuadrante);
-        return subgrid.getPosicionesVaciasAnotadas();
+        
+        Anotador mock = mock(Anotador.class);
+        when(mock.getPosicionesConAnotacionesRemovidas())
+                .thenReturn(subgrid.getPosicionesVaciasAnotadas());
+        
+        return mock;
     }
     
     @Test
     public void hayUnaCeldaConUnPosibleValorIncorrecto() {
-        List<Posicion> posiciones = getPosicionesVaciasDeCuadrante(Cuadrante.CENTRAL_DERECHO);
+        List<Posicion> posiciones = getPosicionesVaciasDeCuadrante(Cuadrante.CENTRAL_DERECHO)
+                .getPosicionesConAnotacionesRemovidas();
         
         CeldaConUnicaPosicion metodo = new CeldaConUnicaPosicion();
         assertFalse(metodo.hayUnaCasillaConUnSoloPosibleValor(posiciones));
@@ -39,27 +49,28 @@ public class CeldaConUnicaPosicionTest {
     
     @Test
     public void getRespuestaCorrecta() {
-        List<Posicion> posiciones = getPosicionesVaciasDeCuadrante(Cuadrante.SUPERIOR_DERECHO);
+        Anotador anotador = getPosicionesVaciasDeCuadrante(Cuadrante.SUPERIOR_DERECHO);
+        
         CeldaConUnicaPosicion posicion = new CeldaConUnicaPosicion();
         
-        Intercambio esperado = new Intercambio(new Posicion(Fila._2, Columna._8, new Celda()).addAnotacion(Valor._2), Valor._2);
+        Posicion esperado = new Posicion(Fila._2, Columna._8, new Celda(Valor._2));
         
-        Optional<Intercambio> obtenido = posicion.apply(posiciones);
+        Optional<MetadataSolver> obtenido = posicion.apply(anotador);
         
         assertTrue(obtenido.isPresent());
-        assertEquals(esperado, obtenido.get());
+        assertEquals(esperado, obtenido.get().getPosicionResuelta());
     }
     
     @Test
     public void getRespuestaIncorrecta() {
-        List<Posicion> posiciones = getPosicionesVaciasDeCuadrante(Cuadrante.SUPERIOR_DERECHO);
+        Anotador anotador = getPosicionesVaciasDeCuadrante(Cuadrante.SUPERIOR_DERECHO);
         CeldaConUnicaPosicion posicion = new CeldaConUnicaPosicion();
         
-        Intercambio esperado = new Intercambio(new Posicion(Fila._2, Columna._8, new Celda()).addAnotacion(Valor._2), Valor._2);
+        Posicion esperado = new Posicion(Fila._2, Columna._8, new Celda(Valor._2));
         
-        Optional<Intercambio> obtenido = posicion.apply(posiciones);
+        Optional<MetadataSolver> obtenido = posicion.apply(anotador);
         
         assertTrue(obtenido.isPresent());
-        assertEquals(esperado, obtenido.get());
+        assertEquals(esperado, obtenido.get().getPosicionResuelta());
     }
 }

@@ -1,20 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.proundmega.sudokucore.solver;
 
 import org.proundmega.sudokucore.Respuesta;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.data.GridFactory;
+import org.proundmega.sudokucore.elementos.Celda;
+import org.proundmega.sudokucore.elementos.Columna;
+import org.proundmega.sudokucore.elementos.Fila;
+import org.proundmega.sudokucore.elementos.Valor;
 import org.proundmega.sudokucore.elementos.grid.Grid;
 
-/**
- *
- * @author vansi
- */
 public class ColumnaSolverTest {
     
     @Test
@@ -39,4 +35,14 @@ public class ColumnaSolverTest {
         assertEquals(esperado, obtenido.getGridRespuesta());
     }
     
+    @Test
+    public void getPosicionResueltaCorrecta() {
+        Grid gridIncompleta = new Grid(GridFactory.getSudokuIncompleto1());
+        Posicion esperado = new Posicion(Fila._9, Columna._9, new Celda(Valor._8));
+        
+        Solver solver = new ColumnaSolver();
+        Respuesta obtenido = solver.apply(gridIncompleta);
+        
+        assertEquals(esperado, obtenido.getMetadatos().getPosicionResuelta());
+    }
 }

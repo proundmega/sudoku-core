@@ -5,18 +5,24 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import org.proundmega.sudokucore.MetadataSolver;
 import org.proundmega.sudokucore.Posicion;
+import org.proundmega.sudokucore.elementos.Cuadrante;
 import org.proundmega.sudokucore.elementos.Valor;
+import org.proundmega.sudokucore.elementos.grid.anotador.Anotador;
+import org.proundmega.sudokucore.elementos.grid.anotador.AnotadorCuadrante;
 
 public class ValorConUnicaPosicion implements ProcesadorAnotaciones {
-
+    
     public ValorConUnicaPosicion() {
     }
     
     @Override
-    public Optional<Intercambio> apply(List<Posicion> posiciones) {
+    public Optional<MetadataSolver> apply(Anotador anotador) {
+        List<Posicion> posiciones = anotador.getPosicionesConAnotacionesRemovidas();
+        
         if (unValorSoloPuedeEstarEnUnLugar(posiciones)) {
-            return Optional.ofNullable(getIntercambioCalculado(posiciones));
+            return Optional.of(getIntercambioCalculado(anotador));
         } else {
             return Optional.ofNullable(null);
         }
@@ -37,12 +43,14 @@ public class ValorConUnicaPosicion implements ProcesadorAnotaciones {
         return valores;
     }
 
-    private Intercambio getIntercambioCalculado(List<Posicion> posicionesVaciasAnotadas) {
+    private MetadataSolver getIntercambioCalculado(Anotador anotador) {
+        List<Posicion> posicionesVaciasAnotadas = anotador.getPosicionesConAnotacionesRemovidas();
+        
         Map<Valor, Long> valores = getValoresConSusConteos(posicionesVaciasAnotadas);
         Map.Entry<Valor, Long> otro = getEntradaConConteoDeUno(valores);
         Posicion elegida = getPosicionConLaEntradaDeseada(posicionesVaciasAnotadas, otro);
-        return new Intercambio(elegida, otro.getKey());
-
+        
+        return crearMetadata(elegida, otro.getKey(), anotador);
     }
 
     private Map.Entry<Valor, Long> getEntradaConConteoDeUno(Map<Valor, Long> valores) {
@@ -60,6 +68,12 @@ public class ValorConUnicaPosicion implements ProcesadorAnotaciones {
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
         return elegida;
+    }
+    
+    private MetadataSolver crearMetadata(Posicion posicionACambiar, Valor valorAPoner, Anotador anotador) {
+        Posicion posicionReemplazo = new Posicion(posicionACambiar.getFila(), posicionACambiar.getColumna(), valorAPoner);
+        List<Posicion> posicionesLimitantes = anotador.getPosicionesQueRemuevenValoresDeValor(valorAPoner);
+        return new MetadataSolver(null, posicionReemplazo, posicionesLimitantes);
     }
 
 }
