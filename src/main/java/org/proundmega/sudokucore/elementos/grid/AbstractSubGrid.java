@@ -27,7 +27,7 @@ public abstract class AbstractSubGrid implements SubGrid {
         Posicion posicionReemplazo = new Posicion(posicionVacia.getFila(), posicionVacia.getColumna(), new Celda(valorFaltante));
         Grid gridResuelta = new Grid(celdas).reemplazarCasilla(posicionReemplazo);
         
-        return new MetadataSolver(gridResuelta, posicionReemplazo);
+        return new MetadataSolver(posicionReemplazo);
     }
     
     protected abstract List<Posicion> getPosiciones();
