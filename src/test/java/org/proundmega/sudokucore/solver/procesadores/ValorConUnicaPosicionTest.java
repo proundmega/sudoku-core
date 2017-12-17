@@ -29,7 +29,7 @@ public class ValorConUnicaPosicionTest {
     private Anotador crearAnotaciones(Cuadrante cuadranteAResolver) {
         Celda[][] celdas = GridFactory.getSudokuFacil1();
         SubGridCuadrante subgrid = new SubGridCuadrante(celdas, cuadranteAResolver);
-        List<Posicion> posiciones = subgrid.getPosicionesVaciasAnotadas();
+        List<Posicion> posiciones = subgrid.getAnotador().getPosicionesConAnotacionesRemovidas();
         
         Anotador mock = mock(Anotador.class);
         when(mock.getPosicionesConAnotacionesRemovidas())

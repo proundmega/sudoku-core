@@ -1,6 +1,5 @@
 package org.proundmega.sudokucore;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -42,8 +41,11 @@ public class Posicion implements Comparable<Posicion>{
         this.anotaciones = new TreeSet<>();
     }
 
-    public Posicion() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Posicion(Posicion coordenadas, Valor nuevoValor) {
+        this.fila = coordenadas.fila;
+        this.columna = coordenadas.columna;
+        this.celda = new Celda(nuevoValor);
+        this.anotaciones = new TreeSet<>();
     }
     
     public int getFilaAsNumero() {

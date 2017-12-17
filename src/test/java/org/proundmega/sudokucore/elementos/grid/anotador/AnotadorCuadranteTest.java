@@ -2,6 +2,7 @@ package org.proundmega.sudokucore.elementos.grid.anotador;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -156,11 +157,11 @@ public class AnotadorCuadranteTest {
     }
     
     @Test
-    public void getContextoCorrecto1() {
+    public void getPosicionesQueRemuevenValorCorrecto1() {
         Cuadrante cuadranteObjetivo = Cuadrante.SUPERIOR_IZQUIERO;
         AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadranteObjetivo);
         
-        List<Posicion> obtenidas = anotador.getPosicionesQueRemuevenValoresDeValor(_3);
+        List<Posicion> obtenidas = anotador.getPosicionesQueRemuevenElValor(_3);
         List<Posicion> esperadas =  getPosicionesQueRemuevenNotacionesSuperiorDerecho();
         
         assertEquals(esperadas, obtenidas);
@@ -176,11 +177,11 @@ public class AnotadorCuadranteTest {
     }
     
     @Test
-    public void getContextoCorrecto2() {
+    public void getPosicionesQueRemuevenValorCorrecto2() {
         Cuadrante cuadranteObjetivo = Cuadrante.INFERIOR_CENTRAL;
         AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadranteObjetivo);
         
-        List<Posicion> obtenidas = anotador.getPosicionesQueRemuevenValoresDeValor(_8);
+        List<Posicion> obtenidas = anotador.getPosicionesQueRemuevenElValor(_8);
         List<Posicion> esperadas =  getPosicionesQueRemuevenNotacionesInferiorCentral();
         
         assertEquals(esperadas, obtenidas);
@@ -195,14 +196,44 @@ public class AnotadorCuadranteTest {
     }
     
     @Test
-    public void getContextoCorrectoCeldaVacia() {
+    public void getPosicionesQueRemuevenValorCorrectoCeldaVacia() {
         Cuadrante cuadranteObjetivo = Cuadrante.INFERIOR_CENTRAL;
         AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadranteObjetivo);
         
-        List<Posicion> obtenidas = anotador.getPosicionesQueRemuevenValoresDeValor(VACIA);
+        List<Posicion> obtenidas = anotador.getPosicionesQueRemuevenElValor(VACIA);
         List<Posicion> esperadas = new ArrayList<>();
         
         assertEquals(esperadas, obtenidas);
+    }
+    
+    @Test
+    public void getLimitadoresCorrecto1() {
+        Cuadrante cuadrante = Cuadrante.CENTRAL_CENTRAL;
+        AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadrante);
+        
+        Posicion posicionObjetivo = new Posicion(Fila._5, Columna._5, Valor.VACIA);
+        
+        List<Posicion> esperada = getLimitadoresPosicionCentralCentral();
+        List<Posicion> obtenida = anotador.getPosicionesLimitadoras(posicionObjetivo);
+        
+        assertEquals(esperada, obtenida);
+        
+    }
+    
+    private List<Posicion> getLimitadoresPosicionCentralCentral() {
+        List<Posicion> posiciones = new ArrayList<>();
+        posiciones.add(new Posicion(Fila._1, Columna._5, Valor._3));
+        posiciones.add(new Posicion(Fila._2, Columna._5, Valor._1));
+        posiciones.add(new Posicion(Fila._5, Columna._1, Valor._9));
+        posiciones.add(new Posicion(Fila._5, Columna._2, Valor._1));
+        posiciones.add(new Posicion(Fila._5, Columna._8, Valor._3));
+        posiciones.add(new Posicion(Fila._5, Columna._9, Valor._7));
+        posiciones.add(new Posicion(Fila._8, Columna._5, Valor._8));
+        posiciones.add(new Posicion(Fila._9, Columna._5, Valor._2));
+        
+        Collections.sort(posiciones);
+        
+        return posiciones;
     }
     
 }

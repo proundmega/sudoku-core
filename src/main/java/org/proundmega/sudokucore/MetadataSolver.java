@@ -9,16 +9,19 @@ import org.proundmega.sudokucore.elementos.grid.Grid;
 @Data
 @AllArgsConstructor
 public class MetadataSolver {
-    private Grid gridResuelta;
     private Posicion posicionResuelta;
-    private List<Posicion> celdasQueLimitanValor;
+    private List<Posicion> celdasQueLimitanValor = new ArrayList<>();
+    private List<Posicion> celdasLimitantesEnCuadrante = new ArrayList<>();
 
-    public MetadataSolver(Grid gridResuelta, Posicion posicionResuelta) {
-        this.gridResuelta = gridResuelta;
+    public MetadataSolver(Posicion posicionResuelta) {
         this.posicionResuelta = posicionResuelta;
-        this.celdasQueLimitanValor = new ArrayList<>();
     }
 
     public MetadataSolver() {
+    }
+    
+    public MetadataSolver(Posicion posicionResuela, List<Posicion> celdasQueLimitanValor) {
+        this.posicionResuelta = posicionResuela;
+        this.celdasQueLimitanValor = celdasQueLimitanValor;
     }
 }

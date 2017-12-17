@@ -7,10 +7,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.proundmega.sudokucore.MetadataSolver;
 import org.proundmega.sudokucore.Posicion;
-import org.proundmega.sudokucore.elementos.Cuadrante;
 import org.proundmega.sudokucore.elementos.Valor;
 import org.proundmega.sudokucore.elementos.grid.anotador.Anotador;
-import org.proundmega.sudokucore.elementos.grid.anotador.AnotadorCuadrante;
 
 public class ValorConUnicaPosicion implements ProcesadorAnotaciones {
     
@@ -72,8 +70,8 @@ public class ValorConUnicaPosicion implements ProcesadorAnotaciones {
     
     private MetadataSolver crearMetadata(Posicion posicionACambiar, Valor valorAPoner, Anotador anotador) {
         Posicion posicionReemplazo = new Posicion(posicionACambiar.getFila(), posicionACambiar.getColumna(), valorAPoner);
-        List<Posicion> posicionesLimitantes = anotador.getPosicionesQueRemuevenValoresDeValor(valorAPoner);
-        return new MetadataSolver(null, posicionReemplazo, posicionesLimitantes);
+        List<Posicion> posicionesLimitantes = anotador.getPosicionesQueRemuevenElValor(valorAPoner);
+        return new MetadataSolver(posicionReemplazo, posicionesLimitantes);
     }
 
 }

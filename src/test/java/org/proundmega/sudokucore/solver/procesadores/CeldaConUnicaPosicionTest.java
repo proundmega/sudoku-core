@@ -31,11 +31,7 @@ public class CeldaConUnicaPosicionTest {
         Celda[][] celda = GridFactory.getSudokuFacil1();
         SubGridCuadrante subgrid = new SubGridCuadrante(celda, cuadrante);
         
-        Anotador mock = mock(Anotador.class);
-        when(mock.getPosicionesConAnotacionesRemovidas())
-                .thenReturn(subgrid.getPosicionesVaciasAnotadas());
-        
-        return mock;
+        return subgrid.getAnotador();
     }
     
     @Test

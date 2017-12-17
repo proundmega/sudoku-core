@@ -39,11 +39,6 @@ public class SubGridCuadrante extends AbstractSubGrid {
         return cuadranteObjetivo.getCuadranteAsList(celdas);
     }
 
-    public List<Posicion> getPosicionesVaciasAnotadas() {
-        AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadranteObjetivo);
-        return anotador.getPosicionesConAnotacionesRemovidas();
-    }
-    
     public Anotador getAnotador() {
         return new AnotadorCuadrante(celdas, cuadranteObjetivo);
     }

@@ -9,7 +9,6 @@ import lombok.ToString;
 import lombok.Value;
 import org.proundmega.sudokucore.Posicion;
 
-@ToString
 public enum Fila implements Posicionable {
     _1(1),
     _2(2),
@@ -71,6 +70,11 @@ public enum Fila implements Posicionable {
     @Override
     public List<Posicion> getPosiciones(Celda[][] celdas) {
         return getfilaAsList(celdas);
+    }
+
+    @Override
+    public String toString() {
+        return "Fila{"+ indiceFila + '}';
     }
     
 }

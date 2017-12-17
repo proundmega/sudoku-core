@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.elementos.Celda;
+import org.proundmega.sudokucore.elementos.Celdas;
 import org.proundmega.sudokucore.elementos.Cuadrante;
 import org.proundmega.sudokucore.elementos.Valor;
 import org.proundmega.sudokucore.solver.SolverHelper;
@@ -114,7 +117,7 @@ public class AnotadorCuadrante implements Anotador {
     }
 
     @Override
-    public List<Posicion> getPosicionesQueRemuevenValoresDeValor(Valor valor) {
+    public List<Posicion> getPosicionesQueRemuevenElValor(Valor valor) {
         List<Posicion> posiciones = new ArrayList<>();
         
         List<Posicion> valoresFilaLLenos = cuadranteObjetivo.getCeldasHorizontalesConValor(celdas);
@@ -127,6 +130,20 @@ public class AnotadorCuadrante implements Anotador {
                 .filter(posicionConValor -> posicionConValor.getCelda().getValorActual() == valor)
                 .sorted()
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Posicion> getPosicionesLimitadoras(Posicion filtro) {
+        return Celdas.asPosiciones(celdas)
+                .stream()
+                .filter(posicion -> !posicion.getCelda().estaVacia())
+                .filter(posicion -> poseenFilaOColumnaSimilares(filtro, posicion))
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    private static boolean poseenFilaOColumnaSimilares(Posicion filtro, Posicion posicion) {
+        return posicion.getFila() == filtro.getFila() || posicion.getColumna() == filtro.getColumna();
     }
     
 }

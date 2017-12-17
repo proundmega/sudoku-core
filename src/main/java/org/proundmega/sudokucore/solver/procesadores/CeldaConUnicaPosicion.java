@@ -45,8 +45,8 @@ public class CeldaConUnicaPosicion implements ProcesadorAnotaciones {
 
     private MetadataSolver crearMetadata(Posicion posicionACambiar, Valor valorAPoner, Anotador anotador) {
         Posicion posicionReemplazo = new Posicion(posicionACambiar.getFila(), posicionACambiar.getColumna(), valorAPoner);
-        List<Posicion> posicionesLimitantes = anotador.getPosicionesQueRemuevenValoresDeValor(valorAPoner);
-        return new MetadataSolver(null, posicionReemplazo, posicionesLimitantes);
+        List<Posicion> posicionesLimitantes = anotador.getPosicionesLimitadoras(posicionACambiar);
+        return new MetadataSolver(posicionReemplazo, posicionesLimitantes);
     }
     
 }

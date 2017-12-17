@@ -12,12 +12,12 @@ public class PipelineProcesadores {
     public static Pipeline<Anotador, Optional<MetadataSolver>, ProcesadorAnotaciones> getPipelineProcesadoresSimples(
             Anotador anotador) {
         return Pipeline.crear(anotador, ProcesadorAnotaciones.class)
+                .addStep(new SoloUnaCasilla())
                 .addStep(new CeldaConUnicaPosicion())
                 .addStep(new ValorConUnicaPosicion())
                 .afterStep(intercambio -> anotador)
                 .finishIf(Optional::isPresent)
-                .maxIterations(10)
+                .maxIterations(1)
                 .build();
     }
-    
 }
