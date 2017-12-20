@@ -1,9 +1,7 @@
 package org.proundmega.sudokucore.elementos.grid;
 
-import java.util.ArrayList;
 import org.proundmega.sudokucore.elementos.Valor;
 import org.proundmega.sudokucore.elementos.Celda;
-import java.util.Arrays;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -70,31 +68,31 @@ public class Grid {
 
     @Override
     public String toString() {
-        String print = "";
+        StringBuilder print = new StringBuilder();
         for (int i = 0; i < 9; i++) {
             Celda[] fila = celdas[i];
-            print += printFila(fila);
+            print.append(printFila(fila));
             
             if (i == 2 || i == 5) {
-                print += "-------------------------------\n";
+                print.append("-------------------------------\n");
             }
         }
         
-        return print;
+        return print.toString();
     }
 
     private String printFila(Celda[] fila) {
-        String print = "";
+        StringBuilder print = new StringBuilder();
         for (int i = 0; i < 9; i++) {
             Celda celda = fila[i];
-            print += celda.toString();
+            print.append(celda.toString());
             
             if (i == 2 || i == 5) {
-                print += "  ";
+                print.append("  ");
             }
         }
-        print += "\n";
-        return print;
+        print.append("\n");
+        return print.toString();
     }
     
     public Grid reemplazarCasilla(@NonNull Fila fila, @NonNull Columna columna, @NonNull Valor valor) {

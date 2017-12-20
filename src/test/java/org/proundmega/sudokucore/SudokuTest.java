@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Ignore;
 import org.proundmega.sudokucore.data.GridFactory;
 import org.proundmega.sudokucore.elementos.Celda;
-import org.proundmega.sudokucore.elementos.grid.Grid;
 
 public class SudokuTest {
     
