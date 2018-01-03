@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -21,22 +23,22 @@ import lombok.Data;
  *
  * @author vansi
  * @param <I> Input - la clase que recibo
- * @param <O> Output - la clases que voy a retornar en un paso intermedio
- * @param <P> La clases a usar como base de la funcion, los pasos que debe
- * seguir
+ * @param <O> Output - la clases que voy a retornar en un paso intermedio seguir
  */
-public class Pipeline<I, O, P extends Function<I, O>> {
+public class Pipeline<I, O> {
 
-    private PipelineIntermediate<I, O, P> datos;
+    private PipelineIntermediate<I, O> datos;
 
-    private Pipeline(PipelineIntermediate<I, O, P> intermediate) {
+    private Pipeline(PipelineIntermediate<I, O> intermediate) {
         this.datos = intermediate;
     }
 
     public O get() {
         List<Retorno> retornoList = new ArrayList<>();
-        Consumer<Retorno> nulo = retorno -> {};
+        Consumer<Retorno> nulo = retorno -> {
+        };
         Consumer<Retorno> guardar = retorno -> retornoList.add(retorno);
+
         realizarPipeline(nulo, guardar);
 
         return retornoList.get(0).getSalida();
@@ -48,10 +50,12 @@ public class Pipeline<I, O, P extends Function<I, O>> {
         for (int i = 0; i < datos.maxIteraciones; i++) {
             respuesta = iterar(temp);
             if (respuesta.isTerminado()) {
-                alFinalizarIteracion.accept(respuesta);
+                break;
             } else {
+                if (respuesta.isReiterar()) {
+                    alFinalizarPaso.accept(respuesta);
+                }
                 temp = datos.pasoIntercambio.apply(respuesta.getSalida());
-                alFinalizarPaso.accept(respuesta);
             }
         }
         alFinalizarIteracion.accept(respuesta);
@@ -65,15 +69,15 @@ public class Pipeline<I, O, P extends Function<I, O>> {
             salida = pipelineStep.apply(temp);
 
             if (haTerminado(salida)) {
-                return new Retorno((P) pipelineStep, salida, true);
+                return new Retorno(salida, OutcomeIteracion.TERMINADO);
             } else if (tieneQueReiniciar(salida)) {
-                return new Retorno((P) pipelineStep, salida, false);
+                return new Retorno(salida, OutcomeIteracion.REITERAR);
             } else {
                 temp = datos.pasoIntercambio.apply(salida);
             }
         }
 
-        return new Retorno(null, salida, false);
+        return new Retorno(salida, OutcomeIteracion.SIN_AVANCE);
     }
 
     private boolean haTerminado(O resultado) {
@@ -88,11 +92,7 @@ public class Pipeline<I, O, P extends Function<I, O>> {
                 .allMatch(respuesta -> respuesta == true);
     }
 
-    public static <I, O, P extends Function<I, O>> PipelineIntermediate<I, O, P> crear(I input, Class<P> clazz) {
-        return new PipelineIntermediate(input);
-    }
-
-    public static <I, O, P extends Function<I, O>> PipelineIntermediate<I, O, P> crear(I input, Set<P> funciones) {
+    public static <I, O> PipelineIntermediate<I, O> crear(I input, Set<Function<I, O>> funciones) {
         return new PipelineIntermediate<>(input, funciones);
     }
 
@@ -107,16 +107,16 @@ public class Pipeline<I, O, P extends Function<I, O>> {
                 .collect(Collectors.toList());
     }
 
-    public static class PipelineIntermediate<I, O, P extends Function<I, O>> {
+    public static class PipelineIntermediate<I, O> {
 
         private I input;
-        private Set<P> pasos = new HashSet<>();
+        private Set<Function<I, O>> pasos = new HashSet<>();
         private Function<O, I> pasoIntercambio;
         private List<Predicate> reiniciadores = new ArrayList<>();
         private List<Predicate> finalizadores = new ArrayList<>();
         private int maxIteraciones = 10000;
 
-        private PipelineIntermediate(I input, Set<P> steps) {
+        private PipelineIntermediate(I input, Set<Function<I, O>> steps) {
             this.pasos = steps;
             this.input = input;
         }
@@ -125,27 +125,27 @@ public class Pipeline<I, O, P extends Function<I, O>> {
             this.input = input;
         }
 
-        public PipelineIntermediate<I, O, P> addStep(P step) {
+        public PipelineIntermediate<I, O> addStep(Function<I, O> step) {
             pasos.add(step);
             return this;
         }
 
-        public PipelineIntermediate<I, O, P> afterStep(Function<O, I> step) {
+        public PipelineIntermediate<I, O> afterStep(Function<O, I> step) {
             this.pasoIntercambio = step;
             return this;
         }
 
-        public PipelineIntermediate<I, O, P> restartPipelineIf(Predicate<O> consumer) {
+        public PipelineIntermediate<I, O> restartPipelineIf(Predicate<O> consumer) {
             reiniciadores.add(consumer);
             return this;
         }
 
-        public PipelineIntermediate<I, O, P> finishIf(Predicate<O> consumer) {
+        public PipelineIntermediate<I, O> finishIf(Predicate<O> consumer) {
             finalizadores.add(consumer);
             return this;
         }
 
-        public PipelineIntermediate<I, O, P> maxIterations(int maxIterations) {
+        public PipelineIntermediate<I, O> maxIterations(int maxIterations) {
             this.maxIteraciones = maxIterations;
             return this;
         }
@@ -158,8 +158,22 @@ public class Pipeline<I, O, P extends Function<I, O>> {
     @Data
     @AllArgsConstructor
     private class Retorno {
-        private P metodo;
+
         private O salida;
-        private boolean terminado;
+        private OutcomeIteracion outcome;
+
+        public boolean isTerminado() {
+            return outcome == OutcomeIteracion.TERMINADO;
+        }
+
+        public boolean isReiterar() {
+            return outcome == OutcomeIteracion.REITERAR;
+        }
+    }
+
+    private enum OutcomeIteracion {
+        TERMINADO,
+        REITERAR,
+        SIN_AVANCE;
     }
 }

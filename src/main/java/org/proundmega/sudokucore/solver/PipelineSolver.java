@@ -9,7 +9,7 @@ import org.proundmega.sudokucore.elementos.grid.Grid;
 
 public class PipelineSolver {
     
-    public static Pipeline<Grid, Respuesta, Solver> getPipeline(Grid gridInicial) {
+    public static Pipeline<Grid, Respuesta> getPipeline(Grid gridInicial) {
         return Pipeline.crear(gridInicial, PipelineSolver.getSolvers())
                 .afterStep(Respuesta::getGridRespuesta)
                 .finishIf(esGridRespuesta())

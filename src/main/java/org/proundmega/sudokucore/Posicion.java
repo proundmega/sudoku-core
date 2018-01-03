@@ -56,6 +56,10 @@ public class Posicion implements Comparable<Posicion>{
         return columna.getIndice();
     }
     
+    public Valor getValorActual() {
+        return celda.getValorActual();
+    }
+    
     public Posicion addAnotacion(Valor anotacion) {
         Set<Valor> anotacionesCopia = anotaciones.stream()
                 .collect(Collectors.toCollection(TreeSet::new));

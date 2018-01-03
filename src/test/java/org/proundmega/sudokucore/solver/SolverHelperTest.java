@@ -33,17 +33,4 @@ public class SolverHelperTest {
         assertFalse(SolverHelper.soloFaltaUnEspacio(celdas));
     }
 
-    @Test
-    public void testGetValoresFaltantes() {
-        Celda[][] celdas = GridFactory.getSudokuIncompleto2();
-        
-        Set<Valor> esperado = new HashSet<>();
-        esperado.add(_4);
-        esperado.add(_8);
-        
-        Set<Valor> obtenido = SolverHelper.getValoresFaltantes(celdas, Cuadrante.INFERIOR_DERECHO);
-        
-        assertEquals(esperado, obtenido);
-    }
-
 }

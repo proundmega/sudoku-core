@@ -27,13 +27,13 @@ public class Sudoku {
     }
     
     public Sudoku solve() {
-        Pipeline<Grid, Respuesta, Solver> pipeline = PipelineSolver.getPipeline(gridActual);
+        Pipeline<Grid, Respuesta> pipeline = PipelineSolver.getPipeline(gridActual);
         
         return new Sudoku(pipeline.get().getGridRespuesta());
     }
     
     public List<Respuesta> solvePorPasos() {
-        Pipeline<Grid, Respuesta, Solver> pipeline = PipelineSolver.getPipeline(gridActual);
+        Pipeline<Grid, Respuesta> pipeline = PipelineSolver.getPipeline(gridActual);
         
         return pipeline.getPorPasos();
     }

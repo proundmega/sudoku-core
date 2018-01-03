@@ -1,8 +1,10 @@
 package org.proundmega.sudokucore.elementos.grid.anotador;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -18,27 +20,48 @@ public class AnotadorCuadrante implements Anotador {
     private Celda[][] celdas;
     private Cuadrante cuadranteObjetivo;
     private List<Posicion> posicionesVacias;
+    private List<Posicion> cachePosicionesConAnotacionesRemovidas;
     
     public AnotadorCuadrante(Celda[][] celdas, Cuadrante cuadranteObjetivo) {
         this.celdas = celdas;
         this.cuadranteObjetivo = cuadranteObjetivo;
         this.posicionesVacias = cuadranteObjetivo.getCeldasVacias(celdas);
-        
         anotarPosiciones();
     }
     
     private void anotarPosiciones() {
-        Set<Valor> valoresFaltantes = SolverHelper.getValoresFaltantes(celdas, cuadranteObjetivo);
+        Set<Valor> valoresFaltantes = getValoresFaltantes();
 
         posicionesVacias = posicionesVacias.stream()
                 .map(posicion -> posicion.addAnotaciones(valoresFaltantes))
                 .collect(Collectors.toList());
     }
+    
+    public Set<Valor> getValoresFaltantes() {
+        Set<Valor> valoresUsados = cuadranteObjetivo.getCeldasConValor(celdas)
+                .stream()
+                .map(posicion -> posicion.getCelda().getValorActual())
+                .collect(Collectors.toSet());
+
+        return Arrays.stream(Valor.values())
+                .filter(valor -> valor != Valor.VACIA)
+                .filter(valor -> !valoresUsados.contains(valor))
+                .collect(Collectors.toSet());
+    }
+    
+    public List<Posicion> crearPosicionesConAnotacionesRemovidas() {
+        List<Posicion> posiciones = removerNotacionesFilaA(posicionesVacias);
+        return removerNotacionesColumnaA(posiciones);
+    }
 
     @Override
     public List<Posicion> getPosicionesConAnotacionesRemovidas() {
-        List<Posicion> posiciones = removerNotacionesFilaA(posicionesVacias);
-        return removerNotacionesColumnaA(posiciones);
+        synchronized(this) {
+            if(cachePosicionesConAnotacionesRemovidas == null) {
+                cachePosicionesConAnotacionesRemovidas = crearPosicionesConAnotacionesRemovidas();
+            }
+        }
+        return cachePosicionesConAnotacionesRemovidas;
     }
     
     public List<Posicion> getPosicionesFilasRemovidas() {
@@ -117,7 +140,7 @@ public class AnotadorCuadrante implements Anotador {
     }
 
     @Override
-    public List<Posicion> getPosicionesQueRemuevenElValor(Valor valor) {
+    public List<Posicion> getPosicionesQueLimitanElValor(Valor valor) {
         List<Posicion> posiciones = new ArrayList<>();
         
         List<Posicion> valoresFilaLLenos = cuadranteObjetivo.getCeldasHorizontalesConValor(celdas);
@@ -127,13 +150,18 @@ public class AnotadorCuadrante implements Anotador {
         posiciones.addAll(valoresColumnaLLenos);
         
         return posiciones.stream()
-                .filter(posicionConValor -> posicionConValor.getCelda().getValorActual() == valor)
+                .filter(posicionConValor -> posicionConValor.getValorActual() == valor)
                 .sorted()
                 .collect(Collectors.toList());
     }
-
+    
     @Override
     public List<Posicion> getPosicionesLimitadoras(Posicion filtro) {
+        List<Posicion> posiciones = getPosicionesLimitadorasConRepetidos(filtro);
+        return eliminarRepetidosConMismoValor(posiciones);
+    }
+    
+    public List<Posicion> getPosicionesLimitadorasConRepetidos(Posicion filtro) {
         return Celdas.asPosiciones(celdas)
                 .stream()
                 .filter(posicion -> !posicion.getCelda().estaVacia())
@@ -144,6 +172,16 @@ public class AnotadorCuadrante implements Anotador {
 
     private static boolean poseenFilaOColumnaSimilares(Posicion filtro, Posicion posicion) {
         return posicion.getFila() == filtro.getFila() || posicion.getColumna() == filtro.getColumna();
+    }
+    
+    private List<Posicion> eliminarRepetidosConMismoValor(List<Posicion> posiciones) {
+        Map<Valor, List<Posicion>> posicionesRepetidas = posiciones.stream()
+                .collect(Collectors.groupingBy(Posicion::getValorActual));
+        
+        return posicionesRepetidas.entrySet().stream()
+                .flatMap(entrada -> Stream.of(entrada.getValue().get(0)))
+                .sorted()
+                .collect(Collectors.toList());
     }
     
 }

@@ -18,6 +18,7 @@ import org.proundmega.sudokucore.elementos.Cuadrante;
 import org.proundmega.sudokucore.elementos.Fila;
 import org.proundmega.sudokucore.elementos.Valor;
 import static org.proundmega.sudokucore.elementos.Valor.*;
+import org.proundmega.sudokucore.solver.SolverHelper;
 
 public class AnotadorCuadranteTest {
     private static Celda[][] celdas;
@@ -157,11 +158,11 @@ public class AnotadorCuadranteTest {
     }
     
     @Test
-    public void getPosicionesQueRemuevenValorCorrecto1() {
+    public void getPosicionesQueLimitanValorCorrecto1() {
         Cuadrante cuadranteObjetivo = Cuadrante.SUPERIOR_IZQUIERO;
         AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadranteObjetivo);
         
-        List<Posicion> obtenidas = anotador.getPosicionesQueRemuevenElValor(_3);
+        List<Posicion> obtenidas = anotador.getPosicionesQueLimitanElValor(_3);
         List<Posicion> esperadas =  getPosicionesQueRemuevenNotacionesSuperiorDerecho();
         
         assertEquals(esperadas, obtenidas);
@@ -181,7 +182,7 @@ public class AnotadorCuadranteTest {
         Cuadrante cuadranteObjetivo = Cuadrante.INFERIOR_CENTRAL;
         AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadranteObjetivo);
         
-        List<Posicion> obtenidas = anotador.getPosicionesQueRemuevenElValor(_8);
+        List<Posicion> obtenidas = anotador.getPosicionesQueLimitanElValor(_8);
         List<Posicion> esperadas =  getPosicionesQueRemuevenNotacionesInferiorCentral();
         
         assertEquals(esperadas, obtenidas);
@@ -200,24 +201,23 @@ public class AnotadorCuadranteTest {
         Cuadrante cuadranteObjetivo = Cuadrante.INFERIOR_CENTRAL;
         AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadranteObjetivo);
         
-        List<Posicion> obtenidas = anotador.getPosicionesQueRemuevenElValor(VACIA);
+        List<Posicion> obtenidas = anotador.getPosicionesQueLimitanElValor(VACIA);
         List<Posicion> esperadas = new ArrayList<>();
         
         assertEquals(esperadas, obtenidas);
     }
     
     @Test
-    public void getLimitadoresCorrecto1() {
+    public void getLimitadoresCorrecto1ConRepetidos() {
         Cuadrante cuadrante = Cuadrante.CENTRAL_CENTRAL;
         AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadrante);
         
         Posicion posicionObjetivo = new Posicion(Fila._5, Columna._5, Valor.VACIA);
         
         List<Posicion> esperada = getLimitadoresPosicionCentralCentral();
-        List<Posicion> obtenida = anotador.getPosicionesLimitadoras(posicionObjetivo);
+        List<Posicion> obtenida = anotador.getPosicionesLimitadorasConRepetidos(posicionObjetivo);
         
         assertEquals(esperada, obtenida);
-        
     }
     
     private List<Posicion> getLimitadoresPosicionCentralCentral() {
@@ -234,6 +234,39 @@ public class AnotadorCuadranteTest {
         Collections.sort(posiciones);
         
         return posiciones;
+    }
+    
+    @Test
+    public void getLimitadoresCorrecto1SinRepetidos() {
+        Cuadrante cuadrante = Cuadrante.CENTRAL_CENTRAL;
+        AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadrante);
+        
+        Posicion posicionObjetivo = new Posicion(Fila._5, Columna._5, Valor.VACIA);
+        
+        List<Posicion> esperada = getLimitadoresPosicionCentralCentral();
+        esperada.remove(new Posicion(Fila._5, Columna._2, Valor._1));
+        esperada.remove(new Posicion(Fila._5, Columna._8, Valor._3));
+        
+        List<Posicion> obtenida = anotador.getPosicionesLimitadoras(posicionObjetivo);
+        
+        esperada.forEach(System.out::println);
+        System.out.println("Obtenida: ");
+        obtenida.forEach(System.out::println);
+        
+        assertEquals(esperada, obtenida);
+    }
+    
+    @Test
+    public void testGetValoresFaltantes() {
+        Celda[][] celdas = GridFactory.getSudokuIncompleto2();
+        
+        Set<Valor> esperado = new HashSet<>();
+        esperado.add(_4);
+        esperado.add(_8);
+        
+        Set<Valor> obtenido = new AnotadorCuadrante(celdas, Cuadrante.INFERIOR_DERECHO).getValoresFaltantes();
+        
+        assertEquals(esperado, obtenido);
     }
     
 }

@@ -21,7 +21,7 @@ public interface Anotador {
      * @param valor el valor que se usa como base para la fila, columna, etc.
      * @return todas las posiciones que poseen este valor y limitan mi espacio.
      */
-    List<Posicion> getPosicionesQueRemuevenElValor(Valor valor);
+    List<Posicion> getPosicionesQueLimitanElValor(Valor valor);
     
     /** Devuelve todas las posiciones que limitan de alguna manera los numeros que 
      *  pueden ir en dicha posicion.
