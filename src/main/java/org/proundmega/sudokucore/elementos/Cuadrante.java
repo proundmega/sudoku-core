@@ -60,31 +60,14 @@ public enum Cuadrante implements Posicionable {
         return Collections.unmodifiableList(posiciones);
     }
 
-    public List<Posicion> getCeldasVacias(Celda[][] celdas) {
+    @Override
+    public List<Posicion> getPosicionesVacias(Celda[][] celdas) {
         return agregarSi(celdas, Celda::estaVacia);
     }
 
-    public List<Posicion> getCeldasConValor(Celda[][] celdas) {
+    @Override
+    public List<Posicion> getPosicionesConValor(Celda[][] celdas) {
         return agregarSi(celdas, celda -> !celda.estaVacia());
-    }
-
-    public List<Posicion> getCeldasHorizontalesConValor(Celda[][] celdas) {
-        return getCeldasConValorDeCuardrantesAdyacentesSiCumple(celdas, 
-                cuadrante -> cuadrante.getOffsetFila() == this.getOffsetFila());
-    }
-
-    public List<Posicion> getCeldasVerticalesConValor(Celda[][] celdas) {
-        return getCeldasConValorDeCuardrantesAdyacentesSiCumple(celdas, 
-                cuadrante -> cuadrante.getOffsetColumna() == this.getOffsetColumna());
-    }
-    
-    private List<Posicion> getCeldasConValorDeCuardrantesAdyacentesSiCumple(Celda[][] celdas, Predicate<Cuadrante> predicado) {
-        return Arrays.stream(Cuadrante.values())
-                .filter(cuadrante -> cuadrante != this)
-                .filter(cuadrante -> predicado.test(cuadrante))
-                .flatMap(cuadrante -> cuadrante.getPosiciones(celdas).stream())
-                .filter(posicion -> posicion.getCelda().getValorActual() != Valor.VACIA)
-                .collect(Collectors.toList());
     }
 
     @Override

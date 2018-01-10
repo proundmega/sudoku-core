@@ -1,4 +1,4 @@
-package org.proundmega.sudokucore.elementos.grid.anotador;
+package org.proundmega.sudokucore.elementos.anotador;
 
 import java.util.List;
 import org.proundmega.sudokucore.Posicion;

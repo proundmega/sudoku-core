@@ -14,7 +14,7 @@ import org.proundmega.sudokucore.elementos.Cuadrante;
 import org.proundmega.sudokucore.elementos.Fila;
 import org.proundmega.sudokucore.elementos.Valor;
 import org.proundmega.sudokucore.elementos.grid.SubGridCuadrante;
-import org.proundmega.sudokucore.elementos.grid.anotador.Anotador;
+import org.proundmega.sudokucore.elementos.anotador.Anotador;
 
 public class CeldaConUnicaPosicionTest {
     

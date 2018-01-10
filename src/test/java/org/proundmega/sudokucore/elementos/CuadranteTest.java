@@ -174,7 +174,7 @@ public class CuadranteTest {
         Cuadrante cuadrante = Cuadrante.INFERIOR_DERECHO;
         
         List<Posicion> esperado = getPosicionesInferiorDerechoVacias(celdas);
-        List<Posicion> obtenido = cuadrante.getCeldasVacias(celdas);
+        List<Posicion> obtenido = cuadrante.getPosicionesVacias(celdas);
         
         assertEquals(esperado, obtenido);
     }
@@ -188,63 +188,4 @@ public class CuadranteTest {
         return posiciones;
     }
     
-    @Test
-    public void getValoresHorizontalesCorrectos1() {
-        Celda[][] celdas = GridFactory.getSudokuFacil1Resuelto();
-        
-        Cuadrante cuadrante = Cuadrante.CENTRAL_CENTRAL;
-        
-        List<Posicion> esperado = new ArrayList<>();
-        esperado.addAll(Cuadrante.CENTRAL_IZQUIERO.getCuadranteAsList(celdas));
-        esperado.addAll(Cuadrante.CENTRAL_DERECHO.getCuadranteAsList(celdas));
-        
-        List<Posicion> obtenidos = cuadrante.getCeldasHorizontalesConValor(celdas);
-        
-        assertEquals(esperado, obtenidos);
-    }
-    
-    @Test
-    public void getValoresHorizontalesCorrectos2() {
-        Celda[][] celdas = GridFactory.getSudokuFacil1Resuelto();
-        
-        Cuadrante cuadrante = Cuadrante.INFERIOR_DERECHO;
-        
-        List<Posicion> esperado = new ArrayList<>();
-        esperado.addAll(Cuadrante.INFERIOR_IZQUIERO.getCuadranteAsList(celdas));
-        esperado.addAll(Cuadrante.INFERIOR_CENTRAL.getCuadranteAsList(celdas));
-        
-        List<Posicion> obtenidos = cuadrante.getCeldasHorizontalesConValor(celdas);
-        
-        assertEquals(esperado, obtenidos);
-    }
-    
-    @Test
-    public void getValoresVerticalesCorrectos1() {
-        Celda[][] celdas = GridFactory.getSudokuFacil1Resuelto();
-        
-        Cuadrante cuadrante = Cuadrante.CENTRAL_CENTRAL;
-        
-        List<Posicion> esperado = new ArrayList<>();
-        esperado.addAll(Cuadrante.SUPERIOR_CENTRAL.getCuadranteAsList(celdas));
-        esperado.addAll(Cuadrante.INFERIOR_CENTRAL.getCuadranteAsList(celdas));
-        
-        List<Posicion> obtenidos = cuadrante.getCeldasVerticalesConValor(celdas);
-        
-        assertEquals(esperado, obtenidos);
-    }
-    
-    @Test
-    public void getValoresVerticalesCorrectos2() {
-        Celda[][] celdas = GridFactory.getSudokuFacil1Resuelto();
-        
-        Cuadrante cuadrante = Cuadrante.INFERIOR_DERECHO;
-        
-        List<Posicion> esperado = new ArrayList<>();
-        esperado.addAll(Cuadrante.SUPERIOR_DERECHO.getCuadranteAsList(celdas));
-        esperado.addAll(Cuadrante.CENTRAL_DERECHO.getCuadranteAsList(celdas));
-        
-        List<Posicion> obtenidos = cuadrante.getCeldasVerticalesConValor(celdas);
-        
-        assertEquals(esperado, obtenidos);
-    }
  }

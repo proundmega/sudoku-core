@@ -6,10 +6,14 @@ import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.proundmega.sudokucore.Posicion;
+import org.proundmega.sudokucore.elementos.Celdas;
 import org.proundmega.sudokucore.elementos.Columna;
 import org.proundmega.sudokucore.elementos.Cuadrante;
 import org.proundmega.sudokucore.elementos.Fila;
+import org.proundmega.sudokucore.elementos.Posicionable;
 import org.proundmega.sudokucore.elementos.ValidadorSudoku;
+import org.proundmega.sudokucore.elementos.anotador.Anotador;
+import org.proundmega.sudokucore.elementos.anotador.AnotadorGeneral;
 
 @EqualsAndHashCode
 public class Grid {
@@ -110,24 +114,16 @@ public class Grid {
         return new SubGridCuadrante(celdas, cuadrante);
     }
     
-    public SubGridFila getSubGrid(Fila fila) {
-        return new SubGridFila(celdas, fila);
-    }
-    
-    public SubGridColumna getSubGrid(Columna columna) {
-        return new SubGridColumna(celdas, columna);
-    }
-    
     public boolean isGridResuelta() {
         return ValidadorSudoku.esCeldasValidasYCompletas(celdas);
     }
     
     public Posicion getPosicion(Fila fila, Columna columna) {
-        return GridAPosiciones.getPosicion(celdas, fila, columna);
+        return Celdas.getPosicion(celdas, fila, columna);
     }
 
     public List<Posicion> getPosiciones() {
-        return GridAPosiciones.getPosiciones(celdas);
+        return Celdas.asPosiciones(celdas);
     }
     
     public String[][] getValoresAsString() {
@@ -140,5 +136,9 @@ public class Grid {
         }
         
         return gridAsString;
+    }
+    
+    public Anotador getAnotador(Posicionable posicionable) {
+        return new AnotadorGeneral(celdas, posicionable);
     }
 }

@@ -6,8 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import org.proundmega.sudokucore.MetadataSolver;
-import org.proundmega.sudokucore.Posicion;
-import org.proundmega.sudokucore.elementos.grid.anotador.Anotador;
+import org.proundmega.sudokucore.elementos.anotador.Anotador;
 import org.proundmega.sudokucore.solver.Pipeline;
 
 public class PipelineProcesadores {
@@ -23,7 +22,7 @@ public class PipelineProcesadores {
     
     private static Set<Function<Anotador, Optional<MetadataSolver>>> getProcesadores() {
         Set<Function<Anotador, Optional<MetadataSolver>>> procesadores = new HashSet<>();
-        procesadores.add(new SoloUnaCasilla());
+        procesadores.add(new ValorFaltante());
         procesadores.add(new CeldaConUnicaPosicion());
         procesadores.add(new ValorConUnicaPosicion());
         

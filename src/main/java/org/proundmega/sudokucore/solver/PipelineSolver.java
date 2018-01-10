@@ -24,7 +24,8 @@ public class PipelineSolver {
     
     private static Set<Function<Grid, Respuesta>> getSolvers() {
         Set<Function<Grid, Respuesta>> solvers = new HashSet<>();
-        solvers.add(new EliminacionCuadranteSolver());
+        solvers.add(FactorySolver.crearSolverCuadranteSimple());
+        solvers.add(FactorySolver.crearSolverFilaSimple());
         
         return solvers;
     }

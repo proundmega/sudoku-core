@@ -1,27 +1,29 @@
 package org.proundmega.sudokucore.solver;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import org.proundmega.sudokucore.MetadataSolver;
 import org.proundmega.sudokucore.Respuesta;
 import org.proundmega.sudokucore.elementos.Cuadrante;
+import org.proundmega.sudokucore.elementos.Posicionable;
 import org.proundmega.sudokucore.elementos.grid.Grid;
-import org.proundmega.sudokucore.elementos.grid.SubGridCuadrante;
-import org.proundmega.sudokucore.elementos.grid.anotador.Anotador;
-import org.proundmega.sudokucore.solver.procesadores.PipelineProcesadores;
-import org.proundmega.sudokucore.solver.procesadores.ProcesadorAnotaciones;
+import org.proundmega.sudokucore.elementos.anotador.Anotador;
 
 public class SolverCuadrante implements Solver {
+    private List<Posicionable> posicionables;
     private Function<Anotador, Pipeline<Anotador, Optional<MetadataSolver>>> pipeline;
 
-    public SolverCuadrante(Function<Anotador, Pipeline<Anotador, Optional<MetadataSolver>>> pipeline) {
+    public SolverCuadrante(Function<Anotador, Pipeline<Anotador, Optional<MetadataSolver>>> pipeline, List<Posicionable> posicionables) {
         this.pipeline = pipeline;
+        this.posicionables = posicionables;
     }
 
     @Override
     public Respuesta apply(Grid gridOriginal) {
-        for (Cuadrante cuadrante : Cuadrante.values()) {
-            Optional<MetadataSolver> respuesta = resolverCuadrante(gridOriginal, cuadrante);
+        for (Posicionable posicionable : posicionables) {
+            Optional<MetadataSolver> respuesta = resolverCuadrante(gridOriginal, posicionable);
 
             if (respuesta.isPresent()) {
                 MetadataSolver metadata = respuesta.get();
@@ -33,20 +35,14 @@ public class SolverCuadrante implements Solver {
         return new Respuesta(gridOriginal, false, this);
     }
 
-    private Optional<MetadataSolver> resolverCuadrante(Grid grid, Cuadrante cuadrante) {
-        SubGridCuadrante subGrid = grid.getSubGrid(cuadrante);
-        Anotador anotador = subGrid.getAnotador();
+    private Optional<MetadataSolver> resolverCuadrante(Grid grid, Posicionable posicionable) {
+        Anotador anotador = grid.getAnotador(posicionable);
 
-        Pipeline<Anotador, Optional<MetadataSolver>> pipelineProcesadoresSimples
+        Pipeline<Anotador, Optional<MetadataSolver>> pipelineObtenido
                 = pipeline.apply(anotador);
 
-        Optional<MetadataSolver> respuesta = pipelineProcesadoresSimples.get();
+        Optional<MetadataSolver> respuesta = pipelineObtenido.get();
         return respuesta;
     }
 
-    @Override
-    public String getMetodoUsado() {
-        return "Pronto elimino esto";
-    }
-    
 }

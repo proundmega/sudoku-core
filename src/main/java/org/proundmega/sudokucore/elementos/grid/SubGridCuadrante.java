@@ -6,8 +6,8 @@ import java.util.List;
 import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.elementos.Cuadrante;
 import org.proundmega.sudokucore.elementos.ValidadorSudoku;
-import org.proundmega.sudokucore.elementos.grid.anotador.Anotador;
-import org.proundmega.sudokucore.elementos.grid.anotador.AnotadorCuadrante;
+import org.proundmega.sudokucore.elementos.anotador.Anotador;
+import org.proundmega.sudokucore.elementos.anotador.AnotadorGeneral;
 import org.proundmega.sudokucore.solver.SolverHelper;
 
 public class SubGridCuadrante extends AbstractSubGrid {
@@ -40,7 +40,7 @@ public class SubGridCuadrante extends AbstractSubGrid {
     }
 
     public Anotador getAnotador() {
-        return new AnotadorCuadrante(celdas, cuadranteObjetivo);
+        return new AnotadorGeneral(celdas, cuadranteObjetivo);
     }
     
 }

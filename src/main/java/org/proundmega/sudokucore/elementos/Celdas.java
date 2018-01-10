@@ -18,4 +18,8 @@ public class Celdas {
         
         return posiciones;
     }
+    
+    public static Posicion getPosicion(Celda[][] celdas, Fila fila, Columna columna) {
+        return new Posicion(fila, columna, celdas[fila.getIndiceFilaParaArray()][columna.getIndiceColumnaParaArray()]);
+    }
 }

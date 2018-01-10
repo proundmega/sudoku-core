@@ -1,12 +1,15 @@
 package org.proundmega.sudokucore;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.proundmega.sudokucore.elementos.Celda;
 import lombok.AllArgsConstructor;
 import lombok.Value;
 import org.proundmega.sudokucore.elementos.Columna;
+import org.proundmega.sudokucore.elementos.Cuadrante;
 import org.proundmega.sudokucore.elementos.Fila;
 import org.proundmega.sudokucore.elementos.Valor;
 
@@ -95,5 +98,23 @@ public class Posicion implements Comparable<Posicion>{
     
     public static boolean esNula(Posicion posicion) {
         return posicion == POSICION_NULA;
+    }
+    
+    public Cuadrante getCuadrante() {
+        return Arrays.stream(Cuadrante.values())
+                .filter(estaEnElRangoDeFilas())
+                .filter(estaEnElRangoDeColumnas())
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+                
+                
+    }
+
+    private Predicate<Cuadrante> estaEnElRangoDeColumnas() {
+        return cuadrante -> cuadrante.getOffsetColumna() <= getColumnaAsNumero() && cuadrante.getOffsetColumna() + 3 > getColumnaAsNumero();
+    }
+
+    private Predicate<Cuadrante> estaEnElRangoDeFilas() {
+        return cuadrante -> cuadrante.getOffsetFila() <= getFilaAsNumero() && cuadrante.getOffsetFila() + 3 > getFilaAsNumero();
     }
 }

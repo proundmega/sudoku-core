@@ -1,4 +1,4 @@
-package org.proundmega.sudokucore.elementos.grid.anotador;
+package org.proundmega.sudokucore.elementos.anotador;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +32,7 @@ public class AnotadorCuadranteTest {
     public void getAnotacionesConCuadrantesHorizontalesRemovidos() {
         Cuadrante cuadrante = Cuadrante.CENTRAL_IZQUIERO;
         
-        AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadrante);
+        AnotadorGeneral anotador = new AnotadorGeneral(celdas, cuadrante);
         
         Posicion posicionAfectada = new Posicion(5, 3, new Celda(Valor.VACIA));
         posicionAfectada = crearAnotaciones(posicionAfectada, _2, _4, _5, _8);
@@ -44,7 +44,7 @@ public class AnotadorCuadranteTest {
     public void getAnotacionesConCuadrantesVerticalesRemovidos() {
         Cuadrante cuadrante = Cuadrante.CENTRAL_IZQUIERO;
         
-        AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadrante);
+        AnotadorGeneral anotador = new AnotadorGeneral(celdas, cuadrante);
         
         List<Posicion> posicionesCambiadas = getPosicionesAlteradasCuadranteCentralIzquierdo();
         
@@ -73,7 +73,7 @@ public class AnotadorCuadranteTest {
     public void getAnotacionesCSDHorizontales() {
         Cuadrante cuadrante = Cuadrante.SUPERIOR_DERECHO;
         
-        AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadrante);
+        AnotadorGeneral anotador = new AnotadorGeneral(celdas, cuadrante);
         
         List<Posicion> posicionesCambiadas = getPosicionesCSDHorizontales();
         assertEquals(posicionesCambiadas, anotador.getPosicionesFilasRemovidas());
@@ -120,7 +120,7 @@ public class AnotadorCuadranteTest {
     public void getAnotacionesCSDVerticales() {
         Cuadrante cuadrante = Cuadrante.SUPERIOR_DERECHO;
         
-        AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadrante);
+        AnotadorGeneral anotador = new AnotadorGeneral(celdas, cuadrante);
         
         List<Posicion> posicionesCambiadas = getPosicionesCSDVericales();
         
@@ -160,7 +160,7 @@ public class AnotadorCuadranteTest {
     @Test
     public void getPosicionesQueLimitanValorCorrecto1() {
         Cuadrante cuadranteObjetivo = Cuadrante.SUPERIOR_IZQUIERO;
-        AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadranteObjetivo);
+        AnotadorGeneral anotador = new AnotadorGeneral(celdas, cuadranteObjetivo);
         
         List<Posicion> obtenidas = anotador.getPosicionesQueLimitanElValor(_3);
         List<Posicion> esperadas =  getPosicionesQueRemuevenNotacionesSuperiorDerecho();
@@ -180,10 +180,14 @@ public class AnotadorCuadranteTest {
     @Test
     public void getPosicionesQueRemuevenValorCorrecto2() {
         Cuadrante cuadranteObjetivo = Cuadrante.INFERIOR_CENTRAL;
-        AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadranteObjetivo);
+        AnotadorGeneral anotador = new AnotadorGeneral(celdas, cuadranteObjetivo);
         
         List<Posicion> obtenidas = anotador.getPosicionesQueLimitanElValor(_8);
         List<Posicion> esperadas =  getPosicionesQueRemuevenNotacionesInferiorCentral();
+        
+        esperadas.forEach(System.out::println);
+        System.out.println("Obtenido");
+        obtenidas.forEach(System.out::println);
         
         assertEquals(esperadas, obtenidas);
     }
@@ -199,7 +203,7 @@ public class AnotadorCuadranteTest {
     @Test
     public void getPosicionesQueRemuevenValorCorrectoCeldaVacia() {
         Cuadrante cuadranteObjetivo = Cuadrante.INFERIOR_CENTRAL;
-        AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadranteObjetivo);
+        AnotadorGeneral anotador = new AnotadorGeneral(celdas, cuadranteObjetivo);
         
         List<Posicion> obtenidas = anotador.getPosicionesQueLimitanElValor(VACIA);
         List<Posicion> esperadas = new ArrayList<>();
@@ -210,7 +214,7 @@ public class AnotadorCuadranteTest {
     @Test
     public void getLimitadoresCorrecto1ConRepetidos() {
         Cuadrante cuadrante = Cuadrante.CENTRAL_CENTRAL;
-        AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadrante);
+        AnotadorGeneral anotador = new AnotadorGeneral(celdas, cuadrante);
         
         Posicion posicionObjetivo = new Posicion(Fila._5, Columna._5, Valor.VACIA);
         
@@ -239,7 +243,7 @@ public class AnotadorCuadranteTest {
     @Test
     public void getLimitadoresCorrecto1SinRepetidos() {
         Cuadrante cuadrante = Cuadrante.CENTRAL_CENTRAL;
-        AnotadorCuadrante anotador = new AnotadorCuadrante(celdas, cuadrante);
+        AnotadorGeneral anotador = new AnotadorGeneral(celdas, cuadrante);
         
         Posicion posicionObjetivo = new Posicion(Fila._5, Columna._5, Valor.VACIA);
         
@@ -248,10 +252,6 @@ public class AnotadorCuadranteTest {
         esperada.remove(new Posicion(Fila._5, Columna._8, Valor._3));
         
         List<Posicion> obtenida = anotador.getPosicionesLimitadoras(posicionObjetivo);
-        
-        esperada.forEach(System.out::println);
-        System.out.println("Obtenida: ");
-        obtenida.forEach(System.out::println);
         
         assertEquals(esperada, obtenida);
     }
@@ -264,9 +264,32 @@ public class AnotadorCuadranteTest {
         esperado.add(_4);
         esperado.add(_8);
         
-        Set<Valor> obtenido = new AnotadorCuadrante(celdas, Cuadrante.INFERIOR_DERECHO).getValoresFaltantes();
+        Set<Valor> obtenido = new AnotadorGeneral(celdas, Cuadrante.INFERIOR_DERECHO).getValoresFaltantes();
         
         assertEquals(esperado, obtenido);
     }
     
+    @Test
+    public void getPosicionesLimitadorasIncluyendoLasDelMismoCuadrante() {
+        Celda[][] celdas = GridFactory.getSudokuFacil2();
+        
+        Posicion objetivo = new Posicion(Fila._5, Columna._5, Valor.VACIA);
+        List<Posicion> esperado = getPosicionesLimitadorasSudoku2PosicionCentral();
+        List<Posicion> obtenido = new AnotadorGeneral(celdas, Cuadrante.CENTRAL_CENTRAL).getPosicionesLimitadoras(objetivo);
+        
+        assertEquals(esperado, obtenido);
+        
+    }
+    
+    private List<Posicion> getPosicionesLimitadorasSudoku2PosicionCentral() {
+        List<Posicion> posiciones = new ArrayList<>();
+        posiciones.add(new Posicion(Fila._4, Columna._5, Valor._1));
+        posiciones.add(new Posicion(Fila._5, Columna._4, Valor._3));
+        posiciones.add(new Posicion(Fila._5, Columna._6, Valor._6));
+        posiciones.add(new Posicion(Fila._6, Columna._5, Valor._8));
+        
+        posiciones.sort(Posicion::compareTo);
+        
+        return posiciones;
+    }
 }

@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.proundmega.sudokucore.MetadataSolver;
 import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.elementos.Valor;
-import org.proundmega.sudokucore.elementos.grid.anotador.Anotador;
+import org.proundmega.sudokucore.elementos.anotador.Anotador;
 
 public class CeldaConUnicaPosicion implements ProcesadorAnotaciones {
 

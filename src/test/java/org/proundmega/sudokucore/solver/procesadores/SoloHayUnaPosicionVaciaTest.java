@@ -10,17 +10,18 @@ import org.proundmega.sudokucore.elementos.Columna;
 import org.proundmega.sudokucore.elementos.Cuadrante;
 import org.proundmega.sudokucore.elementos.Fila;
 import org.proundmega.sudokucore.elementos.Valor;
-import org.proundmega.sudokucore.elementos.grid.anotador.AnotadorCuadrante;
+import org.proundmega.sudokucore.elementos.anotador.Anotador;
+import org.proundmega.sudokucore.elementos.anotador.AnotadorGeneral;
 
-public class SoloUnaCasillaTest {
+public class SoloHayUnaPosicionVaciaTest {
     
-    public SoloUnaCasillaTest() {
+    public SoloHayUnaPosicionVaciaTest() {
     }
 
     @Test
     public void obtengoMetadatoEnPosicionUnica() {
-        AnotadorCuadrante anotador = new AnotadorCuadrante(GridFactory.getSudokuIncompleto1(), Cuadrante.INFERIOR_DERECHO);
-        ProcesadorAnotaciones procesador = new SoloUnaCasilla();
+        Anotador anotador = new AnotadorGeneral(GridFactory.getSudokuIncompleto1(), Cuadrante.INFERIOR_DERECHO);
+        ProcesadorAnotaciones procesador = new ValorFaltante();
         
         Posicion posicionEsperada = new Posicion(Fila._9, Columna._9, Valor._8);
         Optional<MetadataSolver> respuesta = procesador.apply(anotador);
@@ -31,8 +32,8 @@ public class SoloUnaCasillaTest {
     
     @Test
     public void noObtengoMetadatoEnCuadranteLleno() {
-        AnotadorCuadrante anotador = new AnotadorCuadrante(GridFactory.getSudokuIncompleto1(), Cuadrante.SUPERIOR_CENTRAL);
-        ProcesadorAnotaciones procesador = new SoloUnaCasilla();
+        Anotador anotador = new AnotadorGeneral(GridFactory.getSudokuIncompleto1(), Cuadrante.SUPERIOR_CENTRAL);
+        ProcesadorAnotaciones procesador = new ValorFaltante();
         
         Optional<MetadataSolver> respuesta = procesador.apply(anotador);
         
@@ -41,8 +42,8 @@ public class SoloUnaCasillaTest {
     
     @Test
     public void noObtengoMetadatoEnCuadranteConMasDeUnEspacio() {
-        AnotadorCuadrante anotador = new AnotadorCuadrante(GridFactory.getSudokuFacil1(), Cuadrante.SUPERIOR_CENTRAL);
-        ProcesadorAnotaciones procesador = new SoloUnaCasilla();
+        Anotador anotador = new AnotadorGeneral(GridFactory.getSudokuFacil1(), Cuadrante.SUPERIOR_CENTRAL);
+        ProcesadorAnotaciones procesador = new ValorFaltante();
         
         Optional<MetadataSolver> respuesta = procesador.apply(anotador);
         

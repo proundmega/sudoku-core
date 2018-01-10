@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.Value;
 import org.proundmega.sudokucore.Posicion;
@@ -74,5 +75,15 @@ public enum Columna implements Posicionable {
     public String toString() {
         return "Columna{" + indiceColumna + '}';
     }
-    
+
+    @Override
+    public List<Posicion> getPosicionesVacias(Celda[][] celdas) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Posicion> getPosicionesConValor(Celda[][] celdas) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

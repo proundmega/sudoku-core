@@ -13,9 +13,4 @@ public class NullSolver implements Solver {
         return new Respuesta(gridOriginal, false, new NullSolver());
     }
 
-    @Override
-    public String getMetodoUsado() {
-        return "Solver vacio";
-    }
-
 }
