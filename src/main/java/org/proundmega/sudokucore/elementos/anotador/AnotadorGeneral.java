@@ -119,14 +119,16 @@ public class AnotadorGeneral implements Anotador {
         
         if (valor == Valor.VACIA) return posiciones;
         
-        List<Posicion> valoresFilaLLenos = getPosicionesDeGridEnBaseA(posicionable.getPosicionesConValor(celdas), celdas, Posicion::getFila);
-        List<Posicion> valoresColumnaLLenos = getPosicionesDeGridEnBaseA(posicionable.getPosicionesConValor(celdas), celdas, Posicion::getColumna);
+        List<Posicion> valoresFilaLLenos = getPosicionesDeGridEnBaseA(posicionable.getPosicionesVacias(celdas), celdas, Posicion::getFila);
+        List<Posicion> valoresColumnaLLenos = getPosicionesDeGridEnBaseA(posicionable.getPosicionesVacias(celdas), celdas, Posicion::getColumna);
+        List<Posicion> posicionesYaEnSolver = posicionable.getPosicionesConValor(celdas);
         
         posiciones.addAll(valoresFilaLLenos);
         posiciones.addAll(valoresColumnaLLenos);
         
         return posiciones.stream()
                 .filter(posicionConValor -> posicionConValor.getValorActual() == valor)
+                .filter(posicion -> !posicionesYaEnSolver.contains(posicion))
                 .sorted()
                 .collect(Collectors.toList());
     }
@@ -159,6 +161,11 @@ public class AnotadorGeneral implements Anotador {
                 .flatMap(entrada -> Stream.of(entrada.getValue().get(0)))
                 .sorted()
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Posicion> getPosicionesDeBloque() {
+        return posicionable.getPosiciones(celdas);
     }
 
 }

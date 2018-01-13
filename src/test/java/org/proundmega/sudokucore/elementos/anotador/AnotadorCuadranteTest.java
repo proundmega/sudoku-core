@@ -185,10 +185,6 @@ public class AnotadorCuadranteTest {
         List<Posicion> obtenidas = anotador.getPosicionesQueLimitanElValor(_8);
         List<Posicion> esperadas =  getPosicionesQueRemuevenNotacionesInferiorCentral();
         
-        esperadas.forEach(System.out::println);
-        System.out.println("Obtenido");
-        obtenidas.forEach(System.out::println);
-        
         assertEquals(esperadas, obtenidas);
     }
     

@@ -41,4 +41,12 @@ public interface Anotador {
      *  como parametro
      */
     List<Posicion> getPosicionesLimitadoras(Posicion posicion);
+    
+    /** Devuelve todas las posiciones que son parte del bloque que esta siendo analizado en este momento.
+     *  Por ejemplo, si se analiza toda una cuadricula este metodo devuelve la posicion de todos los elementos
+     *  en la cuadricula; si se analizan los valores en una fila se devuelve la fila y asi sucesivamente
+     * 
+     * @return todas las posiciones que pertenecen al bloque original
+     */
+    List<Posicion> getPosicionesDeBloque();
 }

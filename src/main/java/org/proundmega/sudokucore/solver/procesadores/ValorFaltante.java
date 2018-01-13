@@ -1,5 +1,7 @@
 package org.proundmega.sudokucore.solver.procesadores;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import org.proundmega.sudokucore.MetadataSolver;
 import org.proundmega.sudokucore.Posicion;
@@ -15,9 +17,9 @@ public class ValorFaltante implements ProcesadorAnotaciones {
             
             Valor valorUnico = posicionUnica.getAnotaciones().stream().findFirst().orElseThrow(NullPointerException::new);
             Posicion respuesta = new Posicion(posicionUnica, valorUnico);
-            MetadataSolver metadata = new MetadataSolver(respuesta);
             
-            // TODO falta añadir metadatos sobre posiciones en cuadrante
+            List<Posicion> posicionesBloque = anotador.getPosicionesDeBloque();
+            MetadataSolver metadata = new MetadataSolver(respuesta, Collections.EMPTY_LIST, posicionesBloque);
             
             return Optional.of(metadata);
         }

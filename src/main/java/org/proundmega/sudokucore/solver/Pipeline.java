@@ -1,11 +1,7 @@
 package org.proundmega.sudokucore.solver;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.function.BiFunction;
-import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -87,12 +83,15 @@ public class Pipeline<I, O> {
     }
 
     private boolean tieneQueReiniciar(O resultado) {
+        if(datos.reiniciadores.isEmpty()) {
+           return false; 
+        }
         return datos.reiniciadores.stream()
                 .map(funcion -> funcion.test(resultado))
                 .allMatch(respuesta -> respuesta == true);
     }
 
-    public static <I, O> PipelineIntermediate<I, O> crear(I input, Set<Function<I, O>> funciones) {
+    public static <I, O> PipelineIntermediate<I, O> crear(I input, List<Function<I, O>> funciones) {
         return new PipelineIntermediate<>(input, funciones);
     }
 
@@ -110,13 +109,13 @@ public class Pipeline<I, O> {
     public static class PipelineIntermediate<I, O> {
 
         private I input;
-        private Set<Function<I, O>> pasos = new HashSet<>();
+        private List<Function<I, O>> pasos = new ArrayList<>();
         private Function<O, I> pasoIntercambio;
         private List<Predicate> reiniciadores = new ArrayList<>();
         private List<Predicate> finalizadores = new ArrayList<>();
         private int maxIteraciones = 10000;
 
-        private PipelineIntermediate(I input, Set<Function<I, O>> steps) {
+        private PipelineIntermediate(I input, List<Function<I, O>> steps) {
             this.pasos = steps;
             this.input = input;
         }

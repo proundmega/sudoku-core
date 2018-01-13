@@ -1,8 +1,8 @@
 package org.proundmega.sudokucore.solver;
 
+import java.util.ArrayList;
 import org.proundmega.sudokucore.Respuesta;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import org.proundmega.sudokucore.elementos.grid.Grid;
@@ -22,11 +22,15 @@ public class PipelineSolver {
         return respuesta -> respuesta.getGridRespuesta().isGridResuelta();
     }
     
-    private static Set<Function<Grid, Respuesta>> getSolvers() {
-        Set<Function<Grid, Respuesta>> solvers = new HashSet<>();
+    private static List<Function<Grid, Respuesta>> getSolvers() {
+        List<Function<Grid, Respuesta>> solvers = new ArrayList<>();
         solvers.add(FactorySolver.crearSolverCuadranteSimple());
         solvers.add(FactorySolver.crearSolverFilaSimple());
+        solvers.add(FactorySolver.crearSolverColumnaSimple());
         
+        solvers.add(FactorySolver.crearSolverCuadranteIntermedio());
+        solvers.add(FactorySolver.crearSolverFilaIntermedio());
+        solvers.add(FactorySolver.crearSolverColumnaIntermedio());
         return solvers;
     }
 }

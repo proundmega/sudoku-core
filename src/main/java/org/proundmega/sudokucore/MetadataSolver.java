@@ -10,7 +10,7 @@ import lombok.Data;
 public class MetadataSolver {
     private Posicion posicionResuelta;
     private List<Posicion> celdasQueLimitanValor = new ArrayList<>();
-    private List<Posicion> celdasLimitantesEnCuadrante = new ArrayList<>();
+    private List<Posicion> celdasLimitantesEnBloque = new ArrayList<>();
 
     public MetadataSolver(Posicion posicionResuelta) {
         this.posicionResuelta = posicionResuelta;

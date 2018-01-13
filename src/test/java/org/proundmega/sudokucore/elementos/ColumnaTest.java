@@ -25,7 +25,7 @@ public class ColumnaTest {
         
         Celda[][] celda = GridFactory.getSudokuFacil1Resuelto();
         List<Posicion> posiciones = getListaColumna3(celda);
-        List<Posicion> obtenidos = columna.getColumnaAsList(celda);
+        List<Posicion> obtenidos = columna.getPosiciones(celda);
         
         assertEquals(posiciones, obtenidos);
     }
@@ -48,4 +48,46 @@ public class ColumnaTest {
         return posiciones;
     }
     
+    @Test
+    public void getValoresVaciosCorrectos1() {
+        Columna columnaObjetivo = Columna._7;
+        
+        Celda[][] celdas = GridFactory.getSudokuFacil1();
+        List<Posicion> esperado = getPosicionesVaciasColumna7();
+        List<Posicion> obtenido = columnaObjetivo.getPosicionesVacias(celdas);
+        
+        assertEquals(esperado, obtenido);
+    }
+    
+    private List<Posicion> getPosicionesVaciasColumna7() {
+        List<Posicion> posiciones = new ArrayList<>();
+        posiciones.add(new Posicion(Fila._1, Columna._7, Valor.VACIA));
+        posiciones.add(new Posicion(Fila._3, Columna._7, Valor.VACIA));
+        posiciones.add(new Posicion(Fila._4, Columna._7, Valor.VACIA));
+        posiciones.add(new Posicion(Fila._5, Columna._7, Valor.VACIA));
+        posiciones.add(new Posicion(Fila._8, Columna._7, Valor.VACIA));
+        posiciones.add(new Posicion(Fila._9, Columna._7, Valor.VACIA));
+        
+        return posiciones;
+    }
+    
+    @Test
+    public void getPosicionesConValorCorrectos1() {
+        Columna columnaObjetivo = Columna._7;
+        
+        Celda[][] celdas = GridFactory.getSudokuFacil1();
+        List<Posicion> esperado = getPosicionesConValorColumna7();
+        List<Posicion> obtenido = columnaObjetivo.getPosicionesConValor(celdas);
+        
+        assertEquals(esperado, obtenido);
+    }
+    
+    private List<Posicion> getPosicionesConValorColumna7() {
+        List<Posicion> posiciones = new ArrayList<>();
+        posiciones.add(new Posicion(Fila._2, Columna._7, Valor._8));
+        posiciones.add(new Posicion(Fila._6, Columna._7, Valor._1));
+        posiciones.add(new Posicion(Fila._7, Columna._7, Valor._3));
+        
+        return posiciones;
+    }
 }

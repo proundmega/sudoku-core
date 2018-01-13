@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.Value;
@@ -21,20 +22,19 @@ public enum Columna implements Posicionable {
     _7(7),
     _8(8),
     _9(9);
-    
+
     private static final Map<Integer, Columna> mapa = new HashMap<>();
-    
+
     static {
-        for(Columna columna : values()) {
+        for (Columna columna : values()) {
             mapa.put(columna.indiceColumna, columna);
         }
     }
-    
 
     public static Columna toColumna(int columna) {
         return mapa.get(columna);
     }
-    
+
     private int indiceColumna;
 
     private Columna(int fila) {
@@ -44,23 +44,26 @@ public enum Columna implements Posicionable {
     public int getIndiceColumnaParaArray() {
         return indiceColumna - 1;
     }
-    
+
     public int getIndice() {
         return indiceColumna;
     }
-    
+
     public Celda[] getColumna(Celda[][] celdas) {
         return Arrays.stream(celdas)
                 .map(tupla -> tupla[getIndiceColumnaParaArray()])
                 .toArray(Celda[]::new);
     }
-    
-    public List<Posicion> getColumnaAsList(Celda[][] celdas) {
+
+    public List<Posicion> agregarSi(Celda[][] celdas, Predicate<Celda> predicado) {
         List<Posicion> posiciones = new ArrayList<>();
 
         for (int fila = 0; fila < celdas[0].length; fila++) {
-            Posicion posicion = new Posicion(fila + 1, indiceColumna, celdas[fila][getIndiceColumnaParaArray()]);
-            posiciones.add(posicion);
+            Celda celdaTrabajo = celdas[fila][getIndiceColumnaParaArray()];
+            if (predicado.test(celdaTrabajo)) {
+                Posicion posicion = new Posicion(fila + 1, indiceColumna, celdaTrabajo);
+                posiciones.add(posicion);
+            }
         }
 
         return Collections.unmodifiableList(posiciones);
@@ -68,7 +71,7 @@ public enum Columna implements Posicionable {
 
     @Override
     public List<Posicion> getPosiciones(Celda[][] celdas) {
-        return getColumnaAsList(celdas);
+        return agregarSi(celdas, valor -> true);
     }
 
     @Override
@@ -78,12 +81,12 @@ public enum Columna implements Posicionable {
 
     @Override
     public List<Posicion> getPosicionesVacias(Celda[][] celdas) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return agregarSi(celdas, Celda::estaVacia);
     }
 
     @Override
     public List<Posicion> getPosicionesConValor(Celda[][] celdas) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return agregarSi(celdas, celda -> !celda.estaVacia());
     }
 
 }

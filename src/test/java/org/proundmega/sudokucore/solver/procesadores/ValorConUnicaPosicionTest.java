@@ -1,10 +1,12 @@
 package org.proundmega.sudokucore.solver.procesadores;
 
+import java.io.File;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import org.proundmega.sudokucore.Posicion;
+import org.proundmega.sudokucore.Sudoku;
 import org.proundmega.sudokucore.data.GridFactory;
 import org.proundmega.sudokucore.elementos.Celda;
 import org.proundmega.sudokucore.elementos.Columna;
@@ -13,6 +15,9 @@ import org.proundmega.sudokucore.elementos.Fila;
 import org.proundmega.sudokucore.elementos.Valor;
 import org.proundmega.sudokucore.elementos.grid.SubGridCuadrante;
 import org.proundmega.sudokucore.elementos.anotador.Anotador;
+import org.proundmega.sudokucore.elementos.anotador.AnotadorGeneral;
+import org.proundmega.sudokucore.io.FileToSudoku;
+import org.proundmega.sudokucore.io.TestUtils;
 
 public class ValorConUnicaPosicionTest {
     
