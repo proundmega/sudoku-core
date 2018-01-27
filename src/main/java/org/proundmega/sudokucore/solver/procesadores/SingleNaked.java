@@ -7,9 +7,9 @@ import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.elementos.Valor;
 import org.proundmega.sudokucore.elementos.anotador.Anotador;
 
-public class CeldaConUnicaPosicion implements ProcesadorAnotaciones {
+public class SingleNaked implements ProcesadorAnotaciones {
 
-    public CeldaConUnicaPosicion() {
+    public SingleNaked() {
     }
     
     @Override

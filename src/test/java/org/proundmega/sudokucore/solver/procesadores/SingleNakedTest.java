@@ -16,14 +16,14 @@ import org.proundmega.sudokucore.elementos.Valor;
 import org.proundmega.sudokucore.elementos.grid.SubGridCuadrante;
 import org.proundmega.sudokucore.elementos.anotador.Anotador;
 
-public class CeldaConUnicaPosicionTest {
+public class SingleNakedTest {
     
     @Test
     public void hayUnaCeldaConUnPosibleValorCorrecto() {
         List<Posicion> posiciones = getPosicionesVaciasDeCuadrante(Cuadrante.SUPERIOR_DERECHO)
                 .getPosicionesConAnotacionesRemovidas();
         
-        CeldaConUnicaPosicion metodo = new CeldaConUnicaPosicion();
+        SingleNaked metodo = new SingleNaked();
         assertTrue(metodo.hayUnaCasillaConUnSoloPosibleValor(posiciones));
     }
     
@@ -39,7 +39,7 @@ public class CeldaConUnicaPosicionTest {
         List<Posicion> posiciones = getPosicionesVaciasDeCuadrante(Cuadrante.CENTRAL_DERECHO)
                 .getPosicionesConAnotacionesRemovidas();
         
-        CeldaConUnicaPosicion metodo = new CeldaConUnicaPosicion();
+        SingleNaked metodo = new SingleNaked();
         assertFalse(metodo.hayUnaCasillaConUnSoloPosibleValor(posiciones));
     }
     
@@ -47,7 +47,7 @@ public class CeldaConUnicaPosicionTest {
     public void getRespuestaCorrecta() {
         Anotador anotador = getPosicionesVaciasDeCuadrante(Cuadrante.SUPERIOR_DERECHO);
         
-        CeldaConUnicaPosicion posicion = new CeldaConUnicaPosicion();
+        SingleNaked posicion = new SingleNaked();
         
         Posicion esperado = new Posicion(Fila._2, Columna._8, new Celda(Valor._2));
         
@@ -60,7 +60,7 @@ public class CeldaConUnicaPosicionTest {
     @Test
     public void getRespuestaIncorrecta() {
         Anotador anotador = getPosicionesVaciasDeCuadrante(Cuadrante.SUPERIOR_DERECHO);
-        CeldaConUnicaPosicion posicion = new CeldaConUnicaPosicion();
+        SingleNaked posicion = new SingleNaked();
         
         Posicion esperado = new Posicion(Fila._2, Columna._8, new Celda(Valor._2));
         

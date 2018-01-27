@@ -11,11 +11,11 @@ import org.proundmega.sudokucore.elementos.Posicionable;
 import org.proundmega.sudokucore.elementos.grid.Grid;
 import org.proundmega.sudokucore.elementos.anotador.Anotador;
 
-public class SolverCuadrante implements Solver {
+public class SolverGeneral implements Solver {
     private List<Posicionable> posicionables;
     private Function<Anotador, Pipeline<Anotador, Optional<MetadataSolver>>> pipeline;
 
-    public SolverCuadrante(Function<Anotador, Pipeline<Anotador, Optional<MetadataSolver>>> pipeline, List<Posicionable> posicionables) {
+    public SolverGeneral(Function<Anotador, Pipeline<Anotador, Optional<MetadataSolver>>> pipeline, List<Posicionable> posicionables) {
         this.pipeline = pipeline;
         this.posicionables = posicionables;
     }

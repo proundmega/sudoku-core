@@ -10,9 +10,9 @@ import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.elementos.Valor;
 import org.proundmega.sudokucore.elementos.anotador.Anotador;
 
-public class ValorConUnicaPosicion implements ProcesadorAnotaciones {
+public class SolucionSimple implements ProcesadorAnotaciones {
     
-    public ValorConUnicaPosicion() {
+    public SolucionSimple() {
     }
     
     @Override

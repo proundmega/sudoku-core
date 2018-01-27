@@ -12,8 +12,6 @@ import java.util.stream.Stream;
 import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.elementos.Celda;
 import org.proundmega.sudokucore.elementos.Celdas;
-import org.proundmega.sudokucore.elementos.Columna;
-import org.proundmega.sudokucore.elementos.Fila;
 import org.proundmega.sudokucore.elementos.Posicionable;
 import org.proundmega.sudokucore.elementos.Valor;
 
@@ -74,19 +72,8 @@ public class AnotadorGeneral implements Anotador {
         return removerNotacionesEnBaseAValorEnComun(posiciones, celdas, Posicion::getFila);
     }
     
-    private static <T> List<Posicion> getPosicionesDeGridEnBaseA(List<Posicion> posiciones, Celda[][] celdas, Function<Posicion, T> mapper) {
-        Set<T> valoresEnComun = posiciones.stream()
-                .map(mapper)
-                .collect(Collectors.toSet());
-        
-        return Celdas.asPosiciones(celdas).stream()
-                .filter(posicion -> valoresEnComun.contains(mapper.apply(posicion)))
-                .filter(posicion -> !posiciones.contains(posicion))
-                .collect(Collectors.toList());
-    }
-    
     private static <T> List<Posicion> removerNotacionesEnBaseAValorEnComun (List<Posicion> posiciones, Celda[][] celdas, Function<Posicion, T> mapper) {
-        Map<T, Set<Valor>> valoresUsados = getPosicionesDeGridEnBaseA(posiciones, celdas, mapper).stream()
+        Map<T, Set<Valor>> valoresUsados = AnotadorMapper.getPosicionesEnBaseAFuncionTomandoComoBase(posiciones, celdas, mapper).stream()
                 .collect(Collectors.groupingBy(mapper, Collectors.mapping(Posicion::getValorActual, Collectors.toSet())));
         
         Set<Valor> vacio = Collections.EMPTY_SET;
@@ -115,16 +102,12 @@ public class AnotadorGeneral implements Anotador {
 
     @Override
     public List<Posicion> getPosicionesQueLimitanElValor(Valor valor) {
-        List<Posicion> posiciones = new ArrayList<>();
+        if (valor == Valor.VACIA) return Collections.EMPTY_LIST;
         
-        if (valor == Valor.VACIA) return posiciones;
+        AnotadorMapper mapper = new AnotadorMapper(celdas, posicionable.getPosicionesVacias(celdas));
+        List<Posicion> posiciones = mapper.groupByFilaColumnaYCuadrante();
         
-        List<Posicion> valoresFilaLLenos = getPosicionesDeGridEnBaseA(posicionable.getPosicionesVacias(celdas), celdas, Posicion::getFila);
-        List<Posicion> valoresColumnaLLenos = getPosicionesDeGridEnBaseA(posicionable.getPosicionesVacias(celdas), celdas, Posicion::getColumna);
         List<Posicion> posicionesYaEnSolver = posicionable.getPosicionesConValor(celdas);
-        
-        posiciones.addAll(valoresFilaLLenos);
-        posiciones.addAll(valoresColumnaLLenos);
         
         return posiciones.stream()
                 .filter(posicionConValor -> posicionConValor.getValorActual() == valor)

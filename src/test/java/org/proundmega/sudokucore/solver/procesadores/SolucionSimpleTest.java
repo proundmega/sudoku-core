@@ -19,14 +19,14 @@ import org.proundmega.sudokucore.elementos.anotador.AnotadorGeneral;
 import org.proundmega.sudokucore.io.FileToSudoku;
 import org.proundmega.sudokucore.io.TestUtils;
 
-public class ValorConUnicaPosicionTest {
+public class SolucionSimpleTest {
     
     @Test
     public void unValorSoloPuedeEstarEnUnLugarCorrecto() {
         List<Posicion> posiciones = crearAnotaciones(Cuadrante.SUPERIOR_DERECHO)
                 .getPosicionesConAnotacionesRemovidas();
         
-        ValorConUnicaPosicion pa = new ValorConUnicaPosicion();
+        SolucionSimple pa = new SolucionSimple();
         
         assertTrue(pa.unValorSoloPuedeEstarEnUnLugar(posiciones));
     }
@@ -48,7 +48,7 @@ public class ValorConUnicaPosicionTest {
         List<Posicion> posiciones = crearAnotaciones(Cuadrante.CENTRAL_CENTRAL)
                 .getPosicionesConAnotacionesRemovidas();
         
-        ValorConUnicaPosicion pa = new ValorConUnicaPosicion();
+        SolucionSimple pa = new SolucionSimple();
         
         assertFalse(pa.unValorSoloPuedeEstarEnUnLugar(posiciones));
     }
@@ -58,7 +58,7 @@ public class ValorConUnicaPosicionTest {
         Anotador anotador = crearAnotaciones(Cuadrante.SUPERIOR_DERECHO);
         
         Posicion esperado = new Posicion(Fila._2, Columna._9, new Celda(Valor._3));
-        ValorConUnicaPosicion pa = new ValorConUnicaPosicion();
+        SolucionSimple pa = new SolucionSimple();
         
         Posicion obtenido = pa.apply(anotador).get().getPosicionResuelta();
         

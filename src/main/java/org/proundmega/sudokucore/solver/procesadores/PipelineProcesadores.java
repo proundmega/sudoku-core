@@ -26,7 +26,7 @@ public class PipelineProcesadores {
     private static List<Function<Anotador, Optional<MetadataSolver>>> getProcesadoresSimples() {
         List<Function<Anotador, Optional<MetadataSolver>>> procesadores = new ArrayList<>();
         procesadores.add(new ValorFaltante());
-        procesadores.add(new ValorConUnicaPosicion());
+        procesadores.add(new SolucionSimple());
         
         return procesadores;
     }
@@ -38,7 +38,7 @@ public class PipelineProcesadores {
     
     private static List<Function<Anotador, Optional<MetadataSolver>>> getProcesadoresIntermedios() {
         List<Function<Anotador, Optional<MetadataSolver>>> procesadores = new ArrayList<>();
-        procesadores.add(new CeldaConUnicaPosicion());
+        procesadores.add(new SingleNaked());
         
         return procesadores;
     }
