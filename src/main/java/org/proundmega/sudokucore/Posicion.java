@@ -5,7 +5,6 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import org.proundmega.sudokucore.elementos.Celda;
 import lombok.AllArgsConstructor;
 import lombok.Value;
 import org.proundmega.sudokucore.elementos.Columna;
@@ -18,37 +17,30 @@ import org.proundmega.sudokucore.elementos.Valor;
 public class Posicion implements Comparable<Posicion>{
     private Fila fila;
     private Columna columna;
-    private Celda celda;
+    private Valor valorActual;
     private Set<Valor> anotaciones;
     
     private static Posicion POSICION_NULA = new Posicion(null, null, Valor.VACIA);
     
-    public Posicion(int fila, int columna, Celda celda) {
+    public Posicion(int fila, int columna, Valor celda) {
         this.fila = Fila.toFila(fila);
         this.columna = Columna.toColumna(columna);
-        this.celda = celda;
-        this.anotaciones = new TreeSet<>();
-    }
-
-    public Posicion(Fila fila, Columna columna, Celda celda) {
-        this.fila = fila;
-        this.columna = columna;
-        this.celda = celda;
+        this.valorActual = celda;
         this.anotaciones = new TreeSet<>();
     }
     
-    public Posicion(Fila fila, Columna columna, Valor valor) {
+    public Posicion(Fila fila, Columna columna, Valor celda) {
         this.fila = fila;
         this.columna = columna;
-        this.celda = new Celda(valor);
+        this.valorActual = celda;
         this.anotaciones = new TreeSet<>();
     }
-
+    
     public Posicion(Posicion coordenadas, Valor nuevoValor) {
         this.fila = coordenadas.fila;
         this.columna = coordenadas.columna;
-        this.celda = new Celda(nuevoValor);
         this.anotaciones = new TreeSet<>();
+        this.valorActual = nuevoValor;
     }
     
     public int getFilaAsNumero() {
@@ -59,19 +51,15 @@ public class Posicion implements Comparable<Posicion>{
         return columna.getIndice();
     }
     
-    public Valor getValorActual() {
-        return celda.getValorActual();
-    }
-    
     public Posicion addAnotacion(Valor anotacion) {
         Set<Valor> anotacionesCopia = anotaciones.stream()
                 .collect(Collectors.toCollection(TreeSet::new));
         anotacionesCopia.add(anotacion);
-        return new Posicion(fila, columna, celda, anotacionesCopia);
+        return new Posicion(fila, columna, valorActual, anotacionesCopia);
     }
     
     public Posicion addAnotaciones(Set<Valor> anotaciones) {
-        return new Posicion(fila, columna, celda, anotaciones);
+        return new Posicion(fila, columna, valorActual, anotaciones);
     }
     
     public Posicion removeAnotaciones(Set<Valor> anotacionesARemover) {
@@ -79,7 +67,7 @@ public class Posicion implements Comparable<Posicion>{
                 .filter(anotacion -> !anotacionesARemover.contains(anotacion))
                 .collect(Collectors.toCollection(TreeSet::new));
         
-        return new Posicion(fila, columna, celda, anotacionesConRemociones);
+        return new Posicion(fila, columna, valorActual, anotacionesConRemociones);
     }
 
     @Override

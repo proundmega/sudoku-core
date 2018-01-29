@@ -2,17 +2,19 @@ package org.proundmega.sudokucore.io;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Serializable;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.proundmega.sudokucore.Sudoku;
+import org.proundmega.sudokucore.elementos.Valors;
+import org.proundmega.sudokucore.elementos.Valor;
 
 @AllArgsConstructor
 public class FileToSudoku implements Serializable {
@@ -29,10 +31,7 @@ public class FileToSudoku implements Serializable {
 
     private Sudoku readArchivoYParsearlo(Reader lector) throws IOException {
         try (BufferedReader reader = new BufferedReader(lector)) {
-            String[][] valores = reader.lines()
-                    .filter(linea -> !linea.trim().isEmpty())
-                    .map(this::getValores)
-                    .toArray(String[][]::new);
+            String[][] valores = extraerValores(reader);
 
             return new Sudoku(valores);
         } catch (IllegalArgumentException ex) {
@@ -40,7 +39,15 @@ public class FileToSudoku implements Serializable {
         }
     }
 
-    private String[] getValores(String linea) {
+    private static String[][] extraerValores(final BufferedReader reader) {
+        String[][] valores = reader.lines()
+                .filter(linea -> !linea.trim().isEmpty())
+                .map(FileToSudoku::getValores)
+                .toArray(String[][]::new);
+        return valores;
+    }
+
+    private static String[] getValores(String linea) {
         Matcher matcher = PATRON_SUDOKU.matcher(linea);
         String[] lineas = new String[9];
 
@@ -48,5 +55,16 @@ public class FileToSudoku implements Serializable {
             lineas[fila] = matcher.group(1);
         }
         return lineas;
+    }
+
+    public static Valor[][] crearSudokuAsValor(File testResource) throws FileNotFoundException, IOException {
+        return procesarArchivo(new FileReader(testResource), Valors::copyOf);
+    }
+    
+    private static <T> T procesarArchivo(Reader reader, Function<String[][], T> funcion) throws IOException {
+        try(BufferedReader bufferedReader = new BufferedReader(reader)) {
+            String[][] valores = extraerValores(bufferedReader);
+            return funcion.apply(valores);
+        }
     }
 }

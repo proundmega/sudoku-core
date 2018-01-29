@@ -1,21 +1,20 @@
 package org.proundmega.sudokucore;
 
-import org.proundmega.sudokucore.elementos.grid.Grid;
-import org.proundmega.sudokucore.elementos.Celda;
+import org.proundmega.sudokucore.elementos.Grid;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.proundmega.sudokucore.elementos.Valor;
 import org.proundmega.sudokucore.solver.Pipeline;
 import org.proundmega.sudokucore.solver.PipelineSolver;
-import org.proundmega.sudokucore.solver.Solver;
 
 @ToString
 @EqualsAndHashCode
 public class Sudoku {
     private Grid gridActual;
     
-    public Sudoku(Celda[][] celdas) {
-        this.gridActual = new Grid(celdas);
+    public Sudoku(Valor[][] valores) {
+        this.gridActual = new Grid(valores);
     }
     
     public Sudoku(Grid grid) {

@@ -44,4 +44,8 @@ public enum Valor {
     public String toString() {
         return valorAsString;
     }
+    
+    public boolean estaVacia() {
+        return this == Valor.VACIA;
+    }
 }

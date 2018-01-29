@@ -2,7 +2,6 @@ package org.proundmega.sudokucore;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.proundmega.sudokucore.elementos.Celda;
 import org.proundmega.sudokucore.elementos.Columna;
 import org.proundmega.sudokucore.elementos.Cuadrante;
 import org.proundmega.sudokucore.elementos.Fila;
@@ -21,7 +20,7 @@ public class PosicionTest {
     
     @Test
     public void probarComparacionDePosicionNulaEnNoNulo() {
-        Posicion posicion = new Posicion(Fila._1, Columna._1, new Celda());
+        Posicion posicion = new Posicion(Fila._1, Columna._1, Valor.VACIA);
         assertFalse(Posicion.esNula(posicion));
     }
     

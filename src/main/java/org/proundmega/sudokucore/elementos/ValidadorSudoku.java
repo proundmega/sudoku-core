@@ -11,40 +11,40 @@ import org.proundmega.sudokucore.Posicion;
 
 public class ValidadorSudoku {
     
-    public static boolean esFilaCompleta(Celda[][] celdas, Fila fila) {
-        return esBloqueCompleto(fila.getFila(celdas));
+    public static boolean esFilaCompleta(Valor[][] valores, Fila fila) {
+        return esBloqueCompleto(fila.getFila(valores));
     }
 
-    private static boolean esBloqueCompleto(Celda[] bloque) {
+    private static boolean esBloqueCompleto(Valor[] bloque) {
         return !Arrays.stream(bloque)
-                .anyMatch(Celda::estaVacia);
+                .anyMatch(Valor::estaVacia);
     }
     
-    public static boolean esColumnaCompleta(Celda[][] celdas, Columna columna) {
+    public static boolean esColumnaCompleta(Valor[][] celdas, Columna columna) {
         return esBloqueCompleto(columna.getColumna(celdas));
     }
     
-    public static boolean esCuadranteCompleto(Celda[][] celdas, Cuadrante cuadrante) {
+    public static boolean esCuadranteCompleto(Valor[][] valores, Cuadrante cuadrante) {
         return esBloqueCompleto(
-                Arrays.stream(cuadrante.getCuadrante(celdas))
+                Arrays.stream(cuadrante.getCuadrante(valores))
                         .flatMap(tupla -> Arrays.stream(tupla))
-                        .toArray(Celda[]::new)
+                        .toArray(Valor[]::new)
         );
     }
     
-    public static boolean esCuadranteCompleto(Celda[][] cuadrante) {
+    public static boolean esCuadranteCompleto(Valor[][] cuadrante) {
         return esBloqueCompleto(
                 Arrays.stream(cuadrante)
                         .flatMap(tupla -> Arrays.stream(tupla))
-                        .toArray(Celda[]::new)
+                        .toArray(Valor[]::new)
         );
     }
     
-    public static boolean esFilaValida(Celda[][] celdas, Fila fila) {
+    public static boolean esFilaValida(Valor[][] celdas, Fila fila) {
         return getPosicionesRepetidasDePosicionable(celdas, fila).isEmpty();
     }
     
-    private static List<Posicion> getPosicionesRepetidasDePosicionable(Celda[][] celdas, Posicionable posicionable) {
+    private static List<Posicion> getPosicionesRepetidasDePosicionable(Valor[][] celdas, Posicionable posicionable) {
         List<Posicion> posiciones = posicionable.getPosiciones(celdas);
         Map<Valor, Long> conteo = getConteoPorValorList(posiciones);
         
@@ -54,16 +54,15 @@ public class ValidadorSudoku {
                 .collect(Collectors.toSet());
         
         return posiciones.stream()
-                .filter(posicion -> celdasRepetidas.contains(posicion.getCelda().getValorActual()))
+                .filter(posicion -> celdasRepetidas.contains(posicion.getValorActual()))
                 .collect(Collectors.toList());
                 
     }
     
     private static Map<Valor, Long> getConteoPorValorList(List<Posicion> posiciones) {
         Map<Valor, Long> elementosContados = posiciones.stream()
-                .map(Posicion::getCelda)
-                .filter(celda -> !celda.estaVacia())
-                .map(Celda::getValorActual)
+                .map(Posicion::getValorActual)
+                .filter(valor -> !valor.estaVacia())
                 .collect(
                         Collectors.groupingBy(Function.identity(), Collectors.counting()
                         )
@@ -71,15 +70,15 @@ public class ValidadorSudoku {
         return elementosContados;
     }
     
-    public static boolean esColumnaValida(Celda[][] celdas, Columna columna) {
+    public static boolean esColumnaValida(Valor[][] celdas, Columna columna) {
         return getPosicionesRepetidasDePosicionable(celdas, columna).isEmpty();
     }
     
-    public static boolean esCuadranteValido(Celda[][] celdas, Cuadrante cuadrante) {
+    public static boolean esCuadranteValido(Valor[][] celdas, Cuadrante cuadrante) {
         return getPosicionesRepetidasDePosicionable(celdas, cuadrante).isEmpty();
     }
     
-    public static boolean esCeldasValidasYCompletas(Celda[][] celdas) {
+    public static boolean esValorsValidasYCompletas(Valor[][] celdas) {
         boolean filas = filasValidasYCompletas(celdas);
         boolean columnas = columnasValidasYCompletas(celdas);
         boolean cuadrantes = cuadrantesValidosYCompletos(celdas);
@@ -87,7 +86,7 @@ public class ValidadorSudoku {
         return filas && columnas && cuadrantes;
     }
     
-    private static boolean filasValidasYCompletas(Celda[][] celdas) {
+    private static boolean filasValidasYCompletas(Valor[][] celdas) {
         for(Fila fila : Fila.values()) {
             if (!esFilaValida(celdas, fila)) {
                 manejarExcepcionDeElementosRepetidos(celdas, fila);
@@ -99,12 +98,12 @@ public class ValidadorSudoku {
         return true;
     }
 
-    private static void manejarExcepcionDeElementosRepetidos(Celda[][] celdas, Posicionable posicionable) throws InvalidSudokuException {
+    private static void manejarExcepcionDeElementosRepetidos(Valor[][] celdas, Posicionable posicionable) throws InvalidSudokuException {
         List<Posicion> posicionesRepetidas = getPosicionesRepetidasDePosicionable(celdas, posicionable);
         throw new InvalidSudokuException("Sudoku no valido en la fila " + posicionable.toString() +  ": entradas duplicadas ", posicionesRepetidas);
     }
     
-    private static boolean columnasValidasYCompletas(Celda[][] celdas) {
+    private static boolean columnasValidasYCompletas(Valor[][] celdas) {
         for(Columna columna : Columna.values()) {
             if (!esColumnaValida(celdas, columna)) {
                 manejarExcepcionDeElementosRepetidos(celdas, columna);
@@ -116,7 +115,7 @@ public class ValidadorSudoku {
         return true;
     }
     
-    private static boolean cuadrantesValidosYCompletos(Celda[][] celdas) {
+    private static boolean cuadrantesValidosYCompletos(Valor[][] celdas) {
         for(Cuadrante cuadrante : Cuadrante.values()) {
             if (!esCuadranteValido(celdas, cuadrante)) {
                 manejarExcepcionDeElementosRepetidos(celdas, cuadrante);

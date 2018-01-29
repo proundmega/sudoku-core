@@ -5,37 +5,27 @@ import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
-import org.proundmega.sudokucore.elementos.grid.Grid;
 import org.proundmega.sudokucore.InvalidSudokuException;
 import static org.proundmega.sudokucore.elementos.Valor.*;
 import org.proundmega.sudokucore.data.GridFactory;
 
 public class ValidadorSudokuTest {
-    private static Celda[][] celdas;
+    private static Valor[][] celdas;
 
     @BeforeClass
     public static void crearSudoku() {
-        celdas = new Celda[][] {
-            crearCeldas( _1,    _2,    _3,   _4,    _5,    _6,    _7,   _8,     _9),
-            crearCeldas( _2, VACIA, VACIA, VACIA, VACIA, VACIA, VACIA, VACIA, VACIA),
-            crearCeldas( _3, VACIA, VACIA, VACIA, VACIA, VACIA, VACIA, VACIA, VACIA),
-            crearCeldas( _4, VACIA, VACIA, VACIA, VACIA, VACIA, VACIA, VACIA, VACIA),
-            crearCeldas( _5, VACIA, VACIA,   _5,    _7,    _3,    _5, VACIA, VACIA),
-            crearCeldas( _6, VACIA, VACIA,   _5,    _7,    _3,  VACIA, VACIA, VACIA),
-            crearCeldas( _7, VACIA, VACIA,   _6,    _4,    _8,    _9,    _1,    _2),
-            crearCeldas( _8, VACIA, VACIA, VACIA, VACIA, VACIA,    _5,    _7,    _3),
-            crearCeldas( _9, VACIA, VACIA, VACIA, VACIA, VACIA,    _6,    _4,    _8)
+        celdas = new Valor[][] {
+            new Valor[]{ _1,    _2,    _3,   _4,    _5,    _6,    _7,   _8,     _9},
+            new Valor[]{ _2, VACIA, VACIA, VACIA, VACIA, VACIA, VACIA, VACIA, VACIA},
+            new Valor[]{ _3, VACIA, VACIA, VACIA, VACIA, VACIA, VACIA, VACIA, VACIA},
+            new Valor[]{ _4, VACIA, VACIA, VACIA, VACIA, VACIA, VACIA, VACIA, VACIA},
+            new Valor[]{ _5, VACIA, VACIA,   _5,    _7,    _3,    _5, VACIA, VACIA},
+            new Valor[]{ _6, VACIA, VACIA,   _5,    _7,    _3,  VACIA, VACIA, VACIA},
+            new Valor[]{ _7, VACIA, VACIA,   _6,    _4,    _8,    _9,    _1,    _2},
+            new Valor[]{ _8, VACIA, VACIA, VACIA, VACIA, VACIA,    _5,    _7,    _3},
+            new Valor[]{ _9, VACIA, VACIA, VACIA, VACIA, VACIA,    _6,    _4,    _8}
         };
         
-    }
-    
-    private static Celda[] crearCeldas(Valor... valores) {
-        List<Celda> celdas = new ArrayList<>();
-        for (Valor valor : valores) {
-            celdas.add(new Celda(valor));
-        }
-        
-        return celdas.toArray(new Celda[9]);
     }
     
     @Test
@@ -110,29 +100,29 @@ public class ValidadorSudokuTest {
     
     @Test
     public void isResueltaQueEstaResuelta() {
-        assertTrue(ValidadorSudoku.esCeldasValidasYCompletas(GridFactory.getSudokuFacil1Resuelto()));
+        assertTrue(ValidadorSudoku.esValorsValidasYCompletas(GridFactory.getSudokuFacil1Resuelto()));
     }
     
     @Test
     public void isResueltaConFilaIncompleta() {
-        assertFalse(ValidadorSudoku.esCeldasValidasYCompletas(GridFactory.getSudokuIncompleto1()));
+        assertFalse(ValidadorSudoku.esValorsValidasYCompletas(GridFactory.getSudokuIncompleto1()));
     }
     
     @Test(expected = InvalidSudokuException.class) 
     public void isResueltaConValoresInvalidos1() {
-        ValidadorSudoku.esCeldasValidasYCompletas(GridFactory.getSudokuInvalido1());
+        ValidadorSudoku.esValorsValidasYCompletas(GridFactory.getSudokuInvalido1());
     }
     
     @Test(expected = InvalidSudokuException.class) 
     public void isResueltaConValoresInvalidos2() {
-        ValidadorSudoku.esCeldasValidasYCompletas(celdas);
+        ValidadorSudoku.esValorsValidasYCompletas(celdas);
     }
     
     public void isCuadranteCompletoValido() {
-        Celda[][] cuadranteCompleto = new Celda[][] {
-            GridFactory.crearCeldas(_1, _2, _3),
-            GridFactory.crearCeldas(_4, _5, _6),
-            GridFactory.crearCeldas(_7, _8, _9)
+        Valor[][] cuadranteCompleto = new Valor[][] {
+            new Valor[]{_1, _2, _3},
+            new Valor[]{_4, _5, _6},
+            new Valor[]{_7, _8, _9}
         };
         
         assertTrue(ValidadorSudoku.esCuadranteCompleto(cuadranteCompleto));

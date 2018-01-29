@@ -6,7 +6,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.data.GridFactory;
-import org.proundmega.sudokucore.elementos.grid.Grid;
 
 public class FilaTest {
     
@@ -24,14 +23,14 @@ public class FilaTest {
     public void obtenerFilaAsListCorrectamente() {
         Fila fila = Fila._7;
         
-        Celda[][] celda = GridFactory.getSudokuFacil1Resuelto();
+        Valor[][] celda = GridFactory.getSudokuFacil1Resuelto();
         List<Posicion> posiciones = getListaFila7(celda);
         List<Posicion> obtenidos = fila.getPosiciones(celda);
         
         assertEquals(posiciones, obtenidos);
     }
     
-    private List<Posicion> getListaFila7(Celda[][] celdas) {
+    private List<Posicion> getListaFila7(Valor[][] celdas) {
         List<Posicion> posiciones = new ArrayList<>();
         
         posiciones.add(new Posicion(7, 1, celdas[6][0]));
@@ -51,7 +50,7 @@ public class FilaTest {
     
     @Test
     public void getPosicionesVaciasCorrectas() {
-        Celda[][] celdas = GridFactory.getSudokuFacil1();
+        Valor[][] celdas = GridFactory.getSudokuFacil1();
         Fila filaObjetivo = Fila._1;
         
         List<Posicion> esperado = getPosicionesVaciasFila1();
@@ -74,7 +73,7 @@ public class FilaTest {
     
     @Test
     public void getPosicionesLlenasCorrectas() {
-        Celda[][] celdas = GridFactory.getSudokuFacil1();
+        Valor[][] celdas = GridFactory.getSudokuFacil1();
         Fila filaObjetivo = Fila._6;
         
         List<Posicion> esperado = getPosicionesLlenasFila6();

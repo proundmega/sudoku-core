@@ -1,0 +1,35 @@
+node{
+    
+    stage('Clone') {
+        git url: "https://github.com/proundmega/sudoku-core.git"
+    }
+    
+    stage('Unit test') {
+        sh 'mvn clean test'
+        junit '**/target/surefire-reports/*.xml'
+    }
+    
+    stage("Analysis") {
+        sh "mvn jxr:jxr pmd:pmd findbugs:findbugs pmd:cpd -Dcpd.includeTests=true -Dcpd.includeXmlInSite=true"
+        pmd pattern: '**/target/pmd.xml'
+        findbugs pattern: '**/findbugsXml.xml'
+    }
+
+    stage('SonarQube') {
+        withSonarQubeEnv('SonarServer') {
+            sh 'mvn sonar:sonar'
+        }
+    }
+    
+    stage('Release') {
+        sh 'mvn install -Dmaven.test.skip=true'
+        archive 'target/*.jar'
+    }
+    
+    // añade este paso solo para builds largos
+    stage('Library security') {
+        //sh 'mvn org.owasp:dependency-check-maven:check -Dformat=XML -Ddownloader.quick.query.timestamp=false'
+        //dependencyCheck
+        //step([$class: 'DependencyCheckPublisher', unstableTotalAll: '0'])
+    }
+}

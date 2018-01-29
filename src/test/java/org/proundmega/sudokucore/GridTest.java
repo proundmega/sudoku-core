@@ -1,15 +1,9 @@
-package org.proundmega.sudokucore.elementos.grid;
+package org.proundmega.sudokucore.elementos;
 
-import org.proundmega.sudokucore.elementos.grid.Grid;
-import org.proundmega.sudokucore.elementos.Valor;
-import org.proundmega.sudokucore.elementos.Celda;
-import java.util.Arrays;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Ignore;
 import org.proundmega.sudokucore.data.GridFactory;
-import org.proundmega.sudokucore.elementos.Columna;
-import org.proundmega.sudokucore.elementos.Fila;
 
 public class GridTest {
     
@@ -18,42 +12,42 @@ public class GridTest {
 
     @Test(expected = NullPointerException.class)
     public void crearNuevoSudokuNulo() {
-        Celda[][] celdasErroneas = null;
+        Valor[][] celdasErroneas = null;
         Grid grid = new Grid(celdasErroneas);
     }
     
     @Test(expected = IllegalArgumentException.class)
     public void crearNuevoSudokuSinDimensionesApropiadas() {
-        Celda[][] celdasErroneas = new Celda[0][4];
+        Valor[][] celdasErroneas = new Valor[0][4];
         Grid grid = new Grid(celdasErroneas);
     }
     
     @Test(expected = IllegalArgumentException.class)
     public void crearNuevoSudokuSinDimensionesApropiadas2() {
-        Celda[][] celdasErroneas = new Celda[9][8];
+        Valor[][] celdasErroneas = new Valor[9][8];
         Grid grid = new Grid(celdasErroneas);
     }
     
     @Test(expected = IllegalArgumentException.class)
     public void crearNuevoSudokuSinDimensionesApropiadas3() {
-        Celda[][] celdasErroneas = new Celda[1][10];
+        Valor[][] celdasErroneas = new Valor[1][10];
         Grid grid = new Grid(celdasErroneas);
     }
     
     @Test
     public void crearNuevoSudokuVacioValido() {
-        Celda[][] celdasErroneas = new Celda[9][9];
+        Valor[][] celdasErroneas = new Valor[9][9];
         Grid grid = new Grid(celdasErroneas);
         assertTrue(true);
     }
     
     @Test
     public void reemplazarElementoEnGrid() {
-        Celda[][] celdas = GridFactory.getSudokuFacil1Resuelto();
+        Valor[][] celdas = GridFactory.getSudokuFacil1Resuelto();
         Grid grid = new Grid(celdas);
         
-        Celda[][] copia = GridFactory.getSudokuFacil1Resuelto();
-        copia[2][3] = new Celda(Valor.VACIA);
+        Valor[][] copia = GridFactory.getSudokuFacil1Resuelto();
+        copia[2][3] = Valor.VACIA;
         Grid esperado = new Grid(copia);
         
         assertNotEquals(celdas, copia);
@@ -100,9 +94,9 @@ public class GridTest {
         valores[filaPrueba][columnaPrueba] = valor;
                 
         Grid grid = new Grid(valores);
-        Celda esperada = new Celda(Valor.toValor(valor));
-        Celda obtenida = grid.getPosicion(Fila.toFila(filaPrueba + 1), Columna.toColumna(columnaPrueba + 1)).getCelda();
+        Valor esperado = Valor.toValor(valor);
+        Valor obtenido = grid.getPosicion(Fila.toFila(filaPrueba + 1), Columna.toColumna(columnaPrueba + 1)).getValorActual();
         
-        assertEquals(esperada, obtenida);
+        assertEquals(esperado, obtenido);
     }
 }

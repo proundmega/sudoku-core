@@ -1,56 +1,58 @@
-package org.proundmega.sudokucore.elementos.grid;
+package org.proundmega.sudokucore.elementos;
 
-import org.proundmega.sudokucore.elementos.Valor;
-import org.proundmega.sudokucore.elementos.Celda;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.proundmega.sudokucore.Posicion;
-import org.proundmega.sudokucore.elementos.Celdas;
-import org.proundmega.sudokucore.elementos.Columna;
-import org.proundmega.sudokucore.elementos.Cuadrante;
-import org.proundmega.sudokucore.elementos.Fila;
-import org.proundmega.sudokucore.elementos.Posicionable;
-import org.proundmega.sudokucore.elementos.ValidadorSudoku;
 import org.proundmega.sudokucore.elementos.anotador.Anotador;
 import org.proundmega.sudokucore.elementos.anotador.AnotadorGeneral;
 
 @EqualsAndHashCode
 public class Grid {
-    private Celda[][] celdas = new Celda[9][9];
+    private Valor[][] valores = new Valor[9][9];
     
     public Grid() {
-        crearCeldasVacias();
+        crearValoresVacios();
     }
 
-    private void crearCeldasVacias() {
+    private void crearValoresVacios() {
         for (int fila = 0; fila < 9; fila++) {
             for (int columna = 0; columna < 9; columna++) {
-                celdas[fila][columna] = new Celda();
+                valores[fila][columna] = Valor.VACIA;
             }
         }
     }
     
-    public Grid(Celda[][] celdas) {
-        verificarCeldasEnviadas(celdas); 
-        this.celdas = copiarCeldas(celdas);
+    public Grid(Valor[][] valores) {
+        verificarValoresEnviadas(valores);
+        this.valores = copiarValores(valores);
+    }
+    
+    private Valor[][] copiarValores(Valor[][] valores) {
+        Valor[][] copia = new Valor[9][9];
+        for(int fila = 0; fila < 9; fila++) {
+            for(int columna = 0; columna < 9; columna++) {
+                copia[fila][columna] = valores[fila][columna];
+            }
+        }
+        return copia;
     }
     
     public Grid(String[][] gridAsString) {
-        verificarCeldasEnviadas(gridAsString);
-        pasarLosValoresACelda(gridAsString);
+        verificarValoresEnviadas(gridAsString);
+        pasarLosValoresAValor(gridAsString);
     }
 
-    private void pasarLosValoresACelda(String[][] gridAsString) {
+    private void pasarLosValoresAValor(String[][] gridAsString) {
         for(int fila = 0; fila < 9; fila++) {
             for(int columna = 0; columna < 9; columna++) {
                 Valor valor = Valor.toValor(gridAsString[fila][columna]);
-                this.celdas[fila][columna] = new Celda(valor);
+                this.valores[fila][columna] = valor;
             }
         }
     }
     
-    private static <T> void verificarCeldasEnviadas(@NonNull T[][] celdasEnviadas) throws IllegalArgumentException {
+    private static <T> void verificarValoresEnviadas(@NonNull T[][] celdasEnviadas) throws IllegalArgumentException {
         if (celdasEnviadas.length == 0) { 
             throw new IllegalArgumentException("Matriz de sudoku con numero de filas 0...");
         }
@@ -59,22 +61,11 @@ public class Grid {
         }
     }
 
-    private Celda[][] copiarCeldas(Celda[][] celdasACopiar) {
-        Celda[][] celdas = new Celda[9][9];
-        for (int fila = 0; fila < 9; fila++) {
-            for (int columna = 0; columna < 9; columna++) {
-                celdas[fila][columna] = celdasACopiar[fila][columna];
-            }
-        }
-        
-        return celdas;
-    }
-
     @Override
     public String toString() {
         StringBuilder print = new StringBuilder();
         for (int i = 0; i < 9; i++) {
-            Celda[] fila = celdas[i];
+            Valor[] fila = valores[i];
             print.append(printFila(fila));
             
             if (i == 2 || i == 5) {
@@ -85,11 +76,11 @@ public class Grid {
         return print.toString();
     }
 
-    private String printFila(Celda[] fila) {
+    private String printFila(Valor[] fila) {
         StringBuilder print = new StringBuilder();
         for (int i = 0; i < 9; i++) {
-            Celda celda = fila[i];
-            print.append(celda.toString());
+            Valor celda = fila[i];
+            print.append("[").append(celda.toString()).append("]");
             
             if (i == 2 || i == 5) {
                 print.append("  ");
@@ -100,30 +91,26 @@ public class Grid {
     }
     
     public Grid reemplazarCasilla(@NonNull Fila fila, @NonNull Columna columna, @NonNull Valor valor) {
-        Celda[][] copia = copiarCeldas(celdas);
-        copia[fila.getIndiceFilaParaArray()][columna.getIndiceColumnaParaArray()] = new Celda(valor);
+        Valor[][] copia = copiarValores(valores);
+        copia[fila.getIndiceFilaParaArray()][columna.getIndiceColumnaParaArray()] = valor;
         
         return new Grid(copia);
     }
     
     public Grid reemplazarCasilla(Posicion posicion) {
-        return reemplazarCasilla(posicion.getFila(), posicion.getColumna(), posicion.getCelda().getValorActual());
-    }
-    
-    public SubGridCuadrante getSubGrid(Cuadrante cuadrante) {
-        return new SubGridCuadrante(celdas, cuadrante);
+        return reemplazarCasilla(posicion.getFila(), posicion.getColumna(), posicion.getValorActual());
     }
     
     public boolean isGridResuelta() {
-        return ValidadorSudoku.esCeldasValidasYCompletas(celdas);
+        return ValidadorSudoku.esValorsValidasYCompletas(valores);
     }
     
     public Posicion getPosicion(Fila fila, Columna columna) {
-        return Celdas.getPosicion(celdas, fila, columna);
+        return Valors.getPosicion(valores, fila, columna);
     }
 
     public List<Posicion> getPosiciones() {
-        return Celdas.asPosiciones(celdas);
+        return Valors.asPosiciones(valores);
     }
     
     public String[][] getValoresAsString() {
@@ -131,7 +118,7 @@ public class Grid {
         
         for(int fila = 0; fila < 9; fila++) {
             for(int columna = 0; columna < 9; columna++) {
-                gridAsString[fila][columna] = celdas[fila][columna].getValorActual().toString();
+                gridAsString[fila][columna] = valores[fila][columna].toString();
             }
         }
         
@@ -139,6 +126,6 @@ public class Grid {
     }
     
     public Anotador getAnotador(Posicionable posicionable) {
-        return new AnotadorGeneral(celdas, posicionable);
+        return new AnotadorGeneral(valores, posicionable);
     }
 }

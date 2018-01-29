@@ -49,17 +49,17 @@ public enum Columna implements Posicionable {
         return indiceColumna;
     }
 
-    public Celda[] getColumna(Celda[][] celdas) {
+    public Valor[] getColumna(Valor[][] celdas) {
         return Arrays.stream(celdas)
                 .map(tupla -> tupla[getIndiceColumnaParaArray()])
-                .toArray(Celda[]::new);
+                .toArray(Valor[]::new);
     }
 
-    public List<Posicion> agregarSi(Celda[][] celdas, Predicate<Celda> predicado) {
+    public List<Posicion> agregarSi(Valor[][] celdas, Predicate<Valor> predicado) {
         List<Posicion> posiciones = new ArrayList<>();
 
         for (int fila = 0; fila < celdas[0].length; fila++) {
-            Celda celdaTrabajo = celdas[fila][getIndiceColumnaParaArray()];
+            Valor celdaTrabajo = celdas[fila][getIndiceColumnaParaArray()];
             if (predicado.test(celdaTrabajo)) {
                 Posicion posicion = new Posicion(fila + 1, indiceColumna, celdaTrabajo);
                 posiciones.add(posicion);
@@ -70,7 +70,7 @@ public enum Columna implements Posicionable {
     }
 
     @Override
-    public List<Posicion> getPosiciones(Celda[][] celdas) {
+    public List<Posicion> getPosiciones(Valor[][] celdas) {
         return agregarSi(celdas, valor -> true);
     }
 
@@ -80,12 +80,12 @@ public enum Columna implements Posicionable {
     }
 
     @Override
-    public List<Posicion> getPosicionesVacias(Celda[][] celdas) {
-        return agregarSi(celdas, Celda::estaVacia);
+    public List<Posicion> getPosicionesVacias(Valor[][] celdas) {
+        return agregarSi(celdas, Valor::estaVacia);
     }
 
     @Override
-    public List<Posicion> getPosicionesConValor(Celda[][] celdas) {
+    public List<Posicion> getPosicionesConValor(Valor[][] celdas) {
         return agregarSi(celdas, celda -> !celda.estaVacia());
     }
 

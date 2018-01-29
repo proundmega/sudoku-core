@@ -6,8 +6,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.proundmega.sudokucore.Posicion;
-import org.proundmega.sudokucore.elementos.Celda;
-import org.proundmega.sudokucore.elementos.Celdas;
+import org.proundmega.sudokucore.elementos.Valor;
+import org.proundmega.sudokucore.elementos.Valors;
 
 /** Esta clase busca filtrar las posiciones de todo un sudoku en base a 2 reglas:
  *  1) las posiciones no puede ser ninguna de las que estan en el filtro.
@@ -19,7 +19,7 @@ import org.proundmega.sudokucore.elementos.Celdas;
  */
 @AllArgsConstructor
 public class AnotadorMapper {
-    private Celda[][] celdas;
+    private Valor[][] celdas;
     private List<Posicion> filtros;
     
     
@@ -61,12 +61,12 @@ public class AnotadorMapper {
      * @param mapper la funcion que define que propiedad en comun deben tener las posiciones para ser parte del grupo
      * @return todas las posiciones que comparten al mapper excluyendo las posiciones filtro
      */
-    public static <T> List<Posicion> getPosicionesEnBaseAFuncionTomandoComoBase(List<Posicion> posicionesFiltro, Celda[][] celdas, Function<Posicion, T> mapper) {
+    public static <T> List<Posicion> getPosicionesEnBaseAFuncionTomandoComoBase(List<Posicion> posicionesFiltro, Valor[][] celdas, Function<Posicion, T> mapper) {
         Set<T> valoresEnComun = posicionesFiltro.stream()
                 .map(mapper)
                 .collect(Collectors.toSet());
         
-        return Celdas.asPosiciones(celdas).stream()
+        return Valors.asPosiciones(celdas).stream()
                 .filter(posicion -> valoresEnComun.contains(mapper.apply(posicion)))
                 .filter(posicion -> !posicionesFiltro.contains(posicion))
                 .collect(Collectors.toList());

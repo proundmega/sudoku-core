@@ -13,14 +13,14 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.data.GridFactory;
-import org.proundmega.sudokucore.elementos.Celda;
+import org.proundmega.sudokucore.elementos.Valor;
 import org.proundmega.sudokucore.elementos.Columna;
 import org.proundmega.sudokucore.elementos.Fila;
 import org.proundmega.sudokucore.elementos.Valor;
 import static org.proundmega.sudokucore.elementos.Valor.*;
 
 public class AnotadorFilaTest {
-    private Celda[][] celdas;
+    private Valor[][] celdas;
     // TODO pasar pruebas de AnotadorCuadrante para aca
     // TODO crear implementacion de anotador de fila
     
@@ -39,7 +39,7 @@ public class AnotadorFilaTest {
         assertEquals(esperado, obtenido);
     }
     
-    private List<Posicion> getPosicionesConFilasRemovidasFila4(Celda[][] celdas) {
+    private List<Posicion> getPosicionesConFilasRemovidasFila4(Valor[][] celdas) {
         List<Posicion> posicionesVacias = Fila._4.getPosicionesVacias(celdas);
         Set<Valor> notacionesEsperadas = new HashSet<>(Arrays.asList(
                 Valor._1, Valor._2, Valor._3, Valor._4, Valor._5, Valor._7, Valor._8, Valor._9));

@@ -12,144 +12,143 @@ import org.junit.Ignore;
 import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.data.GridFactory;
 import static org.proundmega.sudokucore.elementos.Valor.*;
-import static org.proundmega.sudokucore.data.GridFactory.crearCeldas;
 
 public class CuadranteTest {
-    private static Celda[][] celdas;
+    private static Valor[][] valores;
     
     @BeforeClass
     public static void crearGridPrueba() {
-        celdas = GridFactory.getSudokuFacil1Resuelto();
+        valores = GridFactory.getSudokuFacil1Resuelto();
     }
     
     @Test
     public void gcSuperiorIzquierdo() {
         Cuadrante cuadrante = Cuadrante.SUPERIOR_IZQUIERO;
         
-        Celda[][] esperado = new Celda[][] {
-            crearCeldas(_8,    _7,    _1),
-            crearCeldas(_4,    _5,    _9),
-            crearCeldas(_6,    _2,    _3)
+        Valor[][] esperado = new Valor[][] {
+            new Valor[]{_8,    _7,    _1},
+            new Valor[]{_4,    _5,    _9},
+            new Valor[]{_6,    _2,    _3}
         };
         
-        assertArrayEquals(esperado, cuadrante.getCuadrante(celdas));
+        assertArrayEquals(esperado, cuadrante.getCuadrante(valores));
     }
     
     @Test
     public void gcSuperiorCentral() {
         Cuadrante cuadrante = Cuadrante.SUPERIOR_CENTRAL;
         
-        Celda[][] esperado = new Celda[][] {
-            crearCeldas(_2,    _3,    _9),
-            crearCeldas(_6,    _1,    _7),
-            crearCeldas(_4,    _5,    _8)
+        Valor[][] esperado = new Valor[][] {
+            new Valor[]{_2,    _3,    _9},
+            new Valor[]{_6,    _1,    _7},
+            new Valor[]{_4,    _5,    _8}
         };
         
-        assertArrayEquals(esperado, cuadrante.getCuadrante(celdas));
+        assertArrayEquals(esperado, cuadrante.getCuadrante(valores));
     }
 
     @Test
     public void gcSuperiorDerecho() {
         Cuadrante cuadrante = Cuadrante.SUPERIOR_DERECHO;
         
-        Celda[][] esperado = new Celda[][] {
-            crearCeldas(_4,   _5,   _6),
-            crearCeldas(_8,   _2,   _3),
-            crearCeldas(_7,   _9,   _1)
+        Valor[][] esperado = new Valor[][] {
+            new Valor[]{_4,   _5,   _6},
+            new Valor[]{_8,   _2,   _3},
+            new Valor[]{_7,   _9,   _1}
         };
         
-        assertArrayEquals(esperado, cuadrante.getCuadrante(celdas));
+        assertArrayEquals(esperado, cuadrante.getCuadrante(valores));
     }
     
     @Test
     public void gcCentralIzquierdo() {
         Cuadrante cuadrante = Cuadrante.CENTRAL_IZQUIERO;
         
-        Celda[][] esperado = new Celda[][] {
-            crearCeldas(_2,    _4,    _6),
-            crearCeldas(_9,    _1,    _8),
-            crearCeldas(_5,    _3,    _7)
+        Valor[][] esperado = new Valor[][] {
+            new Valor[]{_2,    _4,    _6},
+            new Valor[]{_9,    _1,    _8},
+            new Valor[]{_5,    _3,    _7}
         };
         
-        assertArrayEquals(esperado, cuadrante.getCuadrante(celdas));
+        assertArrayEquals(esperado, cuadrante.getCuadrante(valores));
     }
     
     @Test
     public void gcCentralCentral() {
         Cuadrante cuadrante = Cuadrante.CENTRAL_CENTRAL;
         
-        Celda[][] esperado = new Celda[][] {
-            crearCeldas(_3,    _7,    _1),
-            crearCeldas(_5,    _4,    _6),
-            crearCeldas(_8,    _9,    _2)
+        Valor[][] esperado = new Valor[][] {
+            new Valor[]{_3,    _7,    _1},
+            new Valor[]{_5,    _4,    _6},
+            new Valor[]{_8,    _9,    _2}
         };
         
-        assertArrayEquals(esperado, cuadrante.getCuadrante(celdas));
+        assertArrayEquals(esperado, cuadrante.getCuadrante(valores));
     }
     
     @Test
     public void gcCentralDerecho() {
         Cuadrante cuadrante = Cuadrante.CENTRAL_DERECHO;
         
-        Celda[][] esperado = new Celda[][] {
-            crearCeldas(_9,   _8,   _5),
-            crearCeldas(_2,   _3,   _7),
-            crearCeldas(_1,   _6,   _4)
+        Valor[][] esperado = new Valor[][] {
+            new Valor[]{_9,   _8,   _5},
+            new Valor[]{_2,   _3,   _7},
+            new Valor[]{_1,   _6,   _4}
         };
         
-        assertArrayEquals(esperado, cuadrante.getCuadrante(celdas));
+        assertArrayEquals(esperado, cuadrante.getCuadrante(valores));
     }
     
     @Test
     public void gcInferiorIzquierdo() {
         Cuadrante cuadrante = Cuadrante.INFERIOR_IZQUIERO;
         
-        Celda[][] esperado = new Celda[][] {
-            crearCeldas(_7,    _8,    _4),
-            crearCeldas(_1,    _6,    _2),
-            crearCeldas(_3,    _9,    _5)
+        Valor[][] esperado = new Valor[][] {
+            new Valor[]{_7,    _8,    _4},
+            new Valor[]{_1,    _6,    _2},
+            new Valor[]{_3,    _9,    _5}
         };
         
-        assertArrayEquals(esperado, cuadrante.getCuadrante(celdas));
+        assertArrayEquals(esperado, cuadrante.getCuadrante(valores));
     }
     
     @Test
     public void gcInferiorCentral() {
         Cuadrante cuadrante = Cuadrante.INFERIOR_CENTRAL;
         
-        Celda[][] esperado = new Celda[][] {
-            crearCeldas(_9,    _6,    _5),
-            crearCeldas(_7,    _8,    _3),
-            crearCeldas(_1,    _2,    _4)
+        Valor[][] esperado = new Valor[][] {
+            new Valor[]{_9,    _6,    _5},
+            new Valor[]{_7,    _8,    _3},
+            new Valor[]{_1,    _2,    _4}
         };
         
-        assertArrayEquals(esperado, cuadrante.getCuadrante(celdas));
+        assertArrayEquals(esperado, cuadrante.getCuadrante(valores));
     }
     
     @Test
     public void gcInferiorDerecho() {
         Cuadrante cuadrante = Cuadrante.INFERIOR_DERECHO;
         
-        Celda[][] esperado = new Celda[][] {
-            crearCeldas(_3,   _1,   _2),
-            crearCeldas(_5,   _4,   _9),
-            crearCeldas(_6,   _7,   _8)
+        Valor[][] esperado = new Valor[][] {
+            new Valor[]{_3,   _1,   _2},
+            new Valor[]{_5,   _4,   _9},
+            new Valor[]{_6,   _7,   _8}
         };
         
-        assertArrayEquals(esperado, cuadrante.getCuadrante(celdas));
+        assertArrayEquals(esperado, cuadrante.getCuadrante(valores));
     }
     
     @Test
     public void gcInferiorDerechoAsList() {
         Cuadrante cuadrante = Cuadrante.INFERIOR_DERECHO;
         
-        List<Posicion> esperado = getPosicionesInferiorDerecho(celdas);
-        List<Posicion> obtenido = cuadrante.getCuadranteAsList(celdas);
+        List<Posicion> esperado = getPosicionesInferiorDerecho(valores);
+        List<Posicion> obtenido = cuadrante.getCuadranteAsList(valores);
         
         assertEquals(esperado, obtenido);
     }
     
-    private List<Posicion> getPosicionesInferiorDerecho(Celda[][] celdas) {
+    private List<Posicion> getPosicionesInferiorDerecho(Valor[][] celdas) {
         List<Posicion> posiciones = new ArrayList<>();
         
         posiciones.add(new Posicion(7, 7, celdas[6][6]));
@@ -169,7 +168,7 @@ public class CuadranteTest {
     
     @Test
     public void gcInferiorDerechoVacias() {
-        Celda[][] celdas = GridFactory.getSudokuIncompleto2();
+        Valor[][] celdas = GridFactory.getSudokuIncompleto2();
         
         Cuadrante cuadrante = Cuadrante.INFERIOR_DERECHO;
         
@@ -179,7 +178,7 @@ public class CuadranteTest {
         assertEquals(esperado, obtenido);
     }
 
-    private List<Posicion> getPosicionesInferiorDerechoVacias(Celda[][] celdas) {
+    private List<Posicion> getPosicionesInferiorDerechoVacias(Valor[][] celdas) {
         List<Posicion> posiciones = new ArrayList<>();
         
         posiciones.add(new Posicion(8, 8, celdas[7][7]));

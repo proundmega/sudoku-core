@@ -35,17 +35,17 @@ public enum Cuadrante implements Posicionable {
         return offsetColumna + 1;
     }
 
-    public Celda[][] getCuadrante(Celda[][] celdas) {
-        return Arrays.stream(celdas, offsetFila, offsetFila + 3)
+    public Valor[][] getCuadrante(Valor[][] valores) {
+        return Arrays.stream(valores, offsetFila, offsetFila + 3)
                 .map(tupla -> Arrays.copyOfRange(tupla, offsetColumna, offsetColumna + 3))
-                .toArray(Celda[][]::new);
+                .toArray(Valor[][]::new);
     }
 
-    public List<Posicion> getCuadranteAsList(Celda[][] celdas) {
+    public List<Posicion> getCuadranteAsList(Valor[][] celdas) {
         return agregarSi(celdas, celda -> true);
     }
 
-    private List<Posicion> agregarSi(Celda[][] celdas, Predicate<Celda> predicado) {
+    private List<Posicion> agregarSi(Valor[][] celdas, Predicate<Valor> predicado) {
         List<Posicion> posiciones = new ArrayList<>();
 
         for (int fila = offsetFila; fila < offsetFila + 3; fila++) {
@@ -61,17 +61,17 @@ public enum Cuadrante implements Posicionable {
     }
 
     @Override
-    public List<Posicion> getPosicionesVacias(Celda[][] celdas) {
-        return agregarSi(celdas, Celda::estaVacia);
+    public List<Posicion> getPosicionesVacias(Valor[][] celdas) {
+        return agregarSi(celdas, Valor::estaVacia);
     }
 
     @Override
-    public List<Posicion> getPosicionesConValor(Celda[][] celdas) {
+    public List<Posicion> getPosicionesConValor(Valor[][] celdas) {
         return agregarSi(celdas, celda -> !celda.estaVacia());
     }
 
     @Override
-    public List<Posicion> getPosiciones(Celda[][] celdas) {
+    public List<Posicion> getPosiciones(Valor[][] celdas) {
         return getCuadranteAsList(celdas);
     }
 

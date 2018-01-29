@@ -1,15 +1,9 @@
 package org.proundmega.sudokucore.io;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.experimental.categories.Category;
-import static org.mockito.Mockito.*;
 import org.proundmega.sudokucore.data.GridFactory;
-import org.proundmega.sudokucore.io.InvalidSudokuFormatException;
-import org.proundmega.sudokucore.io.FileToSudoku;
 import org.proundmega.sudokucore.Sudoku;
 
 public class SudokuUploaderTest {

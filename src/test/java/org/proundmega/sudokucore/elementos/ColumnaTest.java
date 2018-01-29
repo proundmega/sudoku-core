@@ -23,14 +23,14 @@ public class ColumnaTest {
     public void obtenerColumnaAsListCorrectamente() {
         Columna columna = Columna._3;
         
-        Celda[][] celda = GridFactory.getSudokuFacil1Resuelto();
+        Valor[][] celda = GridFactory.getSudokuFacil1Resuelto();
         List<Posicion> posiciones = getListaColumna3(celda);
         List<Posicion> obtenidos = columna.getPosiciones(celda);
         
         assertEquals(posiciones, obtenidos);
     }
     
-    private List<Posicion> getListaColumna3(Celda[][] celdas) {
+    private List<Posicion> getListaColumna3(Valor[][] celdas) {
         List<Posicion> posiciones = new ArrayList<>();
         
         posiciones.add(new Posicion(1, 3, celdas[0][2]));
@@ -52,7 +52,7 @@ public class ColumnaTest {
     public void getValoresVaciosCorrectos1() {
         Columna columnaObjetivo = Columna._7;
         
-        Celda[][] celdas = GridFactory.getSudokuFacil1();
+        Valor[][] celdas = GridFactory.getSudokuFacil1();
         List<Posicion> esperado = getPosicionesVaciasColumna7();
         List<Posicion> obtenido = columnaObjetivo.getPosicionesVacias(celdas);
         
@@ -75,7 +75,7 @@ public class ColumnaTest {
     public void getPosicionesConValorCorrectos1() {
         Columna columnaObjetivo = Columna._7;
         
-        Celda[][] celdas = GridFactory.getSudokuFacil1();
+        Valor[][] celdas = GridFactory.getSudokuFacil1();
         List<Posicion> esperado = getPosicionesConValorColumna7();
         List<Posicion> obtenido = columnaObjetivo.getPosicionesConValor(celdas);
         

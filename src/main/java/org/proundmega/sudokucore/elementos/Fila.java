@@ -6,10 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import lombok.Value;
 import org.proundmega.sudokucore.Posicion;
 
 public enum Fila implements Posicionable {
@@ -55,20 +51,20 @@ public enum Fila implements Posicionable {
         return indiceFila;
     }
 
-    public Celda[] getFila(Celda[][] celdas) {
+    public Valor[] getFila(Valor[][] celdas) {
         return celdas[getIndiceFilaParaArray()];
     }
 
     @Override
-    public List<Posicion> getPosiciones(Celda[][] celdas) {
+    public List<Posicion> getPosiciones(Valor[][] celdas) {
         return agregarSi(celdas, celda -> true);
     }
 
-    private List<Posicion> agregarSi(Celda[][] celdas, Predicate<Celda> predicado) {
+    private List<Posicion> agregarSi(Valor[][] celdas, Predicate<Valor> predicado) {
         List<Posicion> posiciones = new ArrayList<>();
 
         for (int columna = 0; columna < celdas[0].length; columna++) {
-            Celda celdaTrabajo = celdas[getIndiceFilaParaArray()][columna];
+            Valor celdaTrabajo = celdas[getIndiceFilaParaArray()][columna];
             if (predicado.test(celdaTrabajo)) {
                 Posicion posicion = new Posicion(indiceFila, columna + 1, celdaTrabajo);
                 posiciones.add(posicion);
@@ -80,12 +76,12 @@ public enum Fila implements Posicionable {
     }
     
     @Override
-    public List<Posicion> getPosicionesVacias(Celda[][] celdas) {
-        return agregarSi(celdas, Celda::estaVacia);
+    public List<Posicion> getPosicionesVacias(Valor[][] celdas) {
+        return agregarSi(celdas, Valor::estaVacia);
     }
     
     @Override
-    public List<Posicion> getPosicionesConValor(Celda[][] celdas) {
+    public List<Posicion> getPosicionesConValor(Valor[][] celdas) {
         return agregarSi(celdas, celda -> !celda.estaVacia());
     }
 

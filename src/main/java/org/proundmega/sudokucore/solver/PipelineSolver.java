@@ -5,7 +5,7 @@ import org.proundmega.sudokucore.Respuesta;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import org.proundmega.sudokucore.elementos.grid.Grid;
+import org.proundmega.sudokucore.elementos.Grid;
 
 public class PipelineSolver {
     

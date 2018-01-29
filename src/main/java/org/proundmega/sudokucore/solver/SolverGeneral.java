@@ -8,7 +8,7 @@ import org.proundmega.sudokucore.MetadataSolver;
 import org.proundmega.sudokucore.Respuesta;
 import org.proundmega.sudokucore.elementos.Cuadrante;
 import org.proundmega.sudokucore.elementos.Posicionable;
-import org.proundmega.sudokucore.elementos.grid.Grid;
+import org.proundmega.sudokucore.elementos.Grid;
 import org.proundmega.sudokucore.elementos.anotador.Anotador;
 
 public class SolverGeneral implements Solver {

@@ -1,5 +1,6 @@
 package org.proundmega.sudokucore;
 
+import org.proundmega.sudokucore.elementos.Grid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -7,7 +8,6 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.proundmega.sudokucore.elementos.grid.Grid;
 import org.proundmega.sudokucore.solver.NullSolver;
 
 @Data

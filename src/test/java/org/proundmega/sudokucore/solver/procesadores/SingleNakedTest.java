@@ -4,22 +4,16 @@ import java.util.List;
 import java.util.Optional;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 import org.proundmega.sudokucore.MetadataSolver;
 import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.data.GridFactory;
-import org.proundmega.sudokucore.elementos.Celda;
-import org.proundmega.sudokucore.elementos.Columna;
-import org.proundmega.sudokucore.elementos.Cuadrante;
-import org.proundmega.sudokucore.elementos.Fila;
-import org.proundmega.sudokucore.elementos.Valor;
-import org.proundmega.sudokucore.elementos.grid.SubGridCuadrante;
+import org.proundmega.sudokucore.elementos.*;
 import org.proundmega.sudokucore.elementos.anotador.Anotador;
 
 public class SingleNakedTest {
     
     @Test
-    public void hayUnaCeldaConUnPosibleValorCorrecto() {
+    public void hayUnaValorConUnPosibleValorCorrecto() {
         List<Posicion> posiciones = getPosicionesVaciasDeCuadrante(Cuadrante.SUPERIOR_DERECHO)
                 .getPosicionesConAnotacionesRemovidas();
         
@@ -28,14 +22,14 @@ public class SingleNakedTest {
     }
     
     private Anotador getPosicionesVaciasDeCuadrante(Cuadrante cuadrante) {
-        Celda[][] celda = GridFactory.getSudokuFacil1();
-        SubGridCuadrante subgrid = new SubGridCuadrante(celda, cuadrante);
+        Valor[][] celda = GridFactory.getSudokuFacil1();
+        Grid grid = new Grid(celda);
         
-        return subgrid.getAnotador();
+        return grid.getAnotador(cuadrante);
     }
     
     @Test
-    public void hayUnaCeldaConUnPosibleValorIncorrecto() {
+    public void hayUnaValorConUnPosibleValorIncorrecto() {
         List<Posicion> posiciones = getPosicionesVaciasDeCuadrante(Cuadrante.CENTRAL_DERECHO)
                 .getPosicionesConAnotacionesRemovidas();
         
@@ -49,7 +43,7 @@ public class SingleNakedTest {
         
         SingleNaked posicion = new SingleNaked();
         
-        Posicion esperado = new Posicion(Fila._2, Columna._8, new Celda(Valor._2));
+        Posicion esperado = new Posicion(Fila._2, Columna._8, Valor._2);
         
         Optional<MetadataSolver> obtenido = posicion.apply(anotador);
         
@@ -62,7 +56,7 @@ public class SingleNakedTest {
         Anotador anotador = getPosicionesVaciasDeCuadrante(Cuadrante.SUPERIOR_DERECHO);
         SingleNaked posicion = new SingleNaked();
         
-        Posicion esperado = new Posicion(Fila._2, Columna._8, new Celda(Valor._2));
+        Posicion esperado = new Posicion(Fila._2, Columna._8, Valor._2);
         
         Optional<MetadataSolver> obtenido = posicion.apply(anotador);
         

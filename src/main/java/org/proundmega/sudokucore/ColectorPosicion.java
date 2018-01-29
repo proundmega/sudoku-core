@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.proundmega.sudokucore.elementos.Celda;
+import org.proundmega.sudokucore.elementos.Valor;
 import org.proundmega.sudokucore.elementos.Columna;
 import org.proundmega.sudokucore.elementos.Fila;
 
 public class ColectorPosicion {
-    private Celda[][] celdas;
+    private Valor[][] celdas;
 
-    private ColectorPosicion(Celda[][] celdas) {
+    private ColectorPosicion(Valor[][] celdas) {
         this.celdas = celdas;
     }
     
-    public static ColectorPosicion of(Celda[][] celdas) {
+    public static ColectorPosicion of(Valor[][] celdas) {
         return new ColectorPosicion(celdas);
     }
     

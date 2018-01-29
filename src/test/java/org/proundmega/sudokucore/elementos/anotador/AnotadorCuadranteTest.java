@@ -12,16 +12,14 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.data.GridFactory;
-import org.proundmega.sudokucore.elementos.Celda;
 import org.proundmega.sudokucore.elementos.Columna;
 import org.proundmega.sudokucore.elementos.Cuadrante;
 import org.proundmega.sudokucore.elementos.Fila;
 import org.proundmega.sudokucore.elementos.Valor;
 import static org.proundmega.sudokucore.elementos.Valor.*;
-import org.proundmega.sudokucore.solver.SolverHelper;
 
 public class AnotadorCuadranteTest {
-    private static Celda[][] celdas;
+    private static Valor[][] celdas;
     
     @BeforeClass
     public static void crearGridParaAnotar() {
@@ -34,7 +32,7 @@ public class AnotadorCuadranteTest {
         
         AnotadorGeneral anotador = new AnotadorGeneral(celdas, cuadrante);
         
-        Posicion posicionAfectada = new Posicion(5, 3, new Celda(Valor.VACIA));
+        Posicion posicionAfectada = new Posicion(5, 3, Valor.VACIA);
         posicionAfectada = crearAnotaciones(posicionAfectada, _2, _4, _5, _8);
         
         assertTrue(anotador.getPosicionesFilasRemovidas().contains(posicionAfectada));
@@ -56,12 +54,12 @@ public class AnotadorCuadranteTest {
     private List<Posicion> getPosicionesAlteradasCuadranteCentralIzquierdo() {
         List<Posicion> posiciones = new ArrayList<>();
         
-        Posicion posicionAfectada1 = new Posicion(4, 2, new Celda(Valor.VACIA));
+        Posicion posicionAfectada1 = new Posicion(4, 2, Valor.VACIA);
         posicionAfectada1 = crearAnotaciones(posicionAfectada1, _2, _3, _4);
         
         posiciones.add(posicionAfectada1);
         
-        Posicion posicionAfectada2 = new Posicion(6, 2, new Celda(Valor.VACIA));
+        Posicion posicionAfectada2 = new Posicion(6, 2, Valor.VACIA);
         posicionAfectada2 = crearAnotaciones(posicionAfectada2, _2, _3, _4);
         
         posiciones.add(posicionAfectada2);
@@ -82,27 +80,27 @@ public class AnotadorCuadranteTest {
     private List<Posicion> getPosicionesCSDHorizontales() {
         List<Posicion> posiciones = new ArrayList<>();
         
-        Posicion posicionAfectada1 = new Posicion(1, 7, new Celda(Valor.VACIA));
+        Posicion posicionAfectada1 = new Posicion(1, 7, Valor.VACIA);
         posicionAfectada1 = crearAnotaciones(posicionAfectada1, _1, _2, _4, _5);
         posiciones.add(posicionAfectada1);
         
-        Posicion posicionAfectada2 = new Posicion(1, 8, new Celda(Valor.VACIA));
+        Posicion posicionAfectada2 = new Posicion(1, 8, Valor.VACIA);
         posicionAfectada2 = crearAnotaciones(posicionAfectada2, _1, _2, _4, _5);
         posiciones.add(posicionAfectada2);
         
-        Posicion posicionAfectada3 = new Posicion(2, 8, new Celda(Valor.VACIA));
+        Posicion posicionAfectada3 = new Posicion(2, 8, Valor.VACIA);
         posicionAfectada3 = crearAnotaciones(posicionAfectada3, _2, _3, _7);
         posiciones.add(posicionAfectada3);
         
-        Posicion posicionAfectada4 = new Posicion(2, 9, new Celda(Valor.VACIA));
+        Posicion posicionAfectada4 = new Posicion(2, 9, Valor.VACIA);
         posicionAfectada4 = crearAnotaciones(posicionAfectada4, _2, _3, _7);
         posiciones.add(posicionAfectada4);
         
-        Posicion posicionAfectada5 = new Posicion(3, 7, new Celda(Valor.VACIA));
+        Posicion posicionAfectada5 = new Posicion(3, 7, Valor.VACIA);
         posicionAfectada5 = crearAnotaciones(posicionAfectada5, _1, _2, _5, _7);
         posiciones.add(posicionAfectada5);
         
-        Posicion posicionAfectada6 = new Posicion(3, 9, new Celda(Valor.VACIA));
+        Posicion posicionAfectada6 = new Posicion(3, 9, Valor.VACIA);
         posicionAfectada6 = crearAnotaciones(posicionAfectada6, _1, _2, _5, _7);
         posiciones.add(posicionAfectada6);
         
@@ -130,27 +128,27 @@ public class AnotadorCuadranteTest {
     private List<Posicion> getPosicionesCSDVericales() {
         List<Posicion> posiciones = new ArrayList<>();
         
-        Posicion posicionAfectada1 = new Posicion(1, 7, new Celda(Valor.VACIA));
+        Posicion posicionAfectada1 = new Posicion(1, 7, Valor.VACIA);
         posicionAfectada1 = crearAnotaciones(posicionAfectada1, _2, _4, _5, _7);
         posiciones.add(posicionAfectada1);
         
-        Posicion posicionAfectada2 = new Posicion(1, 8, new Celda(Valor.VACIA));
+        Posicion posicionAfectada2 = new Posicion(1, 8, Valor.VACIA);
         posicionAfectada2 = crearAnotaciones(posicionAfectada2, _1, _2, _5);
         posiciones.add(posicionAfectada2);
         
-        Posicion posicionAfectada3 = new Posicion(2, 8, new Celda(Valor.VACIA));
+        Posicion posicionAfectada3 = new Posicion(2, 8, Valor.VACIA);
         posicionAfectada3 = crearAnotaciones(posicionAfectada3, _1, _2, _5);
         posiciones.add(posicionAfectada3);
         
-        Posicion posicionAfectada4 = new Posicion(2, 9, new Celda(Valor.VACIA));
+        Posicion posicionAfectada4 = new Posicion(2, 9, Valor.VACIA);
         posicionAfectada4 = crearAnotaciones(posicionAfectada4, _1, _2, _3, _4, _5);
         posiciones.add(posicionAfectada4);
         
-        Posicion posicionAfectada5 = new Posicion(3, 7, new Celda(Valor.VACIA));
+        Posicion posicionAfectada5 = new Posicion(3, 7, Valor.VACIA);
         posicionAfectada5 = crearAnotaciones(posicionAfectada5, _2, _4, _5, _7);
         posiciones.add(posicionAfectada5);
         
-        Posicion posicionAfectada6 = new Posicion(3, 9, new Celda(Valor.VACIA));
+        Posicion posicionAfectada6 = new Posicion(3, 9, Valor.VACIA);
         posicionAfectada6 = crearAnotaciones(posicionAfectada6, _1, _2, _3, _4, _5);
         posiciones.add(posicionAfectada6);
         
@@ -197,7 +195,7 @@ public class AnotadorCuadranteTest {
     }
     
     @Test
-    public void getPosicionesQueRemuevenValorCorrectoCeldaVacia() {
+    public void getPosicionesQueRemuevenValorCorrectoValorVacia() {
         Cuadrante cuadranteObjetivo = Cuadrante.INFERIOR_CENTRAL;
         AnotadorGeneral anotador = new AnotadorGeneral(celdas, cuadranteObjetivo);
         
@@ -249,12 +247,16 @@ public class AnotadorCuadranteTest {
         
         List<Posicion> obtenida = anotador.getPosicionesLimitadoras(posicionObjetivo);
         
+        esperada.forEach(System.out::println);
+        System.out.println("obtenido");
+        obtenida.forEach(System.out::println);
+        
         assertEquals(esperada, obtenida);
     }
     
     @Test
     public void testGetValoresFaltantes() {
-        Celda[][] celdas = GridFactory.getSudokuIncompleto2();
+        Valor[][] celdas = GridFactory.getSudokuIncompleto2();
         
         Set<Valor> esperado = new HashSet<>();
         esperado.add(_4);
@@ -267,7 +269,7 @@ public class AnotadorCuadranteTest {
     
     @Test
     public void getPosicionesLimitadorasIncluyendoLasDelMismoCuadrante() {
-        Celda[][] celdas = GridFactory.getSudokuFacil2();
+        Valor[][] celdas = GridFactory.getSudokuFacil2();
         
         Posicion objetivo = new Posicion(Fila._5, Columna._5, Valor.VACIA);
         List<Posicion> esperado = getPosicionesLimitadorasSudoku2PosicionCentral();

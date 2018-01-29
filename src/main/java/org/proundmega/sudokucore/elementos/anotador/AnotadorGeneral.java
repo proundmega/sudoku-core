@@ -10,18 +10,17 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.proundmega.sudokucore.Posicion;
-import org.proundmega.sudokucore.elementos.Celda;
-import org.proundmega.sudokucore.elementos.Celdas;
+import org.proundmega.sudokucore.elementos.Valors;
 import org.proundmega.sudokucore.elementos.Posicionable;
 import org.proundmega.sudokucore.elementos.Valor;
 
 public class AnotadorGeneral implements Anotador {
-    private Celda[][] celdas;
+    private Valor[][] celdas;
     private List<Posicion> posicionesVacias;
     private List<Posicion> cachePosicionesConAnotacionesRemovidas;
     private Posicionable posicionable;
     
-    public AnotadorGeneral(Celda[][] celdas, Posicionable posicionable) {
+    public AnotadorGeneral(Valor[][] celdas, Posicionable posicionable) {
         this.celdas = celdas;
         this.posicionable = posicionable;
         this.posicionesVacias = posicionable.getPosicionesVacias(celdas);
@@ -72,7 +71,7 @@ public class AnotadorGeneral implements Anotador {
         return removerNotacionesEnBaseAValorEnComun(posiciones, celdas, Posicion::getFila);
     }
     
-    private static <T> List<Posicion> removerNotacionesEnBaseAValorEnComun (List<Posicion> posiciones, Celda[][] celdas, Function<Posicion, T> mapper) {
+    private static <T> List<Posicion> removerNotacionesEnBaseAValorEnComun (List<Posicion> posiciones, Valor[][] celdas, Function<Posicion, T> mapper) {
         Map<T, Set<Valor>> valoresUsados = AnotadorMapper.getPosicionesEnBaseAFuncionTomandoComoBase(posiciones, celdas, mapper).stream()
                 .collect(Collectors.groupingBy(mapper, Collectors.mapping(Posicion::getValorActual, Collectors.toSet())));
         
@@ -123,9 +122,9 @@ public class AnotadorGeneral implements Anotador {
     }
     
     public List<Posicion> getPosicionesLimitadorasConRepetidos(Posicion filtro) {
-        return Celdas.asPosiciones(celdas)
+        return Valors.asPosiciones(celdas)
                 .stream()
-                .filter(posicion -> !posicion.getCelda().estaVacia())
+                .filter(posicion -> !posicion.getValorActual().estaVacia())
                 .filter(posicion -> poseenFilaOColumnaSimilaresOSonDelMismoCuadrante(filtro, posicion))
                 .sorted()
                 .collect(Collectors.toList());
