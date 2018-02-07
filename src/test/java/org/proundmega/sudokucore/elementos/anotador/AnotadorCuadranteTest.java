@@ -247,10 +247,6 @@ public class AnotadorCuadranteTest {
         
         List<Posicion> obtenida = anotador.getPosicionesLimitadoras(posicionObjetivo);
         
-        esperada.forEach(System.out::println);
-        System.out.println("obtenido");
-        obtenida.forEach(System.out::println);
-        
         assertEquals(esperada, obtenida);
     }
     

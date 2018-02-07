@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.elementos.Valor;
-import org.proundmega.sudokucore.elementos.Valors;
+import org.proundmega.sudokucore.utils.Valores;
 
 /** Esta clase busca filtrar las posiciones de todo un sudoku en base a 2 reglas:
  *  1) las posiciones no puede ser ninguna de las que estan en el filtro.
@@ -66,7 +66,7 @@ public class AnotadorMapper {
                 .map(mapper)
                 .collect(Collectors.toSet());
         
-        return Valors.asPosiciones(celdas).stream()
+        return Valores.asPosiciones(celdas).stream()
                 .filter(posicion -> valoresEnComun.contains(mapper.apply(posicion)))
                 .filter(posicion -> !posicionesFiltro.contains(posicion))
                 .collect(Collectors.toList());

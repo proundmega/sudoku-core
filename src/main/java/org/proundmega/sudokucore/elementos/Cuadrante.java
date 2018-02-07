@@ -9,24 +9,26 @@ import java.util.stream.Collectors;
 import org.proundmega.sudokucore.Posicion;
 
 public enum Cuadrante implements Posicionable {
-    SUPERIOR_IZQUIERO(0, 0),
-    SUPERIOR_CENTRAL(0, 3),
-    SUPERIOR_DERECHO(0, 6),
-    CENTRAL_IZQUIERO(3, 0),
-    CENTRAL_CENTRAL(3, 3),
-    CENTRAL_DERECHO(3, 6),
-    INFERIOR_IZQUIERO(6, 0),
-    INFERIOR_CENTRAL(6, 3),
-    INFERIOR_DERECHO(6, 6);
+    SUPERIOR_IZQUIERO(0, 0, 1),
+    SUPERIOR_CENTRAL(0, 3, 2),
+    SUPERIOR_DERECHO(0, 6, 3),
+    CENTRAL_IZQUIERO(3, 0, 4),
+    CENTRAL_CENTRAL(3, 3, 5),
+    CENTRAL_DERECHO(3, 6, 6),
+    INFERIOR_IZQUIERO(6, 0, 7),
+    INFERIOR_CENTRAL(6, 3, 8),
+    INFERIOR_DERECHO(6, 6, 9);
 
     private final int offsetFila;
     private final int offsetColumna;
+    private final int id;
 
-    private Cuadrante(int offsetFila, int offsetColumna) {
+    private Cuadrante(int offsetFila, int offsetColumna, int id) {
         this.offsetFila = offsetFila;
         this.offsetColumna = offsetColumna;
+        this.id = id;
     }
-    
+
     public int getOffsetFila() {
         return offsetFila + 1;
     }
@@ -73,6 +75,11 @@ public enum Cuadrante implements Posicionable {
     @Override
     public List<Posicion> getPosiciones(Valor[][] celdas) {
         return getCuadranteAsList(celdas);
+    }
+
+    @Override
+    public int getIdEnSudoku() {
+        return id;
     }
 
 }

@@ -1,24 +1,29 @@
 package org.proundmega.sudokucore.solver.procesadores;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import org.proundmega.sudokucore.ExplicacionBundle;
 import org.proundmega.sudokucore.MetadataSolver;
 import org.proundmega.sudokucore.Posicion;
+import org.proundmega.sudokucore.PosicionBundle;
 import org.proundmega.sudokucore.elementos.Valor;
 import org.proundmega.sudokucore.elementos.anotador.Anotador;
+import org.proundmega.sudokucore.internacionalization.I18NUtils;
+import org.proundmega.sudokucore.utils.Posiciones;
 
 public class SolucionSimple implements ProcesadorAnotaciones {
-    
+
     public SolucionSimple() {
     }
-    
+
     @Override
     public Optional<MetadataSolver> apply(Anotador anotador) {
         List<Posicion> posiciones = anotador.getPosicionesConAnotacionesRemovidas();
-        
+
         if (unValorSoloPuedeEstarEnUnLugar(posiciones)) {
             return Optional.of(getIntercambioCalculado(anotador));
         } else {
@@ -43,12 +48,12 @@ public class SolucionSimple implements ProcesadorAnotaciones {
 
     private MetadataSolver getIntercambioCalculado(Anotador anotador) {
         List<Posicion> posicionesVaciasAnotadas = anotador.getPosicionesConAnotacionesRemovidas();
-        
+
         Map<Valor, Long> valores = getValoresConSusConteos(posicionesVaciasAnotadas);
         Map.Entry<Valor, Long> otro = getEntradaConConteoDeUno(valores);
         Posicion elegida = getPosicionConLaEntradaDeseada(posicionesVaciasAnotadas, otro);
-        
-        return crearMetadata(elegida, otro.getKey(), anotador);
+
+        return crearMetadataSolver(elegida, otro, anotador);
     }
 
     private Map.Entry<Valor, Long> getEntradaConConteoDeUno(Map<Valor, Long> valores) {
@@ -67,12 +72,33 @@ public class SolucionSimple implements ProcesadorAnotaciones {
                 .orElseThrow(IllegalArgumentException::new);
         return elegida;
     }
-    
-    private MetadataSolver crearMetadata(Posicion posicionACambiar, Valor valorAPoner, Anotador anotador) {
-        Posicion posicionReemplazo = new Posicion(posicionACambiar.getFila(), posicionACambiar.getColumna(), valorAPoner);
-        List<Posicion> posicionesLimitantes = anotador.getPosicionesQueLimitanElValor(valorAPoner);
-        List<Posicion> posicionesBloque = anotador.getPosicionesDeBloque();
-        return new MetadataSolver(posicionReemplazo, posicionesLimitantes, posicionesBloque);
+
+    private MetadataSolver crearMetadataSolver(Posicion elegida, Map.Entry<Valor, Long> otro, Anotador anotador) {
+        PosicionBundle bundle = crearPosicionBundle(elegida, otro.getKey(), anotador);
+        ExplicacionBundle explicacionBundle = crearBundleExplicacion(anotador, bundle);
+        return new MetadataSolver(bundle, explicacionBundle);
+    }
+
+    private PosicionBundle crearPosicionBundle(Posicion posicionACambiar, Valor nuevoValor, Anotador anotadorContexto) {
+        Posicion posicion = new Posicion(posicionACambiar.getFila(), posicionACambiar.getColumna(), nuevoValor);
+        List<Posicion> posicionesQueLimitanElValor = anotadorContexto.getPosicionesQueLimitanElValor(nuevoValor);
+        List<Posicion> posicionesDeBloque = anotadorContexto.getPosicionesDeBloque();
+
+        return new PosicionBundle(posicion, posicionesQueLimitanElValor, posicionesDeBloque);
+    }
+
+    private ExplicacionBundle crearBundleExplicacion(Anotador anotador, PosicionBundle posicionBundle) {
+        ExplicacionBundle bundle = new ExplicacionBundle(this.getClass());
+        bundle.addParametro(locale -> posicionBundle.getPosicionResuelta().getValorActual().toString());
+        bundle.addParametro(locale -> I18NUtils.getInternationalizationString(
+                anotador.getPosicionable().getClass(), locale, "nombre_determinante")
+        );
+        bundle.addParametro(locale -> String.valueOf(anotador.getPosicionable().getIdEnSudoku()));
+        bundle.addParametro(locale -> 
+                Posiciones.joinPosicionesAsCoordenadasSinValor(posicionBundle.getPosicionesQueLimitanValor())
+        );
+        
+        return bundle;
     }
 
 }

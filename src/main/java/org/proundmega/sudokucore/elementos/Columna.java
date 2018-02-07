@@ -89,4 +89,9 @@ public enum Columna implements Posicionable {
         return agregarSi(celdas, celda -> !celda.estaVacia());
     }
 
+    @Override
+    public int getIdEnSudoku() {
+        return getIndice();
+    }
+
 }

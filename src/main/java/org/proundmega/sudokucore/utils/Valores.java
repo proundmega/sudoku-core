@@ -1,10 +1,13 @@
-package org.proundmega.sudokucore.elementos;
+package org.proundmega.sudokucore.utils;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.proundmega.sudokucore.Posicion;
+import org.proundmega.sudokucore.elementos.Columna;
+import org.proundmega.sudokucore.elementos.Fila;
+import org.proundmega.sudokucore.elementos.Valor;
 
-public class Valors {
+public class Valores {
 
     public static List<Posicion> asPosiciones(Valor[][] celdas) {
         List<Posicion> posiciones = new ArrayList<>();

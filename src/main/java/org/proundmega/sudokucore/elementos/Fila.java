@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.function.Predicate;
 import org.proundmega.sudokucore.Posicion;
@@ -89,4 +90,10 @@ public enum Fila implements Posicionable {
     public String toString() {
         return "Fila{" + indiceFila + '}';
     }
+
+    @Override
+    public int getIdEnSudoku() {
+        return getIndice();
+    }
+
 }

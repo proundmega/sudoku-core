@@ -1,5 +1,6 @@
 package org.proundmega.sudokucore;
 
+import org.proundmega.sudokucore.utils.ColectorPosicion;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package org.proundmega.sudokucore.elementos;
+package org.proundmega.sudokucore.utils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -8,6 +8,11 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.proundmega.sudokucore.InvalidSudokuException;
 import org.proundmega.sudokucore.Posicion;
+import org.proundmega.sudokucore.elementos.Columna;
+import org.proundmega.sudokucore.elementos.Cuadrante;
+import org.proundmega.sudokucore.elementos.Fila;
+import org.proundmega.sudokucore.elementos.Posicionable;
+import org.proundmega.sudokucore.elementos.Valor;
 
 public class ValidadorSudoku {
     

@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.proundmega.sudokucore.Posicion;
-import org.proundmega.sudokucore.elementos.Valors;
+import org.proundmega.sudokucore.utils.Valores;
 import org.proundmega.sudokucore.elementos.Posicionable;
 import org.proundmega.sudokucore.elementos.Valor;
 
@@ -122,7 +123,7 @@ public class AnotadorGeneral implements Anotador {
     }
     
     public List<Posicion> getPosicionesLimitadorasConRepetidos(Posicion filtro) {
-        return Valors.asPosiciones(celdas)
+        return Valores.asPosiciones(celdas)
                 .stream()
                 .filter(posicion -> !posicion.getValorActual().estaVacia())
                 .filter(posicion -> poseenFilaOColumnaSimilaresOSonDelMismoCuadrante(filtro, posicion))
@@ -148,6 +149,11 @@ public class AnotadorGeneral implements Anotador {
     @Override
     public List<Posicion> getPosicionesDeBloque() {
         return posicionable.getPosiciones(celdas);
+    }
+
+    @Override
+    public Posicionable getPosicionable() {
+        return posicionable;
     }
 
 }

@@ -1,7 +1,9 @@
 package org.proundmega.sudokucore.elementos.anotador;
 
 import java.util.List;
+import java.util.Locale;
 import org.proundmega.sudokucore.Posicion;
+import org.proundmega.sudokucore.elementos.Posicionable;
 import org.proundmega.sudokucore.elementos.Valor;
 
 public interface Anotador {
@@ -49,4 +51,11 @@ public interface Anotador {
      * @return todas las posiciones que pertenecen al bloque original
      */
     List<Posicion> getPosicionesDeBloque();
+    
+    /** Este metodo es usado unicamente con propositos de internacionalizacion ya que
+     *  para como se esta manejando se debe saber la clase del posicionable usado
+     * 
+     * @return el posicionable usado en esta clase
+     */
+    Posicionable getPosicionable();
 }

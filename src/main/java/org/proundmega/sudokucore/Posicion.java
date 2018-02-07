@@ -94,8 +94,6 @@ public class Posicion implements Comparable<Posicion>{
                 .filter(estaEnElRangoDeColumnas())
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
-                
-                
     }
 
     private Predicate<Cuadrante> estaEnElRangoDeColumnas() {
@@ -104,5 +102,9 @@ public class Posicion implements Comparable<Posicion>{
 
     private Predicate<Cuadrante> estaEnElRangoDeFilas() {
         return cuadrante -> cuadrante.getOffsetFila() <= getFilaAsNumero() && cuadrante.getOffsetFila() + 3 > getFilaAsNumero();
+    }
+    
+    public String toStringACoordenadaSinValor() {
+        return "(" + fila.getIndice() + ", " + columna.getIndice() + ")";
     }
 }

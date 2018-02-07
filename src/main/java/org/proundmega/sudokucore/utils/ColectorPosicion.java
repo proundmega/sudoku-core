@@ -1,9 +1,10 @@
-package org.proundmega.sudokucore;
+package org.proundmega.sudokucore.utils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.proundmega.sudokucore.Posicion;
 import org.proundmega.sudokucore.elementos.Valor;
 import org.proundmega.sudokucore.elementos.Columna;
 import org.proundmega.sudokucore.elementos.Fila;

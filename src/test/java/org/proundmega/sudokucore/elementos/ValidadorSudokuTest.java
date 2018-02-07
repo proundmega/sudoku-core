@@ -1,5 +1,6 @@
 package org.proundmega.sudokucore.elementos;
 
+import org.proundmega.sudokucore.utils.ValidadorSudoku;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;

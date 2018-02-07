@@ -50,4 +50,11 @@ public class PosicionTest {
         
         assertEquals(esperado, obtenido);
     }
+    
+    @Test
+    public void toStringCuadranteBonito() {
+        String esperado = "(1, 3)";
+        Posicion posicion = new Posicion(1, 3, Valor._1);
+        assertEquals(esperado, posicion.toStringACoordenadaSinValor());
+    }
 }

@@ -1,5 +1,7 @@
 package org.proundmega.sudokucore.elementos;
 
+import org.proundmega.sudokucore.utils.ValidadorSudoku;
+import org.proundmega.sudokucore.utils.Valores;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -106,11 +108,11 @@ public class Grid {
     }
     
     public Posicion getPosicion(Fila fila, Columna columna) {
-        return Valors.getPosicion(valores, fila, columna);
+        return Valores.getPosicion(valores, fila, columna);
     }
 
     public List<Posicion> getPosiciones() {
-        return Valors.asPosiciones(valores);
+        return Valores.asPosiciones(valores);
     }
     
     public String[][] getValoresAsString() {

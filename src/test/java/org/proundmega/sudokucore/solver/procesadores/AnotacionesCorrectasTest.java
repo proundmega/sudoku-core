@@ -34,7 +34,7 @@ public class AnotacionesCorrectasTest {
         MetadataSolver datos = respuesta.get();
         
         List<Posicion> esperado = getPosicionesLimitadorasBug1();
-        List<Posicion> obtenido = datos.getCeldasQueLimitanValor();
+        List<Posicion> obtenido = datos.getPosicionBundle().getPosicionesQueLimitanValor();
         
         assertEquals(esperado, obtenido);
     }
@@ -62,7 +62,7 @@ public class AnotacionesCorrectasTest {
         MetadataSolver datos = respuesta.get();
         
         List<Posicion> esperado = getPosicionesLimitadorasBug2();
-        List<Posicion> obtenido = datos.getCeldasQueLimitanValor();
+        List<Posicion> obtenido = datos.getPosicionBundle().getPosicionesQueLimitanValor();
         
         assertEquals(esperado, obtenido);
     }
@@ -89,7 +89,7 @@ public class AnotacionesCorrectasTest {
         MetadataSolver datos = respuesta.get();
         
         List<Posicion> esperado = getPosicionesLimitadorasBug3();
-        List<Posicion> obtenido = datos.getCeldasQueLimitanValor();
+        List<Posicion> obtenido = datos.getPosicionBundle().getPosicionesQueLimitanValor();
         
         assertEquals(esperado, obtenido);
     }

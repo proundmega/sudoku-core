@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lombok.AllArgsConstructor;
 import org.proundmega.sudokucore.Sudoku;
-import org.proundmega.sudokucore.elementos.Valors;
+import org.proundmega.sudokucore.utils.Valores;
 import org.proundmega.sudokucore.elementos.Valor;
 
 @AllArgsConstructor
@@ -58,7 +58,7 @@ public class FileToSudoku implements Serializable {
     }
 
     public static Valor[][] crearSudokuAsValor(File testResource) throws FileNotFoundException, IOException {
-        return procesarArchivo(new FileReader(testResource), Valors::copyOf);
+        return procesarArchivo(new FileReader(testResource), Valores::copyOf);
     }
     
     private static <T> T procesarArchivo(Reader reader, Function<String[][], T> funcion) throws IOException {
